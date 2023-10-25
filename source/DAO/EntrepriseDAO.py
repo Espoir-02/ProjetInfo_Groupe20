@@ -1,3 +1,6 @@
+from dbconnection import DBConnection
+
+
 class EntrepriseDAO:
     def create_stage(self, entreprise):
         """Pour entrer une entreprise dans la base de données"""

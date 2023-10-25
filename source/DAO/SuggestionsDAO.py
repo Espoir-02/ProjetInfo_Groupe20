@@ -1,3 +1,6 @@
+from dbconnection import DBConnection
+
+
 class SuggestionsDAO:
     def create_suggestion(self,eleve, stage, professeur) :
         """Met à jour la liste de suggestion d'un élève."""

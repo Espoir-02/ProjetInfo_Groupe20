@@ -1,3 +1,6 @@
+from dbconnection import DBConnection
+
+
 class ListeEnvieDAO:
 
     def update_liste_envie(self, id_utilisateur, id_stage):

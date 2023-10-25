@@ -1,3 +1,6 @@
+from dbconnection import DBConnection
+
+
 class UtilisateurDAO:
 
     def create_compte(self, utilisateur):

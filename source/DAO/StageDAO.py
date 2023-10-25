@@ -1,3 +1,6 @@
+
+from dbconnection import DBConnection
+
 class StageDAO:
     def create_stage(self, stage):
         """Pour entrer un stage dans la base de données"""
