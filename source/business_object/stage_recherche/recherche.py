@@ -82,3 +82,17 @@ class Recherche:
 
         else:
             raise ValueError("La durée envoyée est incorrect")
+
+    def changer_teletravail(self, i):
+        """
+        """
+        if i == "Inconnu":
+            1
+        
+        elif i =="Télétravail occasionnel":
+            1
+        
+        
+        
+        
+        ,"Télétravail régulier","Ouvert au télétravail total"
