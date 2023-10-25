@@ -22,7 +22,7 @@ class StartView:
             # Termine l'application
             return 'Exit'
         
-from source.business_object.listes.historique.py import Historique
+from source.business_object.listes.historique import Historique
 
 class HistoriqueView:
     def __init__(self,id_historique):
@@ -33,10 +33,23 @@ class HistoriqueView:
         historique_courant = self.id_historique.get_historique()
 
         # Affiche une liste de choix pour sélectionner un Pokémon
-        questions = [inquirer.List('selected_pokemon', message='Select a Pokemon:', choices=pokemons)]
+        questions = [inquirer.List('select_stage', 'exit')]
         answers = inquirer.prompt(questions)
 
-        if answers['choice']
+        if answers['choice'] == "select_stage":
+            # Redirige vers la vue Stage avec un certain id
+            return Recherche_Stage_View
+    
+        else:
+            # Termine l'application
+            return 'Exit'
+        
+from source.business_object.stage_recherche.recherche import Recherche
 
-        # Renvoie le Pokémon sélectionné
-        return 'PokemonDetailsView', answers['selected_pokemon']
+class Recherche_Stage_View:
+    def __init__(self,id_stage):
+        self.id_stage = id_stage
+    
+    def display(self):
+        # Choix des filtres
+        
