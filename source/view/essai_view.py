@@ -52,4 +52,37 @@ class Recherche_Stage_View:
     
     def display(self):
         # Choix des filtres
-        
+
+        # Choix du salaire :
+        salary = [inquirer.List('choice', message = 'Choose an option:', choices=['None', ">= 20 000","40 000","60 000","80 000","100 000"])]
+        Recherche.changer_salaire(inquirer.prompt(salary))
+
+        # Choix de la durée :
+        duree = [inquirer.List('choice', message = 'Choose an option:', choices=['None','1',"3", "4","6"])]
+        answer_duree = int(inquirer.prompt(duree))
+
+        # Choix du télétravail :
+        teletravail = [inquirer.List('choice', message = 'Choose an option:', choices=['Inconnu','non'])]
+        answer_teletravail = inquirer.prompt(teletravail)
+
+        # Choix de la profession :
+        profession = [inquirer.List('choice', message = 'Choose an option:', choices=['oui','non'])]
+        answer_profession = inquirer.prompt(profession)
+
+        return Class.scrapping(answer_duree,answer_salary)
+        return blablz.recherche({salary=answer_salary,domaine=None, Type=answer_teletravail,duree=answer_duree})
+        profession=None,
+        secteur=None,
+        taille_entreprise=None,
+        niveau_experience=None,
+        niveau_etude=None,
+        salaire_minimum=None,
+    ):
+        self.duree = duree
+        self.teletravail = teletravail
+        self.profession = profession
+        self.secteur = secteur
+        self.taille_entreprise = taille_entreprise
+        self.niveau_experience = niveau_experience
+        self.niveau_etude = niveau_etude
+        self.salaire_minimum = salaire_minimum
