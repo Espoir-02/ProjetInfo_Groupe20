@@ -25,24 +25,28 @@ class Recherche:
 
         Parameters
         ---------
-        i : 
-
-        """
+        i : str
+            correspond au choix de la plage du salaire faite par l'utilisateur
         
+        Examples
+        --------
+        >>> changer_salaire(">= 20 000")
+        20 000
+        """
         if (i == ">= 20 000"):
-            #
+            # a compléter en demandant quel format du scrapping à Espoir
         
         elif (i == ">= 40 000"):
-            #
+            # a compléter en demandant quel format du scrapping à Espoir
         
         elif (i == ">= 60 000"):
-            #
+            # a compléter en demandant quel format du scrapping à Espoir
         
         elif (i == ">= 80 000"):
-            #
+            # a compléter en demandant quel format du scrapping à Espoir
         
         elif (i == ">= 100 000"):
-            #
+            # a compléter en demandant quel format du scrapping à Espoir
         
         else:
             raise ValueError("Le salaire envoyé est incorrect")
