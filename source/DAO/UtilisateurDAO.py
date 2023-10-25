@@ -5,14 +5,14 @@ class UtilisateurDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO utilisateur (nom, prénom, pseudo, mdp, professeur ) "
-                    "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mdp)s, %(professeur)s) "
+                    "INSERT INTO utilisateur (nom, prénom, pseudo, mdp, type_utilisateur ) "
+                    "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mdp)s, %(type_utilisateur)s) "
                     "  RETURNING id_utilisateur;                           ",
                     {"nom": utilisateur.nom,
                     "prénom": utilisateur.prenom,
                     "pseudo": utilisateur.pseudo,
                     "mdp": utilisateur.mdp,
-                    "professeur": utilisateur.professeur},
+                    "type_utilisateur": utilisateur.type_utilisateur},
                 )
                 utilisateur.id = cursor.fetchone()["id_utilisateur"]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_utilisateur"]
                 # et on l'assigne à utilisateur.id. Cela suppose que notre table a un champ id_utilisateur.
@@ -27,6 +27,28 @@ class UtilisateurDAO:
                     "  FROM utilisateur                      "
                     " WHERE nom = %(nom)s AND prénom = %(prenom)s    ",
                     {"nom": nom, "prénom": prenom}
+                )
+                utilisateur_bdd = cursor.fetchone()
+                          
+        utilisateur = None
+        if utilisateur_bdd:
+            utilisateur = Utilisateur(
+                id=utilisateur_bdd["id_utilisateur"],
+                pseudo=utilisateur_bdd["pseudo"],
+                nom=utilisateur_bdd["nom"],
+                prénom=utilisateur_bdd["prénom"],
+            )
+        return utilisateur
+
+    def find_by_id(self, id_utilisateur):
+        """Pour récupérer un utilisateur depuis son identifiant"""
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT *                          "
+                    "  FROM utilisateur                      "
+                    " WHERE id_utilisateur = %(id_utilisateur)s",
+                    {"id_utilisateur": id_utilisateur}
                 )
                 utilisateur_bdd = cursor.fetchone()
                           
@@ -59,3 +81,5 @@ class UtilisateurDAO:
                     "WHERE id_utilisateur = %(id_utilisateur)s",
                     {"id_utilisateur": id_utilisateur}
                 )
+                if cursor.rowcount == 0:
+                    raise IdUtilisateurInexistantError(id_eleve)

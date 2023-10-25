@@ -23,6 +23,8 @@ class ListeEleves:
                     "WHERE id_élève = %(id_eleve)s AND id_prof=%(id_prof)s",
                     {"id_élève": id_eleve, "id_prof": id_prof},
                 )
+                if cursor.rowcount == 0:
+                    raise IdEleveInexistantError(id_eleve)
 
     def get_liste_eleve_by_id(self, id_prof):
         """Pour obtenir la liste d'élève du professeur"""
@@ -34,6 +36,8 @@ class ListeEleves:
                     {"id_prof": id_prof}
                 )
                 liste_eleves = cursor.fetchall()
+                if not liste_eleves:
+                    print("La liste d'élèves est vide")
             return liste_eleves
 
 # il faut rajouter ce qui se passe si l'identifiant n'existe pas
