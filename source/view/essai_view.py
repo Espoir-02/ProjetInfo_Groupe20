@@ -88,4 +88,4 @@ class Recherche_Stage_View:
 
         # Choix du salaire minimum :
 
-        return Class.scrapping(answer_duree,answer_salary)
+        return #Class.scrapping(answer_duree,answer_salary)
