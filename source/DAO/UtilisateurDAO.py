@@ -82,4 +82,4 @@ class UtilisateurDAO:
                     {"id_utilisateur": id_utilisateur}
                 )
                 if cursor.rowcount == 0:
-                    raise IdUtilisateurInexistantError(id_eleve)
+                    raise IdUtilisateurInexistantError(id_utilisateur)

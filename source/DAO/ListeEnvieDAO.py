@@ -20,7 +20,7 @@ class ListeEnvieDAO:
                     {"id_utilisateur": id_utilisateur, "id_stage": id_stage}
                 )
                 if cursor.rowcount == 0:
-                    raise IdStageInexistantError(id_eleve)
+                    raise IdStageInexistantError(id_stage)
 
     def get_liste_envie_by_id(self, id_utilisateur):
         """Pour récupérer la liste d'envie d'un utilisateur à partir de son identifiant"""
