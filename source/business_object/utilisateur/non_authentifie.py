@@ -1,6 +1,7 @@
 class Non_Authentifie:
-    def __init__(id):
+    def __init__(self, id, id_historique):
         self.id = id
+        self.historique = id_historique
 
     def creer_compte(authentifiant, mot_de_passe):
         1
