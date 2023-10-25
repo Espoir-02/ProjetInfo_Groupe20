@@ -51,6 +51,8 @@ class UtilisateurDAO:
                     {"pseudo": pseudo}
                 )
                 mdp = cursor.fetchone()
+                if mdp is None:
+                    print("Le pseudo n'existe pas")
         return mdp
 
     def find_by_id(self, id_utilisateur):

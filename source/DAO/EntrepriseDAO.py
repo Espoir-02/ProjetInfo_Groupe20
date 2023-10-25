@@ -1,6 +1,6 @@
 class EntrepriseDAO:
     def create_stage(self, entreprise):
-        """Pour entrer un stage dans la base de données"""
+        """Pour entrer une entreprise dans la base de données"""
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -16,4 +16,4 @@ class EntrepriseDAO:
                 )
                 entreprise.id = cursor.fetchone()["id_entreprise"]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_stage"]
                 # et on l'assigne à entreprise.id. Cela suppose que notre table a un champ id_entreprise.
-        return stage
+        return entreprise

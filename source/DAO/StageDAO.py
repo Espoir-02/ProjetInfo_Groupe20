@@ -20,4 +20,29 @@ class StageDAO:
                 # et on l'assigne à stage.id. Cela suppose que notre table a un champ id_stage.
         return stage
 
+    def find_stage_by_id(self, id_stage):
+        """Pour récupérer les informations d'un stage depuis son identifiant"""
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT *                          "
+                    "  FROM stage                      "
+                    " WHERE id_stage = %(id_stage)s",
+                    {"id_stage": id_stage}
+                )
+                stage_bdd = cursor.fetchone()
+                          
+        stage = None
+        if stage_bdd:
+            stage = Stage(
+                id=stage_bdd["id_stage"],
+                titre=stage_bdd["titre"],
+                lien=stage_bdd["lien"],
+                domaine=stage_bdd["domaine"],
+                date_début=stage_bdd["date_début"],
+                date_fin=stage_bdd["date_fin"],
+                entreprise=stage_bdd["entreprise"],
+            )
+        return stage
+
     
