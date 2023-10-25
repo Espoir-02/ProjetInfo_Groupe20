@@ -1,3 +1,6 @@
+from dbconnection import DBConnection
+
+
 class ListeEleves:
     def update_liste_eleve(self, eleve, id_prof):
         """Pour ajouter un élève à la liste d'élèves d'un professeur en particulier"""

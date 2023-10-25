@@ -54,36 +54,38 @@ class Recherche_Stage_View:
         # Choix des filtres
 
         # Choix du salaire :
-        salary = [inquirer.List('choice', message = 'Choose an option:', choices=['None', ">= 20 000","40 000","60 000","80 000","100 000"])]
+        salary = [inquirer.List("choice", message = "Choose an option:", choices=["None", ">= 20 000","40 000","60 000","80 000","100 000"])]
         Recherche.changer_salaire(inquirer.prompt(salary))
 
         # Choix de la durée :
-        duree = [inquirer.List('choice', message = 'Choose an option:', choices=['None','1',"3", "4","6"])]
-        answer_duree = int(inquirer.prompt(duree))
+        duree = [inquirer.List('choice', message = 'Choose an option:', choices=['None','1-3 mois',"4-6 mois","7-12 mois","13-24 mois","25-36 mois"])]
+        Recherche.changer_duree(inquirer.prompt(duree))
 
         # Choix du télétravail :
-        teletravail = [inquirer.List('choice', message = 'Choose an option:', choices=['Inconnu','non'])]
-        answer_teletravail = inquirer.prompt(teletravail)
+        teletravail = [inquirer.List("choice", message = "Choose an option:", choices=["Inconnu","Télétravail occasionnel","Télétravail régulier","Ouvert au télétravail total"])]
+        Recherche.changer_teletravail(inquirer.prompt(teletravail))
 
         # Choix de la profession :
-        profession = [inquirer.List('choice', message = 'Choose an option:', choices=['oui','non'])]
+        profession = [inquirer.List("choice", message = 'Choose an option:', choices=[
+            "Audit / Finance / Assurance","Business","Conseil","Créa","Hôtellerie / Restauration","Immobilier","Industrie","Marketing / Communication",
+            "Media","Métiers de la mode","Relation client","Retail","Santé / Médical / Social","Support","Tech","Tourisme"
+        ])]
         answer_profession = inquirer.prompt(profession)
 
-        return Class.scrapping(answer_duree,answer_salary)
-        return blablz.recherche({salary=answer_salary,domaine=None, Type=answer_teletravail,duree=answer_duree})
-        profession=None,
-        secteur=None,
-        taille_entreprise=None,
-        niveau_experience=None,
-        niveau_etude=None,
-        salaire_minimum=None,
-    ):
-        self.duree = duree
-        self.teletravail = teletravail
-        self.profession = profession
-        self.secteur = secteur
-        self.taille_entreprise = taille_entreprise
-        self.niveau_experience = niveau_experience
-        self.niveau_etude = niveau_etude
-        self.salaire_minimum = salaire_minimum
+        # Choix de la taille de l'entreprise :
 
+        # Choix du secteur :
+        secteur = [inquirer.List("choice", message = 'Choose an option:', choices=[
+            "Architecture","Association / ONG","Banques / Assurances / Finance","Conseil / Audit","Culture / Média / Divertissement","Distribution","Education / Formation / Recrutement",
+            "Food et boisson","Hôtellerie / Tourisme / Loisirs","Immobilier","Industrie","Ingénierie"," Légal / Justice","Mobilité / Transport","Mode / Luxe / Beauté / Art de vivre",
+            "Publicité ....................."
+        ])]
+        answer_profession = inquirer.prompt(secteur)
+
+        # Choix du niveau d'expérience :
+
+        # Choix du niveau d'étude :
+
+        # Choix du salaire minimum :
+
+        return #Class.scrapping(answer_duree,answer_salary)

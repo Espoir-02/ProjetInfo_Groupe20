@@ -1,3 +1,6 @@
+from dbconnection import DBConnection
+
+
 class HistoriqueDAO:
 
     def update_historique(self, id_utilisateur, id_stage):
