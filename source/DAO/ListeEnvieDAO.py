@@ -19,6 +19,8 @@ class ListeEnvieDAO:
                     "WHERE id_utilisateur = %(id_utilisateur)s AND id_stage = %(id_stage)s",
                     {"id_utilisateur": id_utilisateur, "id_stage": id_stage}
                 )
+                if cursor.rowcount == 0:
+                    raise IdStageInexistantError(id_eleve)
 
     def get_liste_envie_by_id(self, id_utilisateur):
         """Pour récupérer la liste d'envie d'un utilisateur à partir de son identifiant"""
@@ -31,6 +33,8 @@ class ListeEnvieDAO:
                     {"id_utilisateur": id_utilisateur})
 
                 liste_envie = cursor.fetchall()
+                if not liste_envie:
+                    print("La liste d'envie est vide")
         return liste_envie
 
 # quand on récupère, on peut récupérer aussi la table stage associée à l'id pour avoir plus d'infos.
