@@ -12,7 +12,7 @@ class SuggestionsDAO:
                 )
 
     def get_suggestions_by_id(self, id_utilisateur):
-        """Pour récupérer la liste de suggestions d'un utilisateur à partir de son identifiant"""
+        """Pour récupérer la liste de suggestions d'un élève à partir de son identifiant"""
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -25,7 +25,7 @@ class SuggestionsDAO:
                 if not liste_suggestions:
                     print("La liste de suggestions est vide")
         return liste_suggestions
-
+    
     def delete_suggestion(self, id_utilisateur, id_stage):
         """Pour supprimer un stage de la liste de suggestions d'un utilisateur"""
         with DBConnection().connection as conn:
