@@ -67,13 +67,20 @@ class Recherche_Stage_View:
 
         # Choix de la profession :
         profession = [inquirer.List("choice", message = 'Choose an option:', choices=[
-            'Audit / Finance / Assurance','non'
+            "Audit / Finance / Assurance","Business","Conseil","Créa","Hôtellerie / Restauration","Immobilier","Industrie","Marketing / Communication",
+            "Media","Métiers de la mode","Relation client","Retail","Santé / Médical / Social","Support","Tech","Tourisme"
         ])]
         answer_profession = inquirer.prompt(profession)
 
         # Choix de la taille de l'entreprise :
 
         # Choix du secteur :
+        secteur = [inquirer.List("choice", message = 'Choose an option:', choices=[
+            "Architecture","Association / ONG","Banques / Assurances / Finance","Conseil / Audit","Culture / Média / Divertissement","Distribution","Education / Formation / Recrutement",
+            "Food et boisson","Hôtellerie / Tourisme / Loisirs","Immobilier","Industrie","Ingénierie"," Légal / Justice","Mobilité / Transport","Mode / Luxe / Beauté / Art de vivre",
+            "Publicité ....................."
+        ])]
+        answer_profession = inquirer.prompt(secteur)
 
         # Choix du niveau d'expérience :
 
