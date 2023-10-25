@@ -40,6 +40,19 @@ class UtilisateurDAO:
             )
         return utilisateur
 
+    def find_mdp(self, pseudo):
+        """Pour récupérer le mot de passe d'un utilisateur à partir du pseudo"""
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT mdp "
+                    "FROM utilisateur "
+                    "WHERE pseudo = %(pseudo)s",
+                    {"pseudo": pseudo}
+                )
+                mdp = cursor.fetchone()
+        return mdp
+
     def find_by_id(self, id_utilisateur):
         """Pour récupérer un utilisateur depuis son identifiant"""
         with DBConnection().connection as conn:
