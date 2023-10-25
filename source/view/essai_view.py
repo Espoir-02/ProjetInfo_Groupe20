@@ -86,3 +86,4 @@ class Recherche_Stage_View:
         self.niveau_experience = niveau_experience
         self.niveau_etude = niveau_etude
         self.salaire_minimum = salaire_minimum
+
