@@ -57,3 +57,4 @@ class Entreprise:
 
     def __str__(self):
       return "{}, {}".format(self.nom_entreprise,self.liste_nom_stage())
+# rgrdft
