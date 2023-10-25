@@ -29,7 +29,6 @@ class Stage:
     --------
         *******
 
-
     Methode 
     -------
         str 
@@ -39,9 +38,7 @@ class Stage:
     >>> stage = Entreprise(1196,SFR,"16 rue Lescault,75010",[13,22])
     >>> str(stage)
     "Agent d'accueil"
-
     """
-
     def __init__(self,id_stage,id_entreprise_stage, nom_stage,debut,fin,salaire,domaine,modalites):
         self.id_stage = id_stage
         self.id_entreprise_stage = id_entreprise_stage
@@ -53,5 +50,3 @@ class Stage:
        
     def __str__(self):
         return "{}".format(self.nom_stage) # Est ce qu'on rajoute toutes les info concernant le stage ou que le nom ?
-
-
