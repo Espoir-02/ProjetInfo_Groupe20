@@ -8,4 +8,3 @@ class Eleve(Non_Authentifie):
         self.voeux = id_list_voeux
         self.suggestion = id_suggestion
 
-    
