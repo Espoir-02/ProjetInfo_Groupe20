@@ -23,5 +23,5 @@ class detail_stage_view(AbstractView):
         else:
             # Termine l'application
             return 'Exit'
-
-"Je m'appelle"
+        
+"Je m'appelle Enzo"
