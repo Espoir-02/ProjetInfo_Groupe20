@@ -40,7 +40,7 @@ class HistoriqueDAO:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "SELECT * "
-                    "FROM historique"
+                    "FROM historique "
                     "WHERE id_historique= %(id_historique)s",
                     {"id_historique": id_historique})
                 historique = cursor.fetchall()
