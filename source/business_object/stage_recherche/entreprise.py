@@ -7,7 +7,7 @@ class Entreprise:
     Attributs
     ---------
         id_entreprise -> int 
-            Identification de manière unique chaque entreprise dns la base de données
+            Identification de manière unique chaque entreprise dans la base de données
 
         nom_entreprise -> string
             Nom de l'entreprise
@@ -33,27 +33,33 @@ class Entreprise:
     "Agent d'accueil"
     """
     def __init__(self,id_entreprise,nom_entreprise,adresse,liste_stage):
-      self.id_entreprise = id_entreprise
-      self.nom_entreprise = nom_entreprise
-      self.adresse = adresse
-      self.liste_stage = liste_stage
+        self.id_entreprise = id_entreprise
+        self.nom_entreprise = nom_entreprise
+        self.adresse = adresse
+        self.liste_stage = liste_stage
 
-    def liste_nom_stage(self):
-      """
-      Méthode liste_nom_stage -> str 
-        Méthode qui prend renvoie la liste des noms de stage que propose une entreprise 
-    
-      Examples
-      -------
-    
-      >>> liste_stage=[112,115,452]
-      >>> liste_nom_stage(liste_stage)
-      ["Conseiller","Directeur Financier","Agent Technique"]
-      """
-      liste_nom_stage=[]
-      for valeur in self.liste_stage:  
-          liste_nom_stage.append(Stage(valeur))
+    def liste_nom_stages(self, id_entreprise):
+        """
+        Méthode qui prend en entrée une entreprise (son id) et qui renvoie les stages associées.
+
+        Return
+        ------
+        str
+        
+        Examples
+        --------
+        >>> liste_stage=[112,115,452]
+        >>> liste_nom_stage(liste_stage)
+        ["Conseiller","Directeur Financier","Agent Technique"]
+        """
+        liste_nom_stage=[]
+        for valeur in self.liste_stage:  
+            liste_nom_stage.append(Stage(valeur))
+        
+        return liste_nom_stage
             
-
     def __str__(self):
-      return "{}, {}".format(self.nom_entreprise,self.liste_nom_stage())
+        """
+        Méthode qui permet de passer pour une même entreprise d'une visualisation machine à une visualisation humaine.
+        """
+        return "{}, {}".format(self.nom_entreprise,self.liste_nom_stages())
