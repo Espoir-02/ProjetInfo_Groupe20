@@ -1,11 +1,35 @@
 from InquirerPy import inquirer
+import random
 from source.business_object.stage_recherche.recherche import Recherche
+from source.DAO.UtilisateurDAO import UtilisateurDAO
 from source.business_object.listes.historique import Historique
 from source.view.recherche_stage_view import Recherche_Stage_View
 from source.business_object.Base_de_donnees import DatabaseUtilisateur # supposition pour l'instant, nom à changer selon Espoir
 # from source.business_object.utilisateur.  --> il faut importer une méthode vérification de connexion pour un utilisateur quelconque
         # cette méthode est dans la classe DatabaseUtilisateur
 
+class Start_view:
+    def display(self):
+        # Propose à l'utilisateur de se connecter
+        questions = [inquirer.List('choice', message = 'Choose an option:', choices=["Se connecter", "S'inscrire","Continuer en mode invité"])]
+        answers = inquirer.prompt(questions)
+
+        if answers['choice'] == "Se connecter":
+            # Redirige vers la vue Connexion
+            return "Connexion_view"
+        
+        elif answers['choice'] == "S'inscrire":
+            # Redirige vers la vue Inscription
+            id_authentifie = UtilisateurDAO.create_compte(Utilisateur()) # demander à Marc-Adrien pour relier Utilisateur et DAO (couche métier)
+            return 'CreateCompte_view', id_authentifie
+    
+        elif answers['choice'] == "Continuer en mode invité":
+            # Redirige vers la vue Menu tout en attribuant un id aléatoire
+            id_non_authentifie = UtilisateurDAO.create_compte()
+            return 'Menu_View', id_non_authentifie
+
+# cette classe DatabaseUtilisateur est temporaire en attendant de faire le lien entre Utilisateur et la vue.
+# cette classe permet de s'inscrire et de vérifier que pseudo et mdp sont bons
 class DatabaseUtilisateur:
     def __init__(self):
         # Initialisez votre base de données ou connectez-vous à la base de données ici
@@ -33,24 +57,6 @@ class DatabaseUtilisateur:
         # Retournez None si l'utilisateur n'est pas trouvé, sinon retournez l'enregistrement de l'utilisateur
         pass
 
-class Start_view:
-    def display(self):
-        # Propose à l'utilisateur de se connecter
-        questions = [inquirer.List('choice', message = 'Choose an option:', choices=["Se connecter", "S'inscrire","Continuer en mode invité"])]
-        answers = inquirer.prompt(questions)
-
-        if answers['choice'] == "Se connecter":
-            # Redirige vers la vue Connexion
-            return "Connexion_view"
-        
-        elif answers['choice'] == "S'inscrire":
-            # Redirige vers la vue Inscription
-            return 'CreateCompte_view'
-    
-        elif answers['choice'] == "Continuer en mode invité":
-            # Redirige vers la vue Menu tout en attribuant un id aléatoire
-            return 'Menu_View' #, id_aleatoire
-
 class Connexion_view:
     def __init__(self):
         self.database = DatabaseUtilisateur()  # Supposons que vous ayez une classe pour gérer la base de données des utilisateurs
@@ -73,7 +79,3 @@ class Connexion_view:
                 return 'Menu_view'
             else:
                 print("Erreur d'authentification. Veuillez réessayer.")
-
-class CreateCompte_view:
-    def display(self):
-    
