@@ -1,4 +1,4 @@
-from voeux import *
+from source.business_object.listes.voeux import Voeux
 from InquirerPy import inquirer
 
 class Liste_envie_view:
