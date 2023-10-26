@@ -4,7 +4,15 @@ from dbconnection import DBConnection
 class ListeEnvieDAO:
 
     def update_liste_envie(self, id_utilisateur, id_stage):
-        """Met à jour la liste d'envie avec un nouveau stage consulté."""
+        """Met à jour la liste d'envie avec un nouveau stage consulté.
+        
+        Parameters
+        ----------
+        id_utilisateur: int
+            L'identifiant de l'utilisateur à qui appartient la liste
+        id_stage : int
+            L'identifiant du stage à ajouter
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -14,7 +22,15 @@ class ListeEnvieDAO:
                 )
 
     def delete_liste_envie(self, id_utilisateur, id_stage):
-        """Pour supprimer un stage de la liste d'envies d'un utilisateur"""
+        """Pour supprimer un stage de la liste d'envies d'un utilisateur.
+    
+        Parameters
+        ---------
+        id_utilisateur: int
+            L'identifiant de l'utilisateur à qui appartient la liste
+        id_stage : int
+            Le stage à supprimer
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -26,7 +42,19 @@ class ListeEnvieDAO:
                     raise IdStageInexistantError(id_stage)
 
     def get_liste_envie_by_id(self, id_utilisateur):
-        """Pour récupérer la liste d'envie d'un utilisateur à partir de son identifiant"""
+        """Pour récupérer la liste d'envie d'un utilisateur à partir de son identifiant.
+      
+        Parameters
+        ---------
+        id_utilisateur : int
+            L'identifiant de l'utilisateur
+          
+        Returns
+        -------
+        list of dict
+        La liste d'envie de l'utilisateur.
+        Chaque envie est sous forme de liste
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(

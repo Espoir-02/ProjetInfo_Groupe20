@@ -4,25 +4,51 @@ from dbconnection import DBConnection
 class UtilisateurDAO:
 
     def create_compte(self, utilisateur):
-        """Pour créer un utilisateur en base"""
+        """Pour créer un utilisateur en base.
+        
+        Parameters
+        ---------
+        utilisateur : Utilisateur
+            L'objet utilisateur à créer.
+            
+        Returns
+        ------
+        Utilisateur
+            L'utilisateur créé avec un ID attribué
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "INSERT INTO utilisateur (nom, prénom, pseudo, mdp, type_utilisateur ) "
                     "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mdp)s, %(type_utilisateur)s) "
                     "  RETURNING id_utilisateur;                           ",
-                    {"nom": utilisateur.nom,
-                    "prénom": utilisateur.prenom,
-                    "pseudo": utilisateur.pseudo,
-                    "mdp": utilisateur.mdp,
-                    "type_utilisateur": utilisateur.type_utilisateur},
+                    {
+                        "nom": utilisateur.nom,
+                        "prénom": utilisateur.prenom,
+                        "pseudo": utilisateur.pseudo,
+                        "mdp": utilisateur.mdp,
+                        "type_utilisateur": utilisateur.type_utilisateur
+                    },
                 )
                 utilisateur.id = cursor.fetchone()["id_utilisateur"]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_utilisateur"]
                 # et on l'assigne à utilisateur.id. Cela suppose que notre table a un champ id_utilisateur.
         return utilisateur
 
     def find_by_nom(self, nom, prenom):
-        """Pour récupérer un utilisateur depuis ses noms et prénoms"""
+        """Pour récupérer un utilisateur depuis ses noms et prénoms.
+        
+        Parameters
+        ---------
+        nom : str
+            Le nom de l'utilisateur
+        prenom : str
+            Le prénom de l'utilisateur
+            
+        Returns
+        ------
+        dict
+            Les informations sur l'utilisateur
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -44,7 +70,18 @@ class UtilisateurDAO:
         return utilisateur
 
     def find_mdp(self, pseudo):
-        """Pour récupérer le mot de passe d'un utilisateur à partir du pseudo"""
+        """Pour récupérer le mot de passe d'un utilisateur à partir du pseudo.
+        
+        Parameters
+        ---------
+        pseudo : str
+            Le pseudo de l'utilisateur
+            
+        Returns
+        ------
+        str
+            Le mot de passe de l'utilisateur
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -59,7 +96,18 @@ class UtilisateurDAO:
         return mdp
 
     def find_by_id(self, id_utilisateur):
-        """Pour récupérer un utilisateur depuis son identifiant"""
+        """Pour récupérer un utilisateur depuis son identifiant.
+        
+        Parameters
+        ---------
+        id_utilisateur : int
+            L'identifiant de l'utilisateur
+            
+        Returns
+        -------
+        dict
+            Toutes les informations sur l'utilisateur, sauf le mot de passe.
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -91,7 +139,13 @@ class UtilisateurDAO:
         return ids_utilisateurs
 
     def delete_utilisateur(self, id_utilisateur):
-        """Pour supprimer un utilisateur de la base de données"""
+        """Pour supprimer un utilisateur de la base de données.
+        
+        Parameters
+        ---------
+        id_utilisateur : int
+            L'identifiant de l'utilisateur à supprimer
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(

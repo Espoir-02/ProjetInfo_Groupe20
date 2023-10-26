@@ -1,8 +1,9 @@
-from voeux import *
+from source.business_object.listes.voeux import Voeux
+from InquirerPy import inquirer
 
 class Liste_envie_view:
     def __init__(self,id_envie):
-        self.id_envie=id_envie
+        self.id_envie = id_envie
     
     def display(self):
         #Récupère la liste d'envies
@@ -17,5 +18,3 @@ class Liste_envie_view:
 
         #Renvoie le pokemon sélectionné
         return 'Stage_detail_view', answers['selection_stage']
-
-

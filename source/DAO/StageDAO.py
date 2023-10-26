@@ -1,30 +1,55 @@
 
 from dbconnection import DBConnection
 
+
 class StageDAO:
     def create_stage(self, stage):
-        """Pour entrer un stage dans la base de données"""
+        """Pour entrer un stage dans la base de données.
+        
+        Parameters
+        ----------
+        stage : Stage
+            L'objet stage à créer.
+
+        Returns
+        ------
+        Stage
+            L'objet stage créé avec un id attribué
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO stage (titre, lien, domaine, modalités, date_publication, date_début, date_fin, entreprise) "
+                    "INSERT INTO stage (titre, lien, domaine, modalites, date_publication, date_début, date_fin, entreprise) "
                     "     VALUES (%(titre)s, %(lien)s,%(domaine)s, %(modalites)s, %(date_publication)s, %(date_debut)s, %(date_fin)s, %(entreprise)s) "
                     "  RETURNING id_stage;                           ",
-                    {"titre": stage.titre,
-                    "lien": stage.lien,
-                    "domaine": stage.domaine,
-                    "modalités": stage.modalites,
-                    "date_publication":stage.date_publication,
-                    "date_début": stage.date_debut,
-                    "date_fin": stage.date_fin,
-                    "entreprise":stage.entreprise},
+                    {
+                        "titre": stage.titre,
+                        "lien": stage.lien,
+                        "domaine": stage.domaine,
+                        "modalités": stage.modalites,
+                        "date_publication": stage.date_publication,
+                        "date_début": stage.date_debut,
+                        "date_fin": stage.date_fin,
+                        "entreprise": stage.entreprise
+                    },
                 )
                 stage.id = cursor.fetchone()["id_stage"]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_stage"]
                 # et on l'assigne à stage.id. Cela suppose que notre table a un champ id_stage.
         return stage
 
     def find_stage_by_id(self, id_stage):
-        """Pour récupérer les informations d'un stage depuis son identifiant"""
+        """Pour récupérer les informations d'un stage depuis son identifiant.
+
+        Parameters
+        ---------
+        id_stage: int
+            L'identifiant du stage
+
+        Returns
+        -------
+        dict
+            Un dictionnaire qui contient toutes les informations du stage.
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -34,7 +59,7 @@ class StageDAO:
                     {"id_stage": id_stage}
                 )
                 stage_bdd = cursor.fetchone()
-                          
+             
         stage = None
         if stage_bdd:
             stage = Stage(
@@ -47,5 +72,3 @@ class StageDAO:
                 entreprise=stage_bdd["entreprise"],
             )
         return stage
-
-    

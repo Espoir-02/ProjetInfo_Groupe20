@@ -3,7 +3,16 @@ from dbconnection import DBConnection
 
 class ListeEleves:
     def update_liste_eleve(self, eleve, id_prof):
-        """Pour ajouter un élève à la liste d'élèves d'un professeur en particulier"""
+        """Pour ajouter un élève à la liste d'élèves d'un professeur en particulier.
+    
+        Parameters
+        ----------
+        eleve: Eleve
+            L'élève qui va être ajouté
+        id_prof : int
+            L'identifiant du professeur à qui appartient la liste
+        ----------
+        """
         with DBConnection().connection as conn:
             with conn.cursor as cursor:
                 cursor.execute(
@@ -18,7 +27,15 @@ class ListeEleves:
                 )
 
     def delete_eleve(self, id_eleve, id_prof):
-        """Pour supprimer un élève de la liste d'élèves d'un professeur donné"""
+        """Pour supprimer un élève de la liste d'élèves d'un professeur donné.
+        
+        Parameters
+        ----------
+        id_eleve : int
+            L'identifiant de l'élève à supprimer.
+        id_prof : int
+            L'identifiant du professeur à qui appartient la liste
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -29,8 +46,21 @@ class ListeEleves:
                 if cursor.rowcount == 0:
                     raise IdEleveInexistantError(id_eleve)
 
+
     def get_liste_eleve_by_id(self, id_prof):
-        """Pour obtenir la liste d'élève du professeur"""
+        """Pour obtenir la liste d'élèves du professeur.
+        
+        Parameters
+        ----------
+        id_prof : int
+            L'identifiant du professeur à qui appartient la liste.
+
+        Returns
+        -------
+        list of dict
+        Une liste contenant les enregistrements d'élèves.
+        Chaque enregistrement est représenté sous forme de dictionnaire.
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -42,6 +72,3 @@ class ListeEleves:
                 if not liste_eleves:
                     print("La liste d'élèves est vide")
             return liste_eleves
-
-# il faut rajouter ce qui se passe si l'identifiant n'existe pas
-# ou si erreur, etc
