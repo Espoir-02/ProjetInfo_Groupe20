@@ -35,7 +35,6 @@ class detail_stage_view_prof(AbstractView):
     def display(self, selection_stage):
         # Affiche les détails du stage sélectionné
         stage_details = self.stage.get_stage_details(stage_details)
-        id_prof = self.utilisateur_id
 
         # Affiche les détails du Pokémon et propose de retourner à la vue précédente
         print(f"Intitulé : {stage_details['nom']}")
@@ -49,6 +48,7 @@ class detail_stage_view_prof(AbstractView):
 
         if answers['choice'] == 'Proposer à mes élèves':
             # Accède à la liste de ses élèves
+            id_prof = self.utilisateur_id
             liste_eleves = self.ListeEleveDAO.get_liste_eleve_by_id(id_prof)
 
             if liste_eleves:
