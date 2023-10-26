@@ -1,5 +1,5 @@
 from InquirerPy import inquirer
-from source.view.recherche_stage_view import Recherche_Stage_View
+from source.view.couche2menu.recherche_stage_view import Recherche_Stage_View
 
 class HistoriqueView:
     def __init__(self,id_historique):
