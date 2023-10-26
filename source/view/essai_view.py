@@ -1,4 +1,6 @@
 from InquirerPy import inquirer
+from source.business_object.stage_recherche.recherche import Recherche
+from source.business_object.listes.historique import Historique
 
 class StartView:
     def display(self):
@@ -21,8 +23,6 @@ class StartView:
         else:
             # Termine l'application
             return 'Exit'
-        
-from source.business_object.listes.historique import Historique
 
 class HistoriqueView:
     def __init__(self,id_historique):
@@ -43,8 +43,6 @@ class HistoriqueView:
         else:
             # Termine l'application
             return 'Exit'
-        
-from source.business_object.stage_recherche.recherche import Recherche
 
 class Recherche_Stage_View:
     def __init__(self,id_stage):

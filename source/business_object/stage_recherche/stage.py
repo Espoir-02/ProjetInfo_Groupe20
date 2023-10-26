@@ -1,8 +1,10 @@
+from source.business_object.stage_recherche.entreprise import Entreprise
+
 class Stage:
     """
     Classe permettant de filtrer la recherche de stage suivant différents critères : Salaire, Domaine, Modalité, Date de début, Date de fin.
 
-    Attributs
+    Attributes
     ---------
         id_stage -> int 
             Identification de manière unique chaque stage dns la base de données
@@ -25,11 +27,7 @@ class Stage:
         Modalité -> str
             **************
 
-    Examples
-    --------
-        *******
-
-    Methode 
+    Methods 
     -------
         str 
 
@@ -47,6 +45,26 @@ class Stage:
         self.fin = fin
         self.salaire=salaire
         self.modalites=modalites
+
+    def liste_nom_entreprise(self, nom_stage):
+        """
+        Méthode qui prend en entrée un stage et qui renvoie l'entreprise associée
+
+        Return
+        ------
+        str
+
+        Examples
+        -------
+        >>> nom_stage = "Conseiller"
+        >>> liste_nom_entreprise(liste_stage)
+        SNCF
+        """
+        
+        return Stage.id_entreprise_stage
        
     def __str__(self):
+        """
+        Méthode qui permet de passer pour un même stage d'une visualisation machine à une visualisation humaine.
+        """
         return "{}".format(self.nom_stage) # Est ce qu'on rajoute toutes les info concernant le stage ou que le nom ?

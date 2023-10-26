@@ -3,7 +3,7 @@ from InquirerPy import inquirer
 
 class Liste_envie_view:
     def __init__(self,id_envie):
-        self.id_envie=id_envie
+        self.id_envie = id_envie
     
     def display(self):
         #Récupère la liste d'envies
