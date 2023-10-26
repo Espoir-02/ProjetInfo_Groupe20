@@ -1,9 +1,6 @@
 from InquirerPy import inquirer
-from source.business_object.stage_recherche.recherche import Recherche
-from source.business_object.listes.historique import Historique
-from source.view.recherche_stage_view import Recherche_Stage_View
 
-class StartView:
+class Menu_view:
     def display(self):
         # Affiche le menu principal
         questions = [inquirer.List('choice', message = 'Choose an option:', choices=['Rechercher un stage', 'Accéder à son historique', "Accéder à sa liste d'envie","Exit"])]
