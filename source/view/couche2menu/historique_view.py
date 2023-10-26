@@ -15,7 +15,7 @@ class HistoriqueView:
 
         if answers['choice'] == "select_stage":
             # Redirige vers la vue Stage avec un certain id
-            return Recherche_Stage_View
+            return #### a mettre
     
         else:
             # Termine l'application
