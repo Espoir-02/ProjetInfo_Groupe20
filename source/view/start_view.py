@@ -36,16 +36,20 @@ class DatabaseUtilisateur:
 class Start_view:
     def display(self):
         # Propose à l'utilisateur de se connecter
-        questions = [inquirer.List('choice', message = 'Choose an option:', choices=["S'authentifier", "Ne pas s'authentifier"])]
+        questions = [inquirer.List('choice', message = 'Choose an option:', choices=["Se connecter", "S'inscrire","Continuer en mode invité"])]
         answers = inquirer.prompt(questions)
 
-        if answers['choice'] == "S'authentifier":
+        if answers['choice'] == "Se connecter":
             # Redirige vers la vue Connexion
             return "Connexion_view"
         
-        elif answers['choice'] == "Ne pas s'authentifier":
-            # Redirige vers la vue Historique
-            return 'NonConnexion_View'
+        elif answers['choice'] == "S'inscrire":
+            # Redirige vers la vue Inscription
+            return 'CreateCompte_view'
+    
+        elif answers['choice'] == "Continuer en mode invité":
+            # Redirige vers la vue Menu tout en attribuant un id aléatoire
+            return 'Menu_View' #, id_aleatoire
 
 class Connexion_view:
     def __init__(self):
@@ -70,6 +74,6 @@ class Connexion_view:
             else:
                 print("Erreur d'authentification. Veuillez réessayer.")
 
-class NonConnexion_view:
+class CreateCompte_view:
     def display(self):
     
