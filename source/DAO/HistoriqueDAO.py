@@ -4,7 +4,15 @@ from dbconnection import DBConnection
 class HistoriqueDAO:
 
     def update_historique(self, id_utilisateur, id_stage):
-        """Met à jour l'historique de l'utilisateur avec un nouveau stage consulté."""
+        """Met à jour l'historique de l'utilisateur avec un nouveau stage consulté.
+
+        Parameters
+        ---------
+        id_utilisateur: int
+            L'identifiant de l'utilisateur
+        id_stage : int
+            L'identifiant du stage consulté
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -14,7 +22,20 @@ class HistoriqueDAO:
                 )
 
     def get_all_historique_by_id(self, id_historique):
-        """Récupère tout l'historique d'un utilisateur à partir de l'identifiant."""
+        """Récupère tout l'historique d'un utilisateur à partir de l'identifiant.
+      
+        Parameters
+        ----------
+        id_historique : int
+            L'identifiant de l'historique.
+
+        Returns
+        -------
+        list of dict
+            Une liste contenant les recherches qui constituent l'historique.
+            Chaque recherche est représentée sous forme de dictionnaire.
+        """
+
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(

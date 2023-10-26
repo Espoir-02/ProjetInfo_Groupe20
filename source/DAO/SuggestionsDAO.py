@@ -2,20 +2,44 @@ from dbconnection import DBConnection
 
 
 class SuggestionsDAO:
-    def create_suggestion(self,eleve, stage, professeur) :
-        """Met à jour la liste de suggestion d'un élève."""
+    def create_suggestion(self, id_eleve, id_stage, id_professeur):
+        """Met à jour la liste de suggestion d'un élève.
+
+        Parameters
+        ----------
+        id_eleve: int
+            L'identifiant de l'élève
+        id_stage: int
+            L'identifiant du stage suggéré
+        id_professeur: int
+            l'identifiant du professeur qui fait la suggestion
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "INSERT INTO liste_suggestions (id_élève, id_stage, id_professeur) "
                     "VALUES (%(id_eleve)s, %(id_stage)s)",
-                    {"id_élève": eleve.id, 
-                    "id_stage": stage.id, 
-                    "id_professeur":professeur.id}
+                    {
+                        "id_élève": id_eleve,
+                        "id_stage": id_stage,
+                        "id_professeur": id_professeur
+                    }
                 )
 
     def get_suggestions_by_id(self, id_utilisateur):
-        """Pour récupérer la liste de suggestions d'un élève à partir de son identifiant"""
+        """Récupère la liste de suggestions d'un élève à partir de son identifiant.
+
+        Parameters
+        --------
+        id_utilisateur: int
+            l'identifiant de l'élève
+
+        Returns
+        ------
+        list of dict
+            La liste de suggestions de l'élève.
+            Chaque suggestion est sous forme de liste.
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -28,9 +52,17 @@ class SuggestionsDAO:
                 if not liste_suggestions:
                     print("La liste de suggestions est vide")
         return liste_suggestions
-    
+
     def delete_suggestion(self, id_utilisateur, id_stage):
-        """Pour supprimer un stage de la liste de suggestions d'un utilisateur"""
+        """Pour supprimer un stage de la liste de suggestions d'un utilisateur.
+  
+        Parameters
+        ---------
+        id_utilisateur: int
+            L'identifiant de l'élève à qui appartient la liste
+        id_stage : int
+            Le stage à supprimer
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
