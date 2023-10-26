@@ -1,7 +1,9 @@
-from stage import *
+from source.business_object.stage_recherche.stage import Stage
+from source.view.abstract_view import AbstractView
+from InquirerPy import inquirer
 
 class detail_stage_view(AbstractView):
-     def __init__(self, stage):
+    def __init__(self, stage):
         self.stage = stage
 
     def display(self, selection_stage):
@@ -23,5 +25,3 @@ class detail_stage_view(AbstractView):
         else:
             # Termine l'application
             return 'Exit'
-        
-"Je m'appelle Enzo"

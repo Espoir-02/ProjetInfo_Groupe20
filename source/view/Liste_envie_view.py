@@ -1,4 +1,5 @@
 from voeux import *
+from InquirerPy import inquirer
 
 class Liste_envie_view:
     def __init__(self,id_envie):

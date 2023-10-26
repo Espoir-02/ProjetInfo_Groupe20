@@ -1,10 +1,7 @@
 from abc import ABC, abstractmethod
-
-from view.session import Session
-
+from source.view.session import Session
 
 class AbstractView(ABC):
-
     @abstractmethod
     def display_info(self):
         pass
