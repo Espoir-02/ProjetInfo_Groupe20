@@ -20,7 +20,7 @@ print(page_number) # affiche ce texte pas entre balises
 
 cpt = 1
 # for i in range(1, page_number + 1):
-for i in range(1, 2 + 1):
+for i in range(1, 2 ):
     print("Page: ", i)
     if i == 1:
         url = "https://www.directetudiant.com/candidatOffre/search/type/stage"
@@ -35,11 +35,16 @@ for i in range(1, 2 + 1):
 
     for element in listing_text_elements:
         a_element = element.find("a")  # Find the <a> element
+        # Récupérer le contenu de l'attribut "title"
+        title = a_element.get("title")
+        # Récupérer le contenu de l'attribut "href"
+        href = a_element.get("href")
         h4_element = element.find("h4")  # Find the <h> element
         if a_element and h4_element:
             print(cpt)
             print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-            print("Titre:", a_element.get_text(strip=True))
+            print("Titre:", title)
+            print("Lien:", href)
             print("Lieu et date:", h4_element.get_text(strip=True))
             print("\n")
             cpt = cpt + 1
