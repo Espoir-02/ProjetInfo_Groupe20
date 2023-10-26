@@ -154,3 +154,5 @@ class UtilisateurDAO:
                 )
                 if cursor.rowcount == 0:
                     raise IdUtilisateurInexistantError(id_utilisateur)
+        
+    
