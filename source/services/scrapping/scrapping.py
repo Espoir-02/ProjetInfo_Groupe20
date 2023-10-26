@@ -2,21 +2,21 @@ from bs4 import BeautifulSoup
 import requests
 
 url = "https://www.directetudiant.com/candidatOffre/search/type/stage"
-response = requests.get(url)
-html = response.text
+response = requests.get(url) # récupération de l'url
+html = response.text # récupération de l'url en format texte
 
-soup = BeautifulSoup(html, 'html.parser')
+soup = BeautifulSoup(html, 'html.parser') # cette commande récupère toute la page provenant de l'url
 
-pagination_elements = soup.find_all(class_="bt_pager_chiffre")
+pagination_elements = soup.find_all(class_="bt_pager_chiffre") # nombre de pages sur l'url en question
 
 page_number = 0
 
-# vérifier que la liste n'est pas vide
-if pagination_elements:
-    last_element = pagination_elements[-1]
-    page_number = int(last_element.get_text(strip=True))
+# vérifier que la liste (avoir au moins 1 page) n'est pas vide
+if pagination_elements: # c'est une liste contenant toutes les balises
+    last_element = pagination_elements[-1] # on prend le dernier élément de cette liste
+    page_number = int(last_element.get_text(strip=True)) # parmi ce dernier élément, on extrait le texte hors des balises
     
-print(page_number)
+print(page_number) # affiche ce texte pas entre balises
 
 cpt = 1
 # for i in range(1, page_number + 1):
