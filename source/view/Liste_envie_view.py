@@ -18,5 +18,3 @@ class Liste_envie_view:
 
         #Renvoie le pokemon sélectionné
         return 'Stage_detail_view', answers['selection_stage']
-
-
