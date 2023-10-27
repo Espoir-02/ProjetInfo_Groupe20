@@ -1,4 +1,4 @@
-from dbconnection import DBConnection
+from source.DAO.dbconnection import DBConnection
 
 
 class HistoriqueDAO:
@@ -13,6 +13,10 @@ class HistoriqueDAO:
         id_stage : int
             L'identifiant du stage consulté
         """
+        if not isinstance(id_utilisateur, int):
+            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+        if not isinstance(id_stage, int):
+            raise TypeError("l'identifiant du stage est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -35,7 +39,8 @@ class HistoriqueDAO:
             Une liste contenant les recherches qui constituent l'historique.
             Chaque recherche est représentée sous forme de dictionnaire.
         """
-
+        if not isinstance(id_historique, int):
+            raise TypeError("l'identifiant de l'historique est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
