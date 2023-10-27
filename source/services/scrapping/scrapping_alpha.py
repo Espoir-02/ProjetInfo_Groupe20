@@ -34,3 +34,16 @@ for stage in propose:
 
 beta = propose[0].parent.parent.parent
 url2 = beta.get("href")
+response2 = requests.get(url2)
+html2 = response2.text
+soup2 = BeautifulSoup(html2, 'html.parser')
+
+tout = soup2.find_all("p")
+nonr = 'Non Renseigné'
+domaine = nonr
+etude = nonr
+for i in range(len(tout)):
+    if tout[i].get_text() == 'PÉRIODE':
+        domaine = tout[i+1].get_text()
+        etude = tout[i+3].get_text()
+        gratification = tout[i+5].get_text()
