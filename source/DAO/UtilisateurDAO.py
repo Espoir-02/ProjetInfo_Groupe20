@@ -1,5 +1,5 @@
 from source.DAO.dbconnection import DBConnection
-from source.DAO.exceptions import IdUtilisateurInexistantError
+from source.exception.exceptions import IdUtilisateurInexistantError
 from source.business_object.utilisateur.Utilisateur import Utilisateur
 
 class UtilisateurDAO:

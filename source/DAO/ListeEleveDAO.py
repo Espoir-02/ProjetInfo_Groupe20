@@ -1,5 +1,5 @@
 from source.DAO.dbconnection import DBConnection
-from source.DAO.exceptions import IdEleveInexistantError
+from source.exception.exceptions import IdEleveInexistantError
 
 
 class ListeElevesDAO:
