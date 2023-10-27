@@ -4,7 +4,7 @@ from source.business_object.stage_recherche.recherche import Recherche
 from source.DAO.UtilisateurDAO import UtilisateurDAO
 from source.business_object.listes.historique import Historique
 from source.view.couche2menu.recherche_stage_view import Recherche_Stage_View
-from source.business_object.Base_de_donnees import DatabaseUtilisateur # supposition pour l'instant, nom à changer selon Espoir
+import source.data
 # from source.business_object.utilisateur.  --> il faut importer une méthode vérification de connexion pour un utilisateur quelconque
         # cette méthode est dans la classe DatabaseUtilisateur
 

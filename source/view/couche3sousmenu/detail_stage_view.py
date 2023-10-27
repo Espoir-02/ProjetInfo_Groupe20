@@ -2,6 +2,8 @@ from source.business_object.stage_recherche.stage import Stage
 from source.view.abstract_view import AbstractView
 from source.DAO.ListeEleveDAO import ListeEleves
 from source.DAO.UtilisateurDAO import UtilisateurDAO
+from source.DAO.SuggestionsDAO import SuggestionsDAO
+from source.DAO.StageDAO import StageDAO
 
 from InquirerPy import inquirer
 
@@ -49,12 +51,17 @@ class detail_stage_view_prof(AbstractView):
 
         if answers['choice'] == 'Proposer à mes élèves':
             # Accède à la liste de ses élèves
-            id_prof = self.utilisateur_id
-            liste_eleves = self.ListeEleveDAO.get_liste_eleve_by_id(id_prof)
+            id_professeur = UtilisateurDAO.find_by_nom().id
+            liste_eleves = self.ListeEleveDAO.get_liste_eleve_by_id(id_professeur)
 
             if liste_eleves:
                 print("Liste d'élèves du professeur:", liste_eleves)
-                # ici je ne sais pas si je fais une autre fenetre pour qu'il puisse choisir un eleve et lui proposer le stage
+                choix_eleve = [inquirer.Text("nom", message="Nom:"),inquirer.Text("prenom", message="Prénom:")]
+                answers = inquirer.prompt(choix_eleve, raise_keyboard_interrupt=True)
+
+                id_eleve = UtilisateurDAO.find_by_nom(answers["nom"],answers["prenom"]).id #rentrer les attribyuts nom et 
+                id_stage = StageDAO.create_stage().id
+                SuggestionsDAO.create_suggestion(id_eleve, id_stage, id_professeur) # ajouter le stage dans la liste de proposition des élèves
             else:
                 print("La liste d'élèves est vide.")
         
