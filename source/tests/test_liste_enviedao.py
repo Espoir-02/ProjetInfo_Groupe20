@@ -40,7 +40,9 @@ def test_get_liste_envie_by_id():
     ma_liste_envie = ListeEnvieDAO()
 
     # Tester avec des paramètres valides
-    ma_liste_envie.get_liste_envie_by_id(id_utilisateur=6)
+    liste = ma_liste_envie.get_liste_envie_by_id(id_utilisateur=6)
+    assert isinstance(liste, list)
+    assert all(isinstance(envie, dict) for envie in liste)
 
     # Tester avec un id_utilisateur invalide
     with pytest.raises(TypeError) as exc_info:

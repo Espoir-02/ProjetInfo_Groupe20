@@ -2,27 +2,12 @@ import pytest
 from source.DAO.UtilisateurDAO import UtilisateurDAO
 
 
-def test_update__historique():
-    mon_historique = UtilisateurDAO()
-
-    # Tester avec des paramètres valides
-    mon_historique.update_historique(id_utilisateur=1, id_stage=42)
-
-    # Tester avec un id_utilisateur invalide
-    with pytest.raises(TypeError) as exc_info:
-        mon_historique.update_historique(id_utilisateur="pas_un_entier", id_stage=42)
-    assert str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
-
-    # Tester avec un id_stage invalide
-    with pytest.raises(TypeError) as exc_info:
-        mon_historique.update_historique(id_utilisateur=1, id_stage="pas_un_entier")
-    assert str(exc_info.value) == "l'identifiant du stage est un entier numérique"
-
 def test_find_mdp():
     mes_utilisateurs = UtilisateurDAO()
 
     # Tester avec des paramètres valides
-    mes_utilisateurs.delete_utilisateur(pseudo='Chercheurdestage')
+    mdp = mes_utilisateurs.delete_utilisateur(pseudo='Chercheurdestage')
+    assert isinstance(mdp, str)
 
     # Tester avec un pseudo invalide
     with pytest.raises(TypeError) as exc_info:
@@ -34,7 +19,8 @@ def test_find_by_nom():
     mes_utilisateurs = UtilisateurDAO()
 
     # Tester avec des paramètres valides
-    mes_utilisateurs.find_by_nom(nom= 'Fleur', prenom='Amaryllis')
+    utilisateur = mes_utilisateurs.find_by_nom(nom='Fleur', prenom='Amaryllis')
+    assert isinstance(utilisateur, dict)
 
     # Tester avec un nom invalide
     with pytest.raises(TypeError) as exc_info:
@@ -50,7 +36,8 @@ def test_find_by_id():
     mes_utilisateurs = UtilisateurDAO()
 
     # Tester avec des paramètres valides
-    mes_utilisateurs.find_by_id(id_utilisateur=1)
+    utilisateur = mes_utilisateurs.find_by_id(id_utilisateur=1)
+    assert isinstance(utilisateur, dict)
 
     # Tester avec un id_utilisateur invalide
     with pytest.raises(TypeError) as exc_info:

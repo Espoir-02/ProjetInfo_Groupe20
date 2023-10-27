@@ -21,7 +21,9 @@ def test_get_liste_eleve_by_id():
     ma_liste_eleve = ListeElevesDAO()
 
     # Tester avec des paramètres valides
-    ma_liste_eleve.get_liste_eleve_by_id(id_prof=85)
+    liste = ma_liste_eleve.get_liste_eleve_by_id(id_prof=85)
+    assert isinstance(liste, list)
+    assert all(isinstance(eleve, dict) for eleve in liste)
 
     # Tester avec un id_prof invalide
     with pytest.raises(TypeError) as exc_info:

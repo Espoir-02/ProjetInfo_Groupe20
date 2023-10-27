@@ -6,7 +6,9 @@ def test_get_all_historiqye_by_id():
     mon_historique = HistoriqueDAO()
 
     # Tester avec des paramètres valides
-    mon_historique.update_liste_envie(id_utilisateur=1)
+    historique = mon_historique.update_liste_envie(id_utilisateur=1)
+    assert isinstance(historique, list)
+    assert all(isinstance(recherche, dict) for recherche in historique)
 
     # Tester avec un id_utilisateur invalide
     with pytest.raises(TypeError) as exc_info:

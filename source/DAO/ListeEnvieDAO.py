@@ -1,4 +1,5 @@
 from source.DAO.dbconnection import DBConnection
+from source.DAO.exceptions import IdStageInexistantError
 
 
 class ListeEnvieDAO:

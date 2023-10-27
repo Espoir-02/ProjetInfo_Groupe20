@@ -6,7 +6,8 @@ def test_find_stage_by_id():
     mes_stages = StageDAO()
 
     # Tester avec des paramètres valides
-    mes_stages.find_stage_by_id( id_stage=87)
+    stage = mes_stages.find_stage_by_id( id_stage=87)
+    assert isinstance(stage, dict)
 
     # Tester avec un id_stage invalide
     with pytest.raises(TypeError) as exc_info:
