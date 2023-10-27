@@ -1,15 +1,16 @@
-from dbconnection import DBConnection
+from source.DAO.dbconnection import DBConnection
+from source.DAO.exceptions import IdUtilisateurInexistantError
 
 
 class UtilisateurDAO:
     def create_compte(self, utilisateur): # faut-il mettre plutôt "utilisateur()" car pour instancier un objet il faut mettre des parenthèses
         """Pour créer un utilisateur en base.
-        
+
         Parameters
         ---------
         utilisateur : Utilisateur
             L'objet utilisateur à créer.
-            
+        
         Returns
         ------
         Utilisateur
@@ -18,8 +19,8 @@ class UtilisateurDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO utilisateur (nom, prénom, pseudo, mdp, type_utilisateur ) "
-                    "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mdp)s, %(type_utilisateur)s) "
+                    "INSERT INTO utilisateur (nom, prénom, pseudo, mdp, type_utilisateur)"
+                    "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mdp)s, %(type_utilisateur)s)"
                     "  RETURNING id_utilisateur;                           ",
                     {
                         "nom": utilisateur.nom,
@@ -48,6 +49,10 @@ class UtilisateurDAO:
         dict
             Les informations sur l'utilisateur
         """
+        if not isinstance(nom, str):
+            raise TypeError("le nom de l'utilisateur est une chaîne de caractères")
+        if not isinstance(nom, str):
+            raise TypeError("le prénom de l'utilisateur est une chaîne de caractères")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -68,6 +73,7 @@ class UtilisateurDAO:
             )
         return utilisateur
 
+
     def find_mdp(self, pseudo):
         """Pour récupérer le mot de passe d'un utilisateur à partir du pseudo.
         
@@ -81,6 +87,8 @@ class UtilisateurDAO:
         str
             Le mot de passe de l'utilisateur
         """
+        if not isinstance(pseudo, str):
+            raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -93,6 +101,35 @@ class UtilisateurDAO:
                 if mdp is None:
                     print("Le pseudo n'existe pas")
         return mdp
+
+
+    def find_id_by_pseudo(self, pseudo):
+        """Pour récupérer l'identifiant d'un utilisateur à partir du pseudo.
+        
+        Parameters
+        ---------
+        pseudo : str
+            Le pseudo de l'utilisateur
+            
+        Returns
+        ------
+        int
+            L'identifiant de l'utilisateur
+        """
+        if not isinstance(pseudo, str):
+            raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT id_utilisateur "
+                    "FROM utilisateur "
+                    "WHERE pseudo = %(pseudo)s",
+                    {"pseudo": pseudo}
+                )
+                id_utilisateur = cursor.fetchone()
+                if id_utilisateur is None:
+                    print("Le pseudo n'existe pas")
+        return id_utilisateur
 
     def find_by_id(self, id_utilisateur):
         """Pour récupérer un utilisateur depuis son identifiant.
@@ -107,6 +144,8 @@ class UtilisateurDAO:
         dict
             Toutes les informations sur l'utilisateur, sauf le mot de passe.
         """
+        if not isinstance(id_utilisateur, int):
+            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -116,7 +155,7 @@ class UtilisateurDAO:
                     {"id_utilisateur": id_utilisateur}
                 )
                 utilisateur_bdd = cursor.fetchone()
-                          
+                        
         utilisateur = None
         if utilisateur_bdd:
             utilisateur = Utilisateur(
@@ -137,6 +176,7 @@ class UtilisateurDAO:
                 ids_utilisateurs = [row["id_utilisateur"] for row in cursor.fetchall()]
         return ids_utilisateurs
 
+
     def delete_utilisateur(self, id_utilisateur):
         """Pour supprimer un utilisateur de la base de données.
         
@@ -145,6 +185,8 @@ class UtilisateurDAO:
         id_utilisateur : int
             L'identifiant de l'utilisateur à supprimer
         """
+        if not isinstance(id_utilisateur, int):
+            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -154,5 +196,3 @@ class UtilisateurDAO:
                 )
                 if cursor.rowcount == 0:
                     raise IdUtilisateurInexistantError(id_utilisateur)
-        
-    

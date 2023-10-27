@@ -27,7 +27,7 @@ class HistoriqueDAO:
 
     def get_all_historique_by_id(self, id_historique):
         """Récupère tout l'historique d'un utilisateur à partir de l'identifiant.
-      
+ 
         Parameters
         ----------
         id_historique : int

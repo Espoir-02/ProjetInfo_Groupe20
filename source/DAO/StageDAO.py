@@ -1,5 +1,5 @@
 
-from dbconnection import DBConnection
+from source.DAO.dbconnection import DBConnection
 
 
 class StageDAO:
@@ -50,6 +50,8 @@ class StageDAO:
         dict
             Un dictionnaire qui contient toutes les informations du stage.
         """
+        if not isinstance(id_stage, int):
+            raise TypeError("l'identifiant du stage est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(

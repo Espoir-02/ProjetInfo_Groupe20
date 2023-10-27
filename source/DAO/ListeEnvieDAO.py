@@ -1,8 +1,8 @@
 from source.DAO.dbconnection import DBConnection
+from source.DAO.exceptions import IdStageInexistantError
 
 
 class ListeEnvieDAO:
-
     def update_liste_envie(self, id_utilisateur, id_stage):
         """Met à jour la liste d'envie avec un nouveau stage consulté.
 
