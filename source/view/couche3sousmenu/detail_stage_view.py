@@ -58,12 +58,22 @@ class detail_stage_view_prof(AbstractView):
             if liste_eleves:
                 print("Liste d'élèves du professeur:", liste_eleves)
                 choix_eleve = [inquirer.Text("nom", message="Nom:"),inquirer.Text("prenom", message="Prénom:")]
-                answers = inquirer.prompt(choix_eleve, raise_keyboard_interrupt=True)
+                answers_debut = inquirer.prompt(choix_eleve, raise_keyboard_interrupt=True)
 
                 id_eleve = UtilisateurDAO.find_by_nom(answers["nom"],answers["prenom"]).id #rentrer les attribyuts nom et 
                 id_stage = StageDAO.create_stage().id
                 SuggestionsDAO.create_suggestion(id_eleve, id_stage, id_professeur) # ajouter le stage dans la liste de proposition des élèves
-                #specifier la suite si Exit
+                print("La stage a bien été ajouté à la liste de propositions de l'élève")
+                
+                questions = [inquirer.List('choice', message='Choisir une option:', choices=['Proposer à mes élèves','Retour en arrière', 'Quitter'])]
+                answers_fin = inquirer.prompt(questions)
+
+                if answers_fin['choice'] == 'Proposer à mes élèves':
+                    return # à ajouter
+                
+                elif answers_fin['choice'] == "Retour en arrière":
+                    return # à ajouter
+            
             else:
                 print("La liste d'élèves est vide.")
         
