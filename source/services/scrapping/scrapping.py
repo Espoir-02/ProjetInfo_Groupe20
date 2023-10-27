@@ -1,3 +1,8 @@
+from source.DAO.StageDAO import StageDAO
+from source.DAO.EntrepriseDAO import EntrepriseDAO
+from source.business_object.stage_recherche.stage import Stage
+from source.business_object.stage_recherche.entreprise import Entreprise
+
 from bs4 import BeautifulSoup
 import requests
 
@@ -70,6 +75,18 @@ for i in range(1, 2 ):
         print("Période:",periode)
         print("Gratification:",gratification)
         print("Date de publication:", date_publication)
+        print("Lien du stage:", url2)
         print("\n")
         cpt = cpt + 1
 
+# Créer un objet Stage
+nouveau_stage= Stage(titre=nomstage, lien=url2, domaine=domaine,  date_publication=date_publication,
+    periode=periode, salaire=gratification)
+# Utiliser StageDAO pour créer le stage dans la base de données
+stage_dao = StageDAO()
+stage_cree = stage_dao.create_stage(nouveau_stage)
+
+
+nouv_entreprise=Entreprise(nom_entreprise=nomentreprise, adresse=lieu, domaine=domaine)
+entreprise_DAO=EntrepriseDAO()
+entreprise_cree=entreprise_DAO.create_entreprise(nouv_entreprise)
