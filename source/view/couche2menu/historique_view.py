@@ -1,11 +1,15 @@
 from InquirerPy import inquirer
 from source.view.couche2menu.recherche_stage_view import Recherche_Stage_View
+<<<<<<< HEAD
 from HistoriqueDAO import HistoriqueDAO
 from UtilisateurDAO import UtilisateurDAO
 from StageDAO import StageDAO
 from detail_stage_view import detail_stage_view_eleve
 from detail_stage_view import detail_stage_view_prof
 
+=======
+from source.DAO.HistoriqueDAO import HistoriqueDAO
+>>>>>>> 38e21375c9f220e10d7b39a42b38406842de0d41
 
 class HistoriqueView:
     def __init__(self,id_utilisateur):

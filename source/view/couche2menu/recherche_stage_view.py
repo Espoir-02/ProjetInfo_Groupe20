@@ -8,39 +8,58 @@ class Recherche_Stage_View:
     def display(self):
         # Choix des filtres
 
-        # Choix du salaire :
-        salary = [inquirer.List("choice", message = "Choose an option:", choices=["None", ">= 20 000","40 000","60 000","80 000","100 000"])]
-        Recherche.changer_salaire(inquirer.prompt(salary))
+        # 1) Choix de la ville/département/région :
 
-        # Choix de la durée :
-        duree = [inquirer.List('choice', message = 'Choose an option:', choices=['None','1-3 mois',"4-6 mois","7-12 mois","13-24 mois","25-36 mois"])]
-        Recherche.changer_duree(inquirer.prompt(duree))
+        choix_echelle = [inquirer.List("choice", message = "Choose an option:", choices=["Toute échelle", "région","département","ville"])]
+        answers_echelle = inquirer.prompt(choix_echelle)
+        stock_reponse = 0
+        region = 0
+        departement = 0
+        ville = 0
 
-        # Choix du télétravail :
-        teletravail = [inquirer.List("choice", message = "Choose an option:", choices=["Inconnu","Télétravail occasionnel","Télétravail régulier","Ouvert au télétravail total"])]
-        Recherche.changer_teletravail(inquirer.prompt(teletravail))
+        if answers_echelle['choice'] == "Toute échelle":
+            stock_reponse = 0
+        
+        elif answers_echelle['choice'] == "région":
+            region = [inquirer.Text("région", message="région:")]
+            stock_reponse = 1
+    
+        elif answers_echelle['choice'] == "département":
+            departement = [inquirer.Text("département", message="département:")]
+            stock_reponse = 2
 
-        # Choix de la profession :
-        profession = [inquirer.List("choice", message = 'Choose an option:', choices=[
-            "Audit / Finance / Assurance","Business","Conseil","Créa","Hôtellerie / Restauration","Immobilier","Industrie","Marketing / Communication",
-            "Media","Métiers de la mode","Relation client","Retail","Santé / Médical / Social","Support","Tech","Tourisme"
+        elif answers_echelle['choice'] == "ville":
+            ville = [inquirer.Text("ville", message="ville:")]
+            stock_reponse = 3
+        
+        # 2) Mot-clé
+        #mot_cle = [inquirer.Text("mot_cle", message="mot_cle:")]
+        #answer_mot_cle = inquirer.prompt(mot_cle)
+
+        # 3) Domaine de formation
+        formation = [inquirer.List("choice", message = 'Choose an option:', choices=[
+            "Agriculture, agroalimentaire, environnement","Arts - Arts appliqués","Assurance, Banque, Immobilier","Commerce, vente, distribution",
+            "Communication, culture","Droit, Sc Politique, Economie","Gestion, management, RH","Hôtellerie-restauration, tourisme",
+            "Informatique, télécom","Lettres et Sciences humaines","Santé - Sports","Sciences, technologie","Secrétariat - Assistanat",
+            "Transports, logistique"
         ])]
-        answer_profession = inquirer.prompt(profession)
+        answer_profession = inquirer.prompt(formation)
 
-        # Choix de la taille de l'entreprise :
-
-        # Choix du secteur :
-        secteur = [inquirer.List("choice", message = 'Choose an option:', choices=[
-            "Architecture","Association / ONG","Banques / Assurances / Finance","Conseil / Audit","Culture / Média / Divertissement","Distribution","Education / Formation / Recrutement",
-            "Food et boisson","Hôtellerie / Tourisme / Loisirs","Immobilier","Industrie","Ingénierie"," Légal / Justice","Mobilité / Transport","Mode / Luxe / Beauté / Art de vivre",
-            "Publicité ....................."
+        # 4) Niveau d'études :
+        niveau_etude = [inquirer.List("choice", message = 'Choose an option:', choices=[
+            "Bac +5","Bac +4","Bac +3","Bac +2","Bac","CAP/BEP","Bac professionnel","3ème"
         ])]
-        answer_profession = inquirer.prompt(secteur)
+        answer_etude = inquirer.prompt(niveau_etude)
 
-        # Choix du niveau d'expérience :
+        # 5) Période :
+        periode = [inquirer.List("choice", message = 'Choose an option:', choices=["Non précisé","1 mois","2 mois","3 mois","4 mois","5 mois","6 mois"])]
+        answer_periode = inquirer.prompt(periode)
+        
+        # Lancer la recherche
+        stock_recherche = Recherche(
+            zone = stock_reponse, region = region, departement = departement, ville = ville, domaine = answer_profession, 
+            niveau_etude = answer_etude, periode = answer_periode
+        )
+        stock_recherche.lancer_recherche() # exécute le scrapping via la classe Recherche
 
-        # Choix du niveau d'étude :
-
-        # Choix du salaire minimum :
-
-        return #Class.scrapping(answer_duree,answer_salary)
+        return stock_recherche
