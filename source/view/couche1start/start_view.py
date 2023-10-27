@@ -1,9 +1,5 @@
 from InquirerPy import inquirer
 import random
-from source.business_object.stage_recherche.recherche import Recherche
-from source.DAO.UtilisateurDAO import UtilisateurDAO
-from source.business_object.listes.historique import Historique
-from source.view.couche2menu.recherche_stage_view import Recherche_Stage_View
 import source.data # supposition pour l'instant, nom à changer selon Espoir
 from connexion_view import Connexion_view
 from create_account import CreationCompte_view
