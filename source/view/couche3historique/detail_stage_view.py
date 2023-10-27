@@ -1,7 +1,8 @@
 from source.business_object.stage_recherche.stage import Stage
 from source.view.abstract_view import AbstractView
-from ListeEleveDAO import ListeEleves
+from source.DAO.ListeEleveDAO import ListeEleves
 from source.DAO.UtilisateurDAO import UtilisateurDAO
+
 from InquirerPy import inquirer
 
 class detail_stage_view_eleve(AbstractView):
