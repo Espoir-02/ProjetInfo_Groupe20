@@ -52,7 +52,7 @@ class detail_stage_view_prof(AbstractView):
 
         if answers['choice'] == 'Proposer à mes élèves':
             # Accède à la liste de ses élèves
-            id_professeur = UtilisateurDAO.find_by_nom().id
+            id_professeur = UtilisateurDAO.find_id_by_pseudo().id # faut-il mettre des attributs noms et prénom du prof ???
             liste_eleves = self.ListeEleveDAO.get_liste_eleve_by_id(id_professeur)
 
             if liste_eleves:
@@ -63,6 +63,7 @@ class detail_stage_view_prof(AbstractView):
                 id_eleve = UtilisateurDAO.find_by_nom(answers["nom"],answers["prenom"]).id #rentrer les attribyuts nom et 
                 id_stage = StageDAO.create_stage().id
                 SuggestionsDAO.create_suggestion(id_eleve, id_stage, id_professeur) # ajouter le stage dans la liste de proposition des élèves
+                #specifier la suite si Exit
             else:
                 print("La liste d'élèves est vide.")
         

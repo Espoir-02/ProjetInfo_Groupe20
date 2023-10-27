@@ -1,13 +1,13 @@
-from source.business_object.listes.voeux import Voeux
 from InquirerPy import inquirer
+from source.view.couche2menu.menu_view import Menu_view
 
-class Liste_envie_view:
-    def __init__(self,id_envie):
-        self.id_envie = id_envie
+class Proposition_prof_view:
+    def __init__(self,id_proposition):
+        self.id_proposition = id_proposition
     
     def display(self):
         #Récupère la liste d'envies
-        liste_envie_courant = self.id_historique.get_proposition()
+        liste_envie_courant = self.id_historique.get_envie()
 
         #Affiche la liste d'envies
         print(liste_envie_courant)
