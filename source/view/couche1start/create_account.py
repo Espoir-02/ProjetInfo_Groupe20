@@ -27,7 +27,7 @@ class VueCreationCompte:
             inquirer.Text("prenom", message="Prénom:"),  
             inquirer.Text("pseudo", message="Pseudo:"),  
             inquirer.Password("mdp", message="Mot de passe:"), #mdp caché
-            inquirer.Text("type_utilisateur", message="Type utilisateur"),
+            inquirer.Text("type_utilisateur", message="Type utilisateur")]
 
         answers = inquirer.prompt(questions, raise_keyboard_interrupt=True)
 
