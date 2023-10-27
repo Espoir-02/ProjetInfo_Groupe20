@@ -1,4 +1,4 @@
-import inquirer
+from InquirerPy import inquirer
 from source.DAO.UtilisateurDAO import UtilisateurDAO
 
 class VueCreationCompte:
