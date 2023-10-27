@@ -68,6 +68,7 @@ for i in range(1, 2 ):
         print("Domaine:",domaine)
         print("Etude:",etude)
         print("Période:",periode)
+        print("Gratification:",gratification)
         print("Date de publication:", date_publication)
         print("\n")
         cpt = cpt + 1
