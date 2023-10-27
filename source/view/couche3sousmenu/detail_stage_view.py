@@ -4,6 +4,7 @@ from source.DAO.ListeEleveDAO import ListeEleves
 from source.DAO.UtilisateurDAO import UtilisateurDAO
 from source.DAO.SuggestionsDAO import SuggestionsDAO
 from source.DAO.StageDAO import StageDAO
+from source.view.couche2menu.liste_envie_view import Liste_envie_view
 
 from InquirerPy import inquirer
 
@@ -26,7 +27,7 @@ class detail_stage_view_eleve(AbstractView):
 
         if answers['choice'] == 'Retour en arrière':
             # Retourne à la vue précédente
-            return Liste_envie_view.liste_envie_view
+            return Liste_envie_view().liste_envie_view()
         else:
             # Termine l'application
             return 'Exit'
