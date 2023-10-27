@@ -104,3 +104,4 @@ class ListeEnvieDAO:
 
 # quand on récupère, on peut récupérer aussi la table stage associée à l'id pour avoir plus d'infos.
 #  Amettre en oeuvre
+

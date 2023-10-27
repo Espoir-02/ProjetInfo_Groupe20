@@ -3,6 +3,7 @@ from source.exception.exceptions import IdUtilisateurInexistantError
 from source.business_object.utilisateur.Utilisateur import Utilisateur
 
 class UtilisateurDAO:
+
     def create_compte(self, utilisateur):
         """Pour créer un utilisateur en base.
 
@@ -27,14 +28,14 @@ class UtilisateurDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO utilisateur (nom, prénom, pseudo, mdp, type_utilisateur)"
-                    "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mdp)s, %(type_utilisateur)s)"
+                    "INSERT INTO utilisateur (nom, prenom, pseudo, mot_de_passe, type_utilisateur)"
+                    "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mot_de_passe)s, %(type_utilisateur)s)"
                     "  RETURNING id_utilisateur;                           ",
                     {
                         "nom": utilisateur.nom,
                         "prénom": utilisateur.prenom,
                         "pseudo": utilisateur.pseudo,
-                        "mdp": utilisateur.mdp,
+                        "mot_de_passe": utilisateur.mot_de_passe,
                         "type_utilisateur": utilisateur.type_utilisateur
                     },
                 )
@@ -66,7 +67,7 @@ class UtilisateurDAO:
         """
         if not isinstance(nom, str):
             raise TypeError("le nom de l'utilisateur est une chaîne de caractères")
-        if not isinstance(nom, str):
+        if not isinstance(prenom, str):
             raise TypeError("le prénom de l'utilisateur est une chaîne de caractères")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
@@ -114,15 +115,15 @@ class UtilisateurDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT mdp "
+                    "SELECT mot_de_passe "
                     "FROM utilisateur "
                     "WHERE pseudo = %(pseudo)s",
                     {"pseudo": pseudo}
                 )
-                mdp = cursor.fetchone()
-                if mdp is None:
+                mot_de_passe = cursor.fetchone()
+                if mot_de_passe is None:
                     print("Le pseudo n'existe pas")
-        return mdp
+        return mot_de_passe
 
 
     def find_id_by_pseudo(self, pseudo):
@@ -223,7 +224,7 @@ class UtilisateurDAO:
         --------
         >>> mes_utilisateurs = UtilisateurDAO()
         >>> id_utilisateur_a_supprimer = 6
-        >>> dao.delete_utilisateur(id_utilisateur_a_supprimer)
+        >>> mes_utilisateurs.delete_utilisateur(id_utilisateur_a_supprimer)
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
@@ -236,3 +237,4 @@ class UtilisateurDAO:
                 )
                 if cursor.rowcount == 0:
                     raise IdUtilisateurInexistantError(id_utilisateur)
+

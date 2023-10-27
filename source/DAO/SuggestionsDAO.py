@@ -33,7 +33,7 @@ class SuggestionsDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO liste_suggestions (id_élève, id_stage, id_professeur) "
+                    "INSERT INTO liste_suggestions (id_eleve, id_stage, id_professeur) "
                     "VALUES (%(id_eleve)s, %(id_stage)s)",
                     {
                         "id_élève": id_eleve,
@@ -103,7 +103,7 @@ class SuggestionsDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "DELETE FROM liste_suggestions "
+                    "DELETE FROM suggestion "
                     "WHERE id_utilisateur = %(id_utilisateur)s AND id_stage = %(id_stage)s",
                     {"id_utilisateur": id_utilisateur, "id_stage": id_stage}
                 )

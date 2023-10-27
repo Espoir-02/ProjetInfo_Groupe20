@@ -1,5 +1,5 @@
 import pytest
-from source.DAO.UtilisateurDAO import UtilisateurDAO
+from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.business_object.utilisateur import Utilisateur
 
 
@@ -10,9 +10,9 @@ def test_create_compte():
     nouvel_utilisateur = Utilisateur(
         nom="Enzo",
         prenom="Enzo",
-        pseudo="checheurdestage",
-        mdp="secret",
-        type_utilisateur="eleve"
+        pseudo="Chercheurdestage",
+        mot_de_passe="secret",
+        type_utilisateur="eleve",
     )
 
     # Appel de la méthode create_compte
@@ -27,44 +27,50 @@ def test_find_id_by_pseudo():
     mes_utilisateurs = UtilisateurDAO()
 
     # Tester avec des paramètres valides
-    id = mes_utilisateurs.delete_utilisateur(pseudo='Chercheurdestage')
+    id = mes_utilisateurs.find_id_by_pseudo(pseudo="Chercheurdestage")
     assert isinstance(id, int)
 
     # Tester avec un pseudo invalide
     with pytest.raises(TypeError) as exc_info:
         mes_utilisateurs.find_mp(pseudo=[85])
-    assert str(exc_info.value) == "le pseudo de l'utilisateur est une chaîne de caractères"
+    assert (
+        str(exc_info.value) == "le pseudo de l'utilisateur est une chaîne de caractères"
+    )
 
 
 def test_find_mdp():
     mes_utilisateurs = UtilisateurDAO()
 
     # Tester avec des paramètres valides
-    mdp = mes_utilisateurs.delete_utilisateur(pseudo='Chercheurdestage')
+    mdp = mes_utilisateurs.find_mdp(pseudo="Chercheurdestage")
     assert isinstance(mdp, str)
 
     # Tester avec un pseudo invalide
     with pytest.raises(TypeError) as exc_info:
         mes_utilisateurs.find_mp(pseudo=[85])
-    assert str(exc_info.value) == "le pseudo de l'utilisateur est une chaîne de caractères"
+    assert (
+        str(exc_info.value) == "le pseudo de l'utilisateur est une chaîne de caractères"
+    )
 
 
 def test_find_by_nom():
     mes_utilisateurs = UtilisateurDAO()
 
     # Tester avec des paramètres valides
-    utilisateur = mes_utilisateurs.find_by_nom(nom='Fleur', prenom='Amaryllis')
+    utilisateur = mes_utilisateurs.find_by_nom(nom="Fleur", prenom="Amaryllis")
     assert isinstance(utilisateur, dict)
 
     # Tester avec un nom invalide
     with pytest.raises(TypeError) as exc_info:
-        mes_utilisateurs.find_by_nom(nom=59, prenom='Amaryllis')
+        mes_utilisateurs.find_by_nom(nom=59, prenom="Amaryllis")
     assert str(exc_info.value) == "le nom de l'utilisateur est une chaîne de caractères"
 
     # Tester avec un prénom invalide
     with pytest.raises(TypeError) as exc_info:
-        mes_utilisateurs.find_by_nom(nom='Fleur', prenom=['Amaryllis'])
-    assert str(exc_info.value) == "le prénom de l'utilisateur est une chaîne de caractères"
+        mes_utilisateurs.find_by_nom(nom="Fleur", prenom=["Amaryllis"])
+    assert (
+        str(exc_info.value) == "le prénom de l'utilisateur est une chaîne de caractères"
+    )
 
 
 def test_find_by_id():
@@ -77,7 +83,9 @@ def test_find_by_id():
     # Tester avec un id_utilisateur invalide
     with pytest.raises(TypeError) as exc_info:
         mes_utilisateurs.find_by_id(id_utilisateur="pas_un_entier")
-    assert str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
+    assert (
+        str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
+    )
 
 
 def test_delete_utilisateur():
@@ -89,4 +97,6 @@ def test_delete_utilisateur():
     # Tester avec un id_utilisateur invalide
     with pytest.raises(TypeError) as exc_info:
         mes_utilisateurs.delete_utilisateur(id_utilisateur="pas_un_entier")
-    assert str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
+    assert (
+        str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
+    )

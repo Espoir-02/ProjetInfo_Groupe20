@@ -47,7 +47,7 @@ class Stage:
         self.date_debut = date_debut
         self.date_fin = date_fin
         self.entreprise = entreprise
-        self.id = Non
+        self.id = None
 
     def liste_nom_entreprise(self, nom_stage):
         """
