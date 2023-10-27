@@ -1,8 +1,6 @@
 from InquirerPy import inquirer
 from source.view.couche2menu.recherche_stage_view import Recherche_Stage_View
-from HistoriqueDAO import HistoriqueDAO
-
-
+from source.DAO.HistoriqueDAO import HistoriqueDAO
 
 class HistoriqueView:
     def __init__(self,id_historique):
