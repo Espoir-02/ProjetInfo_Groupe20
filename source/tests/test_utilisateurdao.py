@@ -2,6 +2,38 @@ import pytest
 from source.DAO.UtilisateurDAO import UtilisateurDAO
 
 
+def test_create_compte():
+    mes_utilisateurs = UtilisateurDAO()
+
+    # Création d'un objet Utilisateur
+    nouvel_utilisateur = Utilisateur(
+        nom="Enzo",
+        prenom="Enzo",
+        pseudo="checheurdestage",
+        mdp="secret",
+        type_utilisateur="eleve"
+    )
+
+    # Appel de la méthode create_compte
+    utilisateur_cree = mes_utilisateurs.create_compte(nouvel_utilisateur)
+
+    # Vérification que l'utilisateur créé a un ID attribué
+    assert utilisateur_cree.id is not None
+    assert isinstance(utilisateur_cree.id, int)
+
+
+def test_find_id_by_pseudo():
+    mes_utilisateurs = UtilisateurDAO()
+
+    # Tester avec des paramètres valides
+    id = mes_utilisateurs.delete_utilisateur(pseudo='Chercheurdestage')
+    assert isinstance(id, int)
+
+    # Tester avec un pseudo invalide
+    with pytest.raises(TypeError) as exc_info:
+        mes_utilisateurs.find_mp(pseudo=[85])
+    assert str(exc_info.value) == "le pseudo de l'utilisateur est une chaîne de caractères"
+
 def test_find_mdp():
     mes_utilisateurs = UtilisateurDAO()
 
@@ -31,6 +63,7 @@ def test_find_by_nom():
     with pytest.raises(TypeError) as exc_info:
         mes_utilisateurs.find_by_nom(nom='Fleur', prenom=['Amaryllis'])
     assert str(exc_info.value) == "le prénom de l'utilisateur est une chaîne de caractères"
+
 
 def test_find_by_id():
     mes_utilisateurs = UtilisateurDAO()
