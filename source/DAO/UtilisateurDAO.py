@@ -103,6 +103,34 @@ class UtilisateurDAO:
         return mdp
 
 
+    def find_id_by_pseudo(self, pseudo):
+        """Pour récupérer l'identifiant d'un utilisateur à partir du pseudo.
+        
+        Parameters
+        ---------
+        pseudo : str
+            Le pseudo de l'utilisateur
+            
+        Returns
+        ------
+        int
+            L'identifiant de l'utilisateur
+        """
+        if not isinstance(pseudo, str):
+            raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT id_utilisateur "
+                    "FROM utilisateur "
+                    "WHERE pseudo = %(pseudo)s",
+                    {"pseudo": pseudo}
+                )
+                id_utilisateur = cursor.fetchone()
+                if id_utilisateur is None:
+                    print("Le pseudo n'existe pas")
+        return id_utilisateur
+
     def find_by_id(self, id_utilisateur):
         """Pour récupérer un utilisateur depuis son identifiant.
         
