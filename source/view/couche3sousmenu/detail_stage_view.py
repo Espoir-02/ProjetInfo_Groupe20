@@ -4,7 +4,7 @@ from source.DAO.ListeEleveDAO import ListeEleves
 from source.DAO.UtilisateurDAO import UtilisateurDAO
 from source.DAO.SuggestionsDAO import SuggestionsDAO
 from source.DAO.StageDAO import StageDAO
-from source.view.couche2menu.liste_envie_view import Liste_envie_view
+from source.view.couche2menu.Liste_envie_view import Liste_envie_view
 
 from InquirerPy import inquirer
 
