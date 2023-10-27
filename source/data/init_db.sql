@@ -30,11 +30,10 @@ CREATE TABLE base_ProjetInfo.stage(
         titre     Varchar (70),
         lien     Varchar (500),
         domaine     Varchar (50),
-        modalites     Varchar (50),
-        date_publication     Date ,
-        salaire     Int,
-        date_debut     Date,
-        date_fin     Date,
+        niveau_etude     Varchar (200),
+        date_publication      Varchar (70) ,
+        salaire      Varchar (70),
+        periode  Varchar (50)
         id_ent     Int,
         PRIMARY KEY (id_stage)
 );
