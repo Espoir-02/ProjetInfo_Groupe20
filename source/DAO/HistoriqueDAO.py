@@ -12,6 +12,13 @@ class HistoriqueDAO:
             L'identifiant de l'utilisateur
         id_stage : int
             L'identifiant du stage consulté
+
+        Examples
+        --------
+        >>> mes_historique = HistoriqueDAO() 
+        >>> id_utilisateur = 123  
+        >>> id_stage = 96  
+        >>> mes_historiques.update_historique(id_utilisateur, id_stage)
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
@@ -25,29 +32,37 @@ class HistoriqueDAO:
                     {"id_utilisateur": id_utilisateur, "id_stage": id_stage}
                 )
 
-    def get_all_historique_by_id(self, id_historique):
+    def get_all_historique_by_id(self, id_utilisateur):
         """Récupère tout l'historique d'un utilisateur à partir de l'identifiant.
  
         Parameters
         ----------
-        id_historique : int
-            L'identifiant de l'historique.
+        id_utilisateur : int
+            L'identifiant de l'utilisateur.
 
         Returns
         -------
         list of dict
             Une liste contenant les recherches qui constituent l'historique.
             Chaque recherche est représentée sous forme de dictionnaire.
+
+        Examples
+        --------
+        >>> mes_historique = HistoriqueDAO()  
+        >>> id_utilisateur = 123  
+        >>> historique = mes_historiques.get_all_historique_by_id(id_utilisateur)
+        >>> print(historique)
+        # Résultat : Liste des recherches dans l'historique
         """
-        if not isinstance(id_historique, int):
-            raise TypeError("l'identifiant de l'historique est un entier numérique")
+        if not isinstance(id_utilisateur, int):
+            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "SELECT * "
                     "FROM historique "
-                    "WHERE id_historique= %(id_historique)s",
-                    {"id_historique": id_historique})
+                    "WHERE id_historique= %(id_utilisateur)s",
+                    {"id_utilisateur": id_utilisateur})
                 historique = cursor.fetchall()
                 if not historique:
                     print("L'historique' est vide")

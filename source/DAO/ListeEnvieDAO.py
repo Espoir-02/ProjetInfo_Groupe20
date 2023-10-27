@@ -12,6 +12,13 @@ class ListeEnvieDAO:
             L'identifiant de l'utilisateur à qui appartient la liste
         id_stage : int
             L'identifiant du stage à ajouter
+
+        Examples
+        --------
+        >>> ma_liste = ListeEnvieDAO()
+        >>> id_utilisateur = 1
+        >>> id_stage = 10
+        >>> ma_liste.update_liste_envie(id_utilisateur, id_stage)
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
@@ -35,6 +42,13 @@ class ListeEnvieDAO:
             L'identifiant de l'utilisateur à qui appartient la liste
         id_stage : int
             Le stage à supprimer
+
+        Examples
+        --------
+        >>> ma_liste = ListeEnvieDAO()
+        >>> id_utilisateur = 1
+        >>> id_stage = 10
+        >>> ma_liste.delete_liste_envie(id_utilisateur, id_stage)
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
@@ -64,6 +78,13 @@ class ListeEnvieDAO:
         list of dict
         La liste d'envie de l'utilisateur.
         Chaque envie est sous forme de liste
+
+        Examples
+        --------
+        >>> ma_liste = ListeEnvieDAO()
+        >>> id_utilisateur = 1
+        >>> ma_liste.get_liste_envie_by_id(id_utilisateur)
+        10
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")

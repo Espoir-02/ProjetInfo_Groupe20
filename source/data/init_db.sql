@@ -78,8 +78,8 @@ CREATE TABLE base_ProjetInfo.historique(
 
 
 DROP TABLE IF EXISTS base_ProjetInfo.voeux;
-CREATE TABLE base_ProjetInfo.voeux(
-        id_voeux     Int,
+CREATE TABLE base_ProjetInfo.liste_envie(
+        id_liste_envie     Int,
         id_eleve     Int ,
         id_stage     Int,
         PRIMARY KEY (id_voeux)

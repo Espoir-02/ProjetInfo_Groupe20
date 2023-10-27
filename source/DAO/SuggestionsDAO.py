@@ -1,4 +1,5 @@
 from source.DAO.dbconnection import DBConnection
+from source.exception.exceptions import IdStageInexistantError
 
 
 class SuggestionsDAO:
@@ -13,6 +14,15 @@ class SuggestionsDAO:
             L'identifiant du stage suggéré
         id_professeur: int
             l'identifiant du professeur qui fait la suggestion
+
+        Examples
+        --------
+        >>> mes_suggestions = SuggestionsDAO() 
+        >>> id_eleve = 123 
+        >>> id_stage = 456  
+        >>> id_professeur = 789
+        >>> mes_suggestions.create_suggestion(id_eleve, id_stage, id_professeur)
+        # La suggestion a été ajoutée à la liste de suggestions de l'élève.
         """
         if not isinstance(id_eleve, int):
             raise TypeError("l'identifiant de l'élève est un entier numérique")
@@ -45,6 +55,14 @@ class SuggestionsDAO:
         list of dict
             La liste de suggestions de l'élève.
             Chaque suggestion est sous forme de liste.
+
+        Examples
+        --------
+        >>> mes_suggestions = SuggestionsDAO() 
+        >>> id_utilisateur = 123  
+        >>> suggestions=mes_suggestions.get_suggestions_by_id(id_utilisateur)
+        print(suggestions)
+        # La liste de suggestions de l'élève avec l'identifiant 123 est renvoyée.
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
@@ -70,6 +88,13 @@ class SuggestionsDAO:
             L'identifiant de l'élève à qui appartient la liste
         id_stage : int
             Le stage à supprimer
+
+        Examples
+        --------
+        >>> mes_suggestions = SuggestionsDAO() 
+        >>> id_utilisateur = 123 
+        >>> id_stage = 456  
+        >>> mes_suggestions.delete_suggestion(id_utilisateur, id_stage)
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")

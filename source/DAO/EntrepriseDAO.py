@@ -2,7 +2,7 @@ from source.DAO.dbconnection import DBConnection
 
 
 class EntrepriseDAO:
-    def create_stage(self, entreprise):
+    def create_entreprise(self, entreprise):
         """Pour entrer une entreprise dans la base de données.
 
         Parameters
