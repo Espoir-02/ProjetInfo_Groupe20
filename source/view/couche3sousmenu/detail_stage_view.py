@@ -73,6 +73,10 @@ class detail_stage_view_prof(AbstractView):
                 
                 elif answers_fin['choice'] == "Retour en arrière":
                     return # à ajouter
+
+                else :
+                    return "Exit"
+
             
             else:
                 print("La liste d'élèves est vide.")
