@@ -1,5 +1,5 @@
 from InquirerPy import inquirer
-        
+
 class Menu_view:
     def display(self, type_utilisateur):
         # Affiche le menu principal
