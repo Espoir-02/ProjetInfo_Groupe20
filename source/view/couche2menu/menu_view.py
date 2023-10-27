@@ -5,7 +5,7 @@ class Menu_view:
         # Affiche le menu principal
         choices = ['Rechercher un stage', 'Accéder à son historique', 'Exit']
 
-        if type_utilisateur == 'professeur'or type_utilisateur =="eleve" or type_utilisateur=="adminstrateur":
+        if type_utilisateur in ['professeur', 'eleve', 'administrateur']:
             choices.append("Accéder à sa liste d'envie")
 
         questions = [inquirer.List('choice', message='Choose an option:', choices=choices)]
@@ -20,7 +20,7 @@ class Menu_view:
             # Redirige vers la vue Historique
             return 'Historique_View'
         
-        elif (type_utilisateur == 'authentifié') and (answers['choice'] == "Accéder à sa liste d'envie"):
+        elif (type_utilisateur in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
             # Redirige vers la vue Envies_View pour les utilisateurs authentifiés
             return 'Envies_View'
 
