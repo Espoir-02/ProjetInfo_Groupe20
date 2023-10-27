@@ -5,7 +5,7 @@ class Menu_view:
         # Affiche le menu principal
         choices = ['Rechercher un stage', 'Accéder à son historique', 'Exit']
 
-        if type_utilisateur == 'authentifié':
+        if type_utilisateur == 'professeur'or type_utilisateur =="eleve" or type_utilisateur=="adminstrateur":
             choices.append("Accéder à sa liste d'envie")
 
         questions = [inquirer.List('choice', message='Choose an option:', choices=choices)]
