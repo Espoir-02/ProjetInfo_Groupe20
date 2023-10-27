@@ -2,7 +2,6 @@ import pytest
 from source.DAO.StageDAO import StageDAO
 from source.business_object.stage_recherche.stage import Stage
 
-
 def test_create_stage():
     mes_stages = StageDAO()
 

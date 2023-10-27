@@ -38,7 +38,7 @@ class Recherche_Stage_View:
 
         # 3) Domaine de formation
         formation = [inquirer.List("choice", message = 'Choose an option:', choices=[
-            "Agriculture, agroalimentaire, environnement","Arts - Arts appliqués","Assurance, Banque, Immobilier","Commerce, vente, distribution",
+            "Non renseigné", "Agriculture, agroalimentaire, environnement","Arts - Arts appliqués","Assurance, Banque, Immobilier","Commerce, vente, distribution",
             "Communication, culture","Droit, Sc Politique, Economie","Gestion, management, RH","Hôtellerie-restauration, tourisme",
             "Informatique, télécom","Lettres et Sciences humaines","Santé - Sports","Sciences, technologie","Secrétariat - Assistanat",
             "Transports, logistique"
@@ -47,12 +47,12 @@ class Recherche_Stage_View:
 
         # 4) Niveau d'études :
         niveau_etude = [inquirer.List("choice", message = 'Choose an option:', choices=[
-            "Bac +5","Bac +4","Bac +3","Bac +2","Bac","CAP/BEP","Bac professionnel","3ème"
+            "Non renseigné", "Bac +5","Bac +4","Bac +3","Bac +2","Bac","CAP/BEP","Bac professionnel","3ème"
         ])]
         answer_etude = inquirer.prompt(niveau_etude)
 
         # 5) Période :
-        periode = [inquirer.List("choice", message = 'Choose an option:', choices=["Non précisé","1 mois","2 mois","3 mois","4 mois","5 mois","6 mois"])]
+        periode = [inquirer.List("choice", message = 'Choose an option:', choices=["Non renseigné","1 mois","2 mois","3 mois","4 mois","5 mois","6 mois"])]
         answer_periode = inquirer.prompt(periode)
         
         # Lancer la recherche
