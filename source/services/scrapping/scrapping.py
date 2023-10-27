@@ -1,50 +1,75 @@
 from bs4 import BeautifulSoup
 import requests
 
-url = "https://www.directetudiant.com/candidatOffre/search/type/stage"
-response = requests.get(url) # récupération de l'url
-html = response.text # récupération de l'url en format texte
+url = "https://jobs-stages.letudiant.fr/stages-etudiants/offres.html"
+response = requests.get(url)
+html = response.text
 
-soup = BeautifulSoup(html, 'html.parser') # cette commande récupère toute la page provenant de l'url
+soup = BeautifulSoup(html, 'html.parser')
 
-pagination_elements = soup.find_all(class_="bt_pager_chiffre") # nombre de pages sur l'url en question
+pagination = soup.find_all("a", {"data-layer-event-cat" : "Pagination"})
 
-page_number = 0
+pagination[0]["data-layer-event-act"]
 
-# vérifier que la liste (avoir au moins 1 page) n'est pas vide
-if pagination_elements: # c'est une liste contenant toutes les balises
-    last_element = pagination_elements[-1] # on prend le dernier élément de cette liste
-    page_number = int(last_element.get_text(strip=True)) # parmi ce dernier élément, on extrait le texte hors des balises
-    
-print(page_number) # affiche ce texte pas entre balises
+print("nb:",len(pagination))
+pages = 1
+for i in range(len(pagination)):
+    if int(pagination[i]["data-layer-event-act"]) > pages:
+        pages = int(pagination[i]["data-layer-event-act"])
 
-cpt = 1
-# for i in range(1, page_number + 1):
 for i in range(1, 2 ):
     print("Page: ", i)
     if i == 1:
-        url = "https://www.directetudiant.com/candidatOffre/search/type/stage"
+        url = "https://jobs-stages.letudiant.fr/stages-etudiants/offres.html"
     else:
-        url = "https://www.directetudiant.com/candidatOffre/search/type/stage/page/" + str(i)
+        url = "https://jobs-stages.letudiant.fr/stages-etudiants/offres/page-2.html"
+
     response = requests.get(url)
     html = response.text
-
     soup = BeautifulSoup(html, 'html.parser')
 
-    listing_text_elements = soup.find_all(class_="listing_text")
+    propose = soup.find_all("div", {"class" : "advert-card-content"})
+    cpt = 1
+    for stage in propose:
+        nomstage = stage.find("h2").get_text(strip=True)
+        nomentreprise = stage.find("h3").get_text(strip=True)
+        lieu = stage.find("span").get("title")
+        beta = stage.parent.parent.parent
+        url2 = beta.get("href")
+        response2 = requests.get(url2)
+        html2 = response2.text
+        soup2 = BeautifulSoup(html2, 'html.parser')
 
-    for element in listing_text_elements:
-        a_element = element.find("a")  # Find the <a> element
-        # Récupérer le contenu de l'attribut "title"
-        title = a_element.get("title")
-        # Récupérer le contenu de l'attribut "href"
-        href = a_element.get("href")
-        h4_element = element.find("h4")  # Find the <h> element
-        if a_element and h4_element:
-            print(cpt)
-            print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-            print("Titre:", title)
-            print("Lien:", href)
-            print("Lieu et date:", h4_element.get_text(strip=True))
-            print("\n")
-            cpt = cpt + 1
+        tout = soup2.find_all("p")
+        nonr = 'Non Renseigné'
+        domaine = nonr
+        etude = nonr
+        periode=nonr
+        date_publication=nonr
+        for i in range(len(tout)):
+            if tout[i].get_text() == 'DOMAINE DE FORMATION':
+                domaine = tout[i+1].get_text()
+            if tout[i].get_text() == 'NIVEAU D\'ÉTUDES':
+                etude = tout[i+1].get_text()
+            if tout[i].get_text() == 'GRATIFICATION':
+                gratification = tout[i+1].get_text()
+            if tout[i].get_text() == 'PÉRIODE':
+                periode = tout[i+1].get_text()
+            phrase = tout[i].get_text(strip=True)
+            if phrase.startswith('Réf.'): 
+            # Utilisez la méthode split() pour récupérer ce qui suit le premier tiret (-)
+                date_publication = phrase.split('- publié le ')[1].strip()
+                #etude = tout[i+3].get_text()
+                #gratification = tout[i+5].get_text()
+        print(cpt)
+        print("Titre:", nomstage)
+        print("Entreprise",nomentreprise )
+        print("Lieu",lieu)
+        print("Domaine:",domaine)
+        print("Etude:",etude)
+        print("Période:",periode)
+        print("Gratification:",gratification)
+        print("Date de publication:", date_publication)
+        print("\n")
+        cpt = cpt + 1
+
