@@ -63,3 +63,8 @@ class Recherche_Stage_View:
         stock_recherche.lancer_recherche() # exécute le scrapping via la classe Recherche
 
         return stock_recherche
+    
+
+
+    # mettre tous les stages à la liste avec pour chaque stage le titre (position 0), l'entreprise (position 1) et le lieu (position 2)
+    # l'user clique dessus et là on affiche toute la liste, plus les boutons "ajouter à la liste d'envie", "suggérer à un élève" pour le prof
