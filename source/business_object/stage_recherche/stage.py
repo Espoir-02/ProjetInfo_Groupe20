@@ -1,4 +1,4 @@
-from source.business_object.stage_recherche.entreprise import Entreprise
+
 
 class Stage:
     """
@@ -37,14 +37,17 @@ class Stage:
     >>> str(stage)
     "Agent d'accueil"
     """
-    def __init__(self,id_stage,id_entreprise_stage, nom_stage,debut,fin,salaire,domaine,modalites):
-        self.id_stage = id_stage
-        self.id_entreprise_stage = id_entreprise_stage
-        self.nom_stage=nom_stage
-        self.debut = debut
-        self.fin = fin
-        self.salaire=salaire
-        self.modalites=modalites
+    
+    def __init__(self, titre, lien, domaine, modalites, date_publication, date_debut, date_fin, entreprise):
+        self.titre = titre
+        self.lien = lien
+        self.domaine = domaine
+        self.modalites = modalites
+        self.date_publication = date_publication
+        self.date_debut = date_debut
+        self.date_fin = date_fin
+        self.entreprise = entreprise
+        self.id = Non
 
     def liste_nom_entreprise(self, nom_stage):
         """
