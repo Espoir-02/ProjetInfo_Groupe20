@@ -1,9 +1,15 @@
 from InquirerPy import inquirer
-
+        
 class Menu_view:
-    def display(self):
+    def display(self, type_utilisateur):
         # Affiche le menu principal
-        questions = [inquirer.List('choice', message = 'Choose an option:', choices=['Rechercher un stage', 'Accéder à son historique', "Accéder à sa liste d'envie","Exit"])]
+        choices = ['Rechercher un stage', 'Accéder à son historique', 'Exit']
+
+        if type_utilisateur == 'authentifié':
+            choices.append("Accéder à sa liste d'envie")
+
+        questions = [inquirer.List('choice', message='Choose an option:', choices=choices)]
+
         answers = inquirer.prompt(questions)
 
         if answers['choice'] == 'Rechercher un stage':
@@ -14,8 +20,8 @@ class Menu_view:
             # Redirige vers la vue Historique
             return 'Historique_View'
         
-        elif answers['choice'] == "Accéder à sa liste d'envie":
-            # Redirige vers la vue Historique
+        elif (type_utilisateur == 'authentifié') and (answers['choice'] == "Accéder à sa liste d'envie"):
+            # Redirige vers la vue Envies_View pour les utilisateurs authentifiés
             return 'Envies_View'
 
         else:
