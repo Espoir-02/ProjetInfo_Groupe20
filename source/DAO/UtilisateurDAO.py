@@ -1,9 +1,9 @@
 from source.DAO.dbconnection import DBConnection
 from source.DAO.exceptions import IdUtilisateurInexistantError
-
+from source.business_object.utilisateur.Utilisateur import Utilisateur
 
 class UtilisateurDAO:
-    def create_compte(self, utilisateur): # faut-il mettre plutôt "utilisateur()" car pour instancier un objet il faut mettre des parenthèses
+    def create_compte(self, utilisateur):
         """Pour créer un utilisateur en base.
 
         Parameters
@@ -15,6 +15,14 @@ class UtilisateurDAO:
         ------
         Utilisateur
             L'utilisateur créé avec un ID attribué
+
+        Examples
+        --------
+        >>> mes_utilisateurs = UtilisateurDAO() 
+        >>> nouvel_utilisateur = Utilisateur(nom="Millepertuis", prénom="Iris", pseudo= "Milliris", mdp= "Motdepasse123", type_utilisateur = "eleve")
+        >>> utilisateur_cree = mes_utilisateurs.create_compte(nouvel_utilisateur)
+        >>> print(utilisateur_cree.id)
+        6
         """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
@@ -48,6 +56,13 @@ class UtilisateurDAO:
         ------
         dict
             Les informations sur l'utilisateur
+
+        Examples
+        -------
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> utilisateur = mes_utilisateurs.find_by_nom("Millepertuis", "Iris")
+        >>> print(utilisateur)
+        {'id_utilisateur': 6, 'pseudo': 'Milliris', 'nom': 'Millepertuis', 'prénom': 'Iris'}
         """
         if not isinstance(nom, str):
             raise TypeError("le nom de l'utilisateur est une chaîne de caractères")
@@ -86,6 +101,13 @@ class UtilisateurDAO:
         ------
         str
             Le mot de passe de l'utilisateur
+
+        Examples
+        -------
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> mdp = mes_utilisateurs.find_mdp("Milliris")
+        >>> print(mdp)
+        "MotDePasse123"
         """
         if not isinstance(pseudo, str):
             raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
@@ -115,6 +137,11 @@ class UtilisateurDAO:
         ------
         int
             L'identifiant de l'utilisateur
+
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> id = mes_utilisateurs.find_id_by_mdp("Milliris")
+        >>> print(id)
+        6
         """
         if not isinstance(pseudo, str):
             raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
@@ -143,6 +170,13 @@ class UtilisateurDAO:
         -------
         dict
             Toutes les informations sur l'utilisateur, sauf le mot de passe.
+
+        Examples
+        -------
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> utilisateur = mes_utilisateurs.find_by_id(6)
+        >>> print(utilisateur)
+        {'id_utilisateur': 6, 'pseudo': 'Milliris', 'nom': 'Millepertuis', 'prénom': 'Iris'}
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
@@ -184,6 +218,12 @@ class UtilisateurDAO:
         ---------
         id_utilisateur : int
             L'identifiant de l'utilisateur à supprimer
+
+        Examples
+        --------
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> id_utilisateur_a_supprimer = 6
+        >>> dao.delete_utilisateur(id_utilisateur_a_supprimer)
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
