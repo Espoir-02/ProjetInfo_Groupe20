@@ -1,5 +1,6 @@
 from InquirerPy import inquirer
 from source.DAO.UtilisateurDAO import UtilisateurDAO
+from menu_view import Menu_view
 
 class CreationCompte_view:
     def creer_compte(self, answers):
@@ -17,7 +18,7 @@ class CreationCompte_view:
         nouvel_utilisateur = UtilisateurDAO.create_compte(utilisateur)
 
         print("Compte créé avec succès. ID de l'utilisateur :", nouvel_utilisateur.id)
-        return "Menu view"
+        return Menu_view().menu_view()
 
     def demande(self):
         # les questions du formulaire InquirerPy
