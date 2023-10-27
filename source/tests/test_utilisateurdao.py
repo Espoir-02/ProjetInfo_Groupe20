@@ -1,5 +1,6 @@
 import pytest
 from source.DAO.UtilisateurDAO import UtilisateurDAO
+from source.business_object.utilisateur import Utilisateur
 
 
 def test_create_compte():
@@ -33,6 +34,7 @@ def test_find_id_by_pseudo():
     with pytest.raises(TypeError) as exc_info:
         mes_utilisateurs.find_mp(pseudo=[85])
     assert str(exc_info.value) == "le pseudo de l'utilisateur est une chaîne de caractères"
+
 
 def test_find_mdp():
     mes_utilisateurs = UtilisateurDAO()

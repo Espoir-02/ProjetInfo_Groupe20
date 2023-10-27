@@ -5,12 +5,12 @@ from source.DAO.exceptions import IdUtilisateurInexistantError
 class UtilisateurDAO:
     def create_compte(self, utilisateur): # faut-il mettre plutôt "utilisateur()" car pour instancier un objet il faut mettre des parenthèses
         """Pour créer un utilisateur en base.
-        
+
         Parameters
         ---------
         utilisateur : Utilisateur
             L'objet utilisateur à créer.
-            
+        
         Returns
         ------
         Utilisateur
