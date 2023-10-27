@@ -4,7 +4,7 @@ from source.DAO.dbconnection import DBConnection
 class HistoriqueDAO:
 
     def update_historique(self, id_utilisateur, id_stage):
-        """Met à jour l'historique de l'utilisateur avec un nouveau stage consulté et attribue un identifiant à la recherche.
+        """Met à jour l'historique de l'utilisateur avec un nouveau stage consulté.
 
         Parameters
         ---------

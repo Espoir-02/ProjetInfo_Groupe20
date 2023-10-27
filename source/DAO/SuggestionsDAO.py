@@ -79,7 +79,7 @@ class SuggestionsDAO:
                     print("La liste de suggestions est vide")
         return liste_suggestions
 
-    def delete_suggestion(self, id_utilisateur, id_stage):
+    def delete_suggestion(self, id_eleve, id_stage):
         """Pour supprimer un stage de la liste de suggestions d'un utilisateur.
   
         Parameters
@@ -96,16 +96,16 @@ class SuggestionsDAO:
         >>> id_stage = 456  
         >>> mes_suggestions.delete_suggestion(id_utilisateur, id_stage)
         """
-        if not isinstance(id_utilisateur, int):
-            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+        if not isinstance(id_eleve, int):
+            raise TypeError("l'identifiant de l'élève est un entier numérique")
         if not isinstance(id_stage, int):
             raise TypeError("l'identifiant du stage est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "DELETE FROM suggestion "
-                    "WHERE id_utilisateur = %(id_utilisateur)s AND id_stage = %(id_stage)s",
-                    {"id_utilisateur": id_utilisateur, "id_stage": id_stage}
+                    "WHERE id_eleve = %(id_eleve)s AND id_stage = %(id_stage)s",
+                    {"id_eleve": id_eleve, "id_stage": id_stage}
                 )
                 if cursor.rowcount == 0:
                     raise IdStageInexistantError(id_stage)

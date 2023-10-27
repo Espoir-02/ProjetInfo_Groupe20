@@ -8,7 +8,7 @@ class ListeElevesDAO:
 
         Parameters
         ----------
-        eleve: Eleve
+        eleve: Utilisateur
             L'élève qui va être ajouté
         id_prof : int
             L'identifiant du professeur à qui appartient la liste
@@ -36,7 +36,7 @@ class ListeElevesDAO:
                     },
                 )
 
-    def delete_eleve(self, id_eleve, id_prof):
+    def delete_eleve(self, id_eleve, id_professeur):
         """Pour supprimer un élève de la liste d'élèves d'un professeur donné.
         
         Parameters
@@ -53,7 +53,7 @@ class ListeElevesDAO:
         >>> id_prof = 456 
         >>> ma_liste.delete_liste_eleve(id_eleve, id_prof)
         """
-        if not isinstance(id_prof, int):
+        if not isinstance(id_professeur, int):
             raise TypeError("l'identifiant du professeur est un entier numérique")
         if not isinstance(id_eleve, int):
             raise TypeError("l'identifiant de l'élève est un entier numérique")
@@ -61,8 +61,8 @@ class ListeElevesDAO:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "DELETE FROM liste_eleves "
-                    "WHERE id_élève = %(id_eleve)s AND id_prof=%(id_prof)s",
-                    {"id_élève": id_eleve, "id_prof": id_prof},
+                    "WHERE id_eleve = %(id_eleve)s AND id_professeur=%(id_professeur)s",
+                    {"id_eleve": id_eleve, "id_professeur": id_professeur},
                 )
                 if cursor.rowcount == 0:
                     raise IdEleveInexistantError(id_eleve)

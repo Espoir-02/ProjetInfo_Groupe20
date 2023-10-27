@@ -48,16 +48,16 @@ def test_delete_suggestion():
     mes_suggestions = SuggestionsDAO()
 
     # Tester avec des paramètres valides
-    mes_suggestions.delete_suggestion(id_utilisateur=1, id_stage=42)
+    mes_suggestions.delete_suggestion(id_eleve=1, id_stage=42)
 
-    # Tester avec un id_utilisateur invalide
+    # Tester avec un id_eleveinvalide
     with pytest.raises(TypeError) as exc_info:
-        mes_suggestions.delete_suggestion(id_utilisateur="pas_un_entier", id_stage=42)
+        mes_suggestions.delete_suggestion(id_eleve="pas_un_entier", id_stage=50)
     assert (
-        str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
+        str(exc_info.value) == "l'identifiant de l'élève est un entier numérique"
     )
 
     # Tester avec un id_stage invalide
     with pytest.raises(TypeError) as exc_info:
-        mes_suggestions.delete_suggestion(id_utilisateur=1, id_stage="pas_un_entier")
+        mes_suggestions.delete_suggestion(id_eleve=1, id_stage="pas_un_entier")
     assert str(exc_info.value) == "l'identifiant du stage est un entier numérique"
