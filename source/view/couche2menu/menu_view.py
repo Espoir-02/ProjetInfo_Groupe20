@@ -1,7 +1,7 @@
 from InquirerPy import inquirer
 from recherche_stage_view import Recherche_Stage_View
 from historique_view import HistoriqueView
-from liste_envie_view import Liste_envie_view 
+from Liste_envie_view import Liste_envie_view 
 
 class Menu_view:
     def display(self, type_utilisateur):
