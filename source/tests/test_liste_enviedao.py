@@ -40,11 +40,9 @@ def test_get_liste_envie_by_id():
     ma_liste_envie = ListeEnvieDAO()
 
     # Tester avec des paramètres valides
-    ma_liste_envie.get_liste_envie_by_id(id_utilisateur=6 )
+    ma_liste_envie.get_liste_envie_by_id(id_utilisateur=6)
 
     # Tester avec un id_utilisateur invalide
     with pytest.raises(TypeError) as exc_info:
         ma_liste_envie.update_liste_envie(id_utilisateur="pas_un_entier")
     assert str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
-
-

@@ -1,4 +1,4 @@
-from dbconnection import DBConnection
+from source.DAO.dbconnection import DBConnection
 
 
 class SuggestionsDAO:
@@ -14,6 +14,12 @@ class SuggestionsDAO:
         id_professeur: int
             l'identifiant du professeur qui fait la suggestion
         """
+        if not isinstance(id_eleve, int):
+            raise TypeError("l'identifiant de l'élève est un entier numérique")
+        if not isinstance(id_stage, int):
+            raise TypeError("l'identifiant du stage est un entier numérique")
+        if not isinstance(id_professeur, int):
+            raise TypeError("l'identifiant du professeur est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -40,6 +46,8 @@ class SuggestionsDAO:
             La liste de suggestions de l'élève.
             Chaque suggestion est sous forme de liste.
         """
+        if not isinstance(id_utilisateur, int):
+            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -63,6 +71,10 @@ class SuggestionsDAO:
         id_stage : int
             Le stage à supprimer
         """
+        if not isinstance(id_utilisateur, int):
+            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+        if not isinstance(id_stage, int):
+            raise TypeError("l'identifiant du stage est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
