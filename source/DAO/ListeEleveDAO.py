@@ -1,7 +1,8 @@
-from dbconnection import DBConnection
+from source.DAO.dbconnection import DBConnection
+from source.DAO.exceptions import IdEleveInexistantError
 
 
-class ListeEleves:
+class ListeElevesDAO:
     def update_liste_eleve(self, eleve, id_prof):
         """Pour ajouter un élève à la liste d'élèves d'un professeur en particulier.
     
@@ -13,6 +14,8 @@ class ListeEleves:
             L'identifiant du professeur à qui appartient la liste
         ----------
         """
+        if not isinstance(id_prof, int):
+            raise TypeError("l'identifiant du professeur est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor as cursor:
                 cursor.execute(
@@ -36,6 +39,10 @@ class ListeEleves:
         id_prof : int
             L'identifiant du professeur à qui appartient la liste
         """
+        if not isinstance(id_prof, int):
+            raise TypeError("l'identifiant du professeur est un entier numérique")
+        if not isinstance(id_eleve, int):
+            raise TypeError("l'identifiant de l'élève est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -61,6 +68,8 @@ class ListeEleves:
         Une liste contenant les enregistrements d'élèves.
         Chaque enregistrement est représenté sous forme de dictionnaire.
         """
+        if not isinstance(id_prof, int):
+            raise TypeError("l'identifiant du professeur est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(

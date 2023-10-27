@@ -1,5 +1,5 @@
 from InquirerPy import inquirer
-
+from menu_view import Menu_view
 # cette classe DatabaseUtilisateur est temporaire en attendant de faire le lien entre Utilisateur et la vue.
 # cette classe permet de s'inscrire et de vérifier que pseudo et mdp sont bons
 class DatabaseUtilisateur:
@@ -48,6 +48,6 @@ class Connexion_view:
             if self.database.verify_credentials(pseudo, password):
                 print("Connexion réussie!")
                 # Redirige vers le menu principal
-                return 'Menu_view'
+                return Menu_view().menu_view()
             else:
                 print("Erreur d'authentification. Veuillez réessayer.")

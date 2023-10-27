@@ -1,60 +1,48 @@
 import pytest
-import re
-from ListeEleveDAO import delete_eleve
-from ListeEleveDAO import get_liste_eleve_by_id
-from ListeEleveDAO import ListeEleve
-from dbconnection import DBConnection
+from source.DAO.ListeEleveDAO import ListeElevesDAO
 
 
-@pytest.mark.parametrize(
-    "params, erreur, message_erreur",
-    [
-        (
-            {"id_prof": [4]},
-            TypeError,
-            "les arguments doivent être des instances int",
-        ),
-    ],
-)
-def test_get_liste_eleve_by_id_parametres(params, erreur, message_erreur):
-    with pytest.raises(erreur, match=re.escape(message_erreur)):
-        get_liste_eleve_by_id(**params)
-
-
-@pytest.mark.parametrize(
-    "params, erreur, message_erreur",
-    [
-        (
-            {
-                "id_eleve": 2,
-                "id_prof": "Mr Y",
-            },
-            TypeError,
-            "l'identifiant du professeur est une valeur numérique",
-        ),
-        (
-            {"id_eleve": {2}, 
-            "id_prof": 450,
-            },
-            TypeError,
-            "l'identifiant de l'élève est une valeur int",
-        ),
-    ],
-)
-def test_delete_eleve_parametres(params, erreur, message_erreur):
-    with pytest.raises(erreur, match=re.escape(message_erreur)):
-        delete_eleve(**params)
-
-
-
-# Écrivez un cas de test pour la fonction update_liste_eleve
 def test_update_liste_eleve():
-    # Créez une instance de la classe Eleve (ou utilisez une instance réelle si vous en avez une)
-    eleve = Eleve(nom="Doe", prenom="John", id_eleve=1) # Remplacez ces valeurs par celles de votre élève
+    ma_liste_eleve = ListeElevesDAO()
 
-    # Appelez la fonction update_liste_eleve avec les arguments nécessaires
-    id_prof = 123 # Remplacez par l'ID du professeur concerné
-    ListeEleve().update_liste_eleve(eleve, id_prof)
+    eleve = Eleve(nom="Dupont", prenom="Jean", id_eleve=1)
+    id_prof = 85
 
-    # Maintenant, vous pouvez vérifier si l'élève a été correctement ajouté à la liste
-    # Vous pouvez faire une requête pour récupérer la liste d'élèves du professeur et vérifier si l'élève y est.
+    # Test avec des paramètres valides
+    ma_liste_eleve.update_liste_eleve(eleve, id_prof)
+
+    # Test avec un id_prof invalide
+    with pytest.raises(TypeError) as exc_info:
+        ma_liste_eleve.update_liste_eleve(eleve, "pas_un_entier")
+    assert str(exc_info.value) == "l'identifiant du professeur est un entier numérique"
+
+
+def test_get_liste_eleve_by_id():
+    ma_liste_eleve = ListeElevesDAO()
+
+    # Tester avec des paramètres valides
+    liste = ma_liste_eleve.get_liste_eleve_by_id(id_prof=85)
+    assert isinstance(liste, list)
+    assert all(isinstance(eleve, dict) for eleve in liste)
+
+    # Tester avec un id_prof invalide
+    with pytest.raises(TypeError) as exc_info:
+        ma_liste_eleve.get_liste_eleve_by_id(id_prof="pas_un_entier")
+    assert str(exc_info.value) == "l'identifiant du professeur est un entier numérique"
+
+
+def test_delete_eleve():
+    ma_liste_eleve = ListeElevesDAO()
+
+    # Tester avec des paramètres valides
+    ma_liste_eleve.delete_liste_eleve(id_eleve=6, id_prof=85)
+
+    # Tester avec un id_eleve invalide
+    with pytest.raises(TypeError) as exc_info:
+        ma_liste_eleve.delete_liste_eleve(id_eleve="pas_un_entier", id_prof=85)
+    assert str(exc_info.value) == "l'identifiant de l'élève est un entier numérique"
+
+    # Tester avec un id_prof invalide
+    with pytest.raises(TypeError) as exc_info:
+        ma_liste_eleve.delete_liste_eleve(id_eleve=6, id_prof="pas_un_entier")
+    assert str(exc_info.value) == "l'identifiant du professeur est un entier numérique"
