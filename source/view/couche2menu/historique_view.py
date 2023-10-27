@@ -1,11 +1,10 @@
 from InquirerPy import inquirer
 from source.view.couche2menu.recherche_stage_view import Recherche_Stage_View
-from HistoriqueDAO import HistoriqueDAO
-from UtilisateurDAO import UtilisateurDAO
-from StageDAO import StageDAO
-from detail_stage_view import detail_stage_view_eleve
-from detail_stage_view import detail_stage_view_prof
-
+from source.DAO.HistoriqueDAO import HistoriqueDAO
+from source.DAO.UtilisateurDAO import UtilisateurDAO
+from source.DAO.StageDAO import StageDAO
+from source.view.couche3sousmenu.detail_stage_view import detail_stage_view_eleve
+from source.view.couche3sousmenu.detail_stage_view import detail_stage_view_prof
 
 class HistoriqueView:
     def __init__(self,id_utilisateur):
@@ -45,10 +44,3 @@ class HistoriqueView:
             id_stage = element_selection_historique["id_stage"]
             detail_view = detail_stage_view_prof(id_stage)
             return detail_view.display()
-        
-
-
-
-
-
-
