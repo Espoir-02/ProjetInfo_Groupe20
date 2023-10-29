@@ -32,15 +32,15 @@ def test_get_suggestions_by_id():
     mes_suggestions = SuggestionsDAO()
 
     # Tester avec des paramètres valides
-    suggestions = mes_suggestions.get_suggestions_by_id(id_utilisateur=1)
+    suggestions = mes_suggestions.get_suggestions_by_id(id_eleve=1)
     assert isinstance(suggestions, list)
     assert all(isinstance(suggestion, dict) for suggestion in suggestions)
 
     # Tester avec un id_utilisateur invalide
     with pytest.raises(TypeError) as exc_info:
-        mes_suggestions.get_suggestions_by_id(id_utilisateur="pas_un_entier")
+        mes_suggestions.get_suggestions_by_id(id_eleve="pas_un_entier")
     assert (
-        str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
+        str(exc_info.value) == "l'identifiant de l'élève est un entier numérique"
     )
 
 

@@ -33,21 +33,21 @@ class SuggestionsDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO liste_suggestions (id_eleve, id_stage, id_professeur) "
-                    "VALUES (%(id_eleve)s, %(id_stage)s)",
+                    "INSERT INTO suggestion (id_eleve, id_stage, id_professeur) "
+                    "VALUES (%(id_eleve)s, %(id_stage)s, %(id_professeur)s)",
                     {
-                        "id_élève": id_eleve,
+                        "id_eleve": id_eleve,
                         "id_stage": id_stage,
                         "id_professeur": id_professeur
                     }
                 )
 
-    def get_suggestions_by_id(self, id_utilisateur):
+    def get_suggestions_by_id(self, id_eleve):
         """Récupère la liste de suggestions d'un élève à partir de son identifiant.
 
         Parameters
         --------
-        id_utilisateur: int
+        id_eleve: int
             l'identifiant de l'élève
 
         Returns
@@ -59,20 +59,20 @@ class SuggestionsDAO:
         Examples
         --------
         >>> mes_suggestions = SuggestionsDAO() 
-        >>> id_utilisateur = 123  
-        >>> suggestions=mes_suggestions.get_suggestions_by_id(id_utilisateur)
+        >>> id_eleve = 123  
+        >>> suggestions=mes_suggestions.get_suggestions_by_id(id_eleve)
         print(suggestions)
         # La liste de suggestions de l'élève avec l'identifiant 123 est renvoyée.
         """
-        if not isinstance(id_utilisateur, int):
-            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+        if not isinstance(id_eleve, int):
+            raise TypeError("l'identifiant de l'élève est un entier numérique")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "SELECT * "
-                    "FROM liste_suggestions"
-                    "WHERE id_utilisateur= %(id_utilisateur)s",
-                    {"id_utilisateur": id_utilisateur})
+                    "FROM suggestion "
+                    "WHERE id_eleve = %(id_eleve)s",
+                    {"id_eleve": id_eleve})
 
                 liste_suggestions = cursor.fetchall()
                 if not liste_suggestions:
