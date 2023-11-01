@@ -27,9 +27,11 @@ class EntrepriseDAO:
                         "région": entreprise.region,
                         "pays": entreprise.pays,
                         "email": entreprise.email,
-                        "domaine": entreprise.domaine
+                        "domaine": entreprise.domaine,
                     },
                 )
-                entreprise.id = cursor.fetchone()["id_entreprise"]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_stage"]
+                entreprise.id = cursor.fetchone()[
+                    "id_entreprise"
+                ]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_stage"]
                 # et on l'assigne à entreprise.id. Cela suppose que notre table a un champ id_entreprise.
         return entreprise

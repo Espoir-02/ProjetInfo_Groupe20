@@ -38,15 +38,15 @@ class Stage:
     "Agent d'accueil"
     """
     
-    def __init__(self, titre, lien, domaine, modalites, date_publication, periode, salaire, entreprise):
+    def __init__(self, titre, lien, domaine, salaire, date_publication, periode, niveau_etudes, entreprise):
         self.titre = titre
         self.lien = lien
         self.domaine = domaine
-        self.modalites = modalites
+        self.salaire = salaire
         self.date_publication = date_publication
         self.periode = periode
-        self.salaire = salaire
-        self.entreprise = entreprise
+        self.niveau_etudes= niveau_etudes
+        self.entreprise= entreprise
         self.id = None
 
     def liste_nom_entreprise(self, nom_stage):

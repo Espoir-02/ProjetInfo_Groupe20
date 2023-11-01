@@ -2,7 +2,6 @@ from source.DAO.dbconnection import DBConnection
 
 
 class HistoriqueDAO:
-
     def update_historique(self, id_utilisateur, id_stage):
         """Met à jour l'historique de l'utilisateur avec un nouveau stage consulté.
 
@@ -15,9 +14,9 @@ class HistoriqueDAO:
 
         Examples
         --------
-        >>> mes_historique = HistoriqueDAO() 
-        >>> id_utilisateur = 123  
-        >>> id_stage = 96  
+        >>> mes_historique = HistoriqueDAO()
+        >>> id_utilisateur = 123
+        >>> id_stage = 96
         >>> mes_historiques.update_historique(id_utilisateur, id_stage)
         """
         if not isinstance(id_utilisateur, int):
@@ -27,14 +26,14 @@ class HistoriqueDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO historique (id_utilisateur, id_stage) "
+                    "INSERT INTO base_projetinfo.historique (id_utilisateur, id_stage) "
                     "VALUES (%(id_utilisateur)s, %(id_stage)s)",
-                    {"id_utilisateur": id_utilisateur, "id_stage": id_stage}
+                    {"id_utilisateur": id_utilisateur, "id_stage": id_stage},
                 )
 
     def get_all_historique_by_id(self, id_utilisateur):
         """Récupère tout l'historique d'un utilisateur à partir de l'identifiant.
- 
+
         Parameters
         ----------
         id_utilisateur : int
@@ -48,8 +47,8 @@ class HistoriqueDAO:
 
         Examples
         --------
-        >>> mes_historique = HistoriqueDAO()  
-        >>> id_utilisateur = 123  
+        >>> mes_historique = HistoriqueDAO()
+        >>> id_utilisateur = 123
         >>> historique = mes_historiques.get_all_historique_by_id(id_utilisateur)
         >>> print(historique)
         # Résultat : Liste des recherches dans l'historique
@@ -59,11 +58,22 @@ class HistoriqueDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT * "
-                    "FROM historique "
-                    "WHERE id_historique= %(id_utilisateur)s",
-                    {"id_utilisateur": id_utilisateur})
+                    "SELECT stage.id_stage, stage.titre, stage.lien, stage.domaine "
+                    "FROM base_projetinfo.historique AS le "
+                    "JOIN base_projetinfo.stage AS stage ON le.id_stage = stage.id_stage "
+                    "WHERE id_utilisateur= %(id_utilisateur)s",
+                    {"id_utilisateur": id_utilisateur},
+                )
                 historique = cursor.fetchall()
                 if not historique:
                     print("L'historique' est vide")
-        return historique
+                result_list = []
+                for recherche in historique:
+                    hist_dict = {
+                        "id_stage": recherche[0],
+                        "titre": recherche[1],
+                        "lien": recherche[2],
+                        "domaine": recherche[3],
+                    }
+                    result_list.append(hist_dict)
+        return result_list

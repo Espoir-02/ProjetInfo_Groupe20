@@ -15,9 +15,9 @@ class ListeElevesDAO:
 
          Examples
         --------
-        >>> ma_liste = ListeElevesDAO()  
-        >>> eleve = Eleve(nom="Millepertuis", prenom="Iris", id_eleve=6)  
-        >>> id_professeur = 456  
+        >>> ma_liste = ListeElevesDAO()
+        >>> eleve = Eleve(nom="Millepertuis", prenom="Iris", id_eleve=6)
+        >>> id_professeur = 456
         >>> ma_liste.update_liste_eleve(eleve, id_professeur)
         ----------
         """
@@ -38,7 +38,7 @@ class ListeElevesDAO:
 
     def delete_eleve(self, id_eleve, id_professeur):
         """Pour supprimer un élève de la liste d'élèves d'un professeur donné.
-        
+
         Parameters
         ----------
         id_eleve : int
@@ -50,7 +50,7 @@ class ListeElevesDAO:
         --------
         >>> ma_liste = ListeElevesDAO()  # Instanciation de votre DAO
         >>> id_eleve = 6
-        >>> id_prof = 456 
+        >>> id_prof = 456
         >>> ma_liste.delete_liste_eleve(id_eleve, id_prof)
         """
         if not isinstance(id_professeur, int):
@@ -67,10 +67,9 @@ class ListeElevesDAO:
                 if cursor.rowcount == 0:
                     raise IdEleveInexistantError(id_eleve)
 
-
     def get_liste_eleve_by_id(self, id_professeur):
         """Pour obtenir la liste d'élèves du professeur.
-        
+
         Parameters
         ----------
         id_prof : int
@@ -84,8 +83,8 @@ class ListeElevesDAO:
 
         Examples
         --------
-        >>> ma_liste = ListeElevesDAO()  
-        >>> id_professeur = 456  
+        >>> ma_liste = ListeElevesDAO()
+        >>> id_professeur = 456
         >>> liste_eleves = ma_liste.get_liste_eleve_by_id(id_professeur)
         >>> for eleve in liste_eleves:
         ...     print(f"Nom: {eleve['nom']}, Prénom: {eleve['prénom']}")
@@ -98,7 +97,7 @@ class ListeElevesDAO:
                     "SELECT * "
                     " FROM base_projetinfo.liste_eleves "
                     "WHERE id_professeur= %(id_professeur)s",
-                    {"id_professeur": id_professeur}
+                    {"id_professeur": id_professeur},
                 )
                 liste_eleves = cursor.fetchall()
                 if not liste_eleves:
@@ -110,6 +109,5 @@ class ListeElevesDAO:
                         "nom": eleve[2],
                         "prenom": eleve[3],
                     }
-                    result_list.append(eleve_dict)   
+                    result_list.append(eleve_dict)
         return result_list
-

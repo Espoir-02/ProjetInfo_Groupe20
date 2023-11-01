@@ -1,6 +1,6 @@
 import pytest
 from source.DAO.utilisateur_dao import UtilisateurDAO
-from source.business_object.utilisateur import Utilisateur
+from source.business_object.utilisateur.utilisateur2 import Utilisateur
 
 
 def test_create_compte():
@@ -8,8 +8,8 @@ def test_create_compte():
 
     # Création d'un objet Utilisateur
     nouvel_utilisateur = Utilisateur(
-        nom="Enzo",
-        prenom="Enzo",
+        nom="Fleur",
+        prenom="Amaryllis",
         pseudo="Chercheurdestage",
         mot_de_passe="secret",
         type_utilisateur="eleve",
@@ -32,7 +32,7 @@ def test_find_id_by_pseudo():
 
     # Tester avec un pseudo invalide
     with pytest.raises(TypeError) as exc_info:
-        mes_utilisateurs.find_mp(pseudo=[85])
+        mes_utilisateurs.find_id_by_pseudo(pseudo=[85])
     assert (
         str(exc_info.value) == "le pseudo de l'utilisateur est une chaîne de caractères"
     )
@@ -47,7 +47,7 @@ def test_find_mdp():
 
     # Tester avec un pseudo invalide
     with pytest.raises(TypeError) as exc_info:
-        mes_utilisateurs.find_mp(pseudo=[85])
+        mes_utilisateurs.find_mdp(pseudo=[85])
     assert (
         str(exc_info.value) == "le pseudo de l'utilisateur est une chaîne de caractères"
     )
@@ -77,7 +77,7 @@ def test_find_by_id():
     mes_utilisateurs = UtilisateurDAO()
 
     # Tester avec des paramètres valides
-    utilisateur = mes_utilisateurs.find_by_id(id_utilisateur=1)
+    utilisateur = mes_utilisateurs.find_by_id(id_utilisateur=6)
     assert isinstance(utilisateur, dict)
 
     # Tester avec un id_utilisateur invalide
@@ -92,7 +92,7 @@ def test_delete_utilisateur():
     mes_utilisateurs = UtilisateurDAO()
 
     # Tester avec des paramètres valides
-    mes_utilisateurs.delete_utilisateur(id_utilisateur=1)
+    mes_utilisateurs.delete_utilisateur(id_utilisateur=30)
 
     # Tester avec un id_utilisateur invalide
     with pytest.raises(TypeError) as exc_info:

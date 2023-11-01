@@ -1,9 +1,9 @@
 from source.DAO.dbconnection import DBConnection
 from source.exception.exceptions import IdUtilisateurInexistantError
-from source.business_object.utilisateur.Utilisateur import Utilisateur
+from source.business_object.utilisateur.utilisateur2 import Utilisateur
+
 
 class UtilisateurDAO:
-
     def create_compte(self, utilisateur):
         """Pour créer un utilisateur en base.
 
@@ -11,7 +11,7 @@ class UtilisateurDAO:
         ---------
         utilisateur : Utilisateur
             L'objet utilisateur à créer.
-        
+
         Returns
         ------
         Utilisateur
@@ -19,8 +19,8 @@ class UtilisateurDAO:
 
         Examples
         --------
-        >>> mes_utilisateurs = UtilisateurDAO() 
-        >>> nouvel_utilisateur = Utilisateur(nom="Millepertuis", prénom="Iris", pseudo= "Milliris", mdp= "Motdepasse123", type_utilisateur = "eleve")
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> nouvel_utilisateur = Utilisateur(nom="Millepertuis", prenom="Iris", pseudo= "Milliris", mot_de_passe= "Motdepasse123", type_utilisateur = "eleve")
         >>> utilisateur_cree = mes_utilisateurs.create_compte(nouvel_utilisateur)
         >>> print(utilisateur_cree.id)
         6
@@ -28,31 +28,33 @@ class UtilisateurDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO utilisateur (nom, prenom, pseudo, mot_de_passe, type_utilisateur)"
+                    "INSERT INTO base_projetinfo.utilisateur (nom, prenom, pseudo, mot_de_passe, type_utilisateur)"
                     "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mot_de_passe)s, %(type_utilisateur)s)"
                     "  RETURNING id_utilisateur;                           ",
                     {
                         "nom": utilisateur.nom,
-                        "prénom": utilisateur.prenom,
+                        "prenom": utilisateur.prenom,
                         "pseudo": utilisateur.pseudo,
                         "mot_de_passe": utilisateur.mot_de_passe,
-                        "type_utilisateur": utilisateur.type_utilisateur
+                        "type_utilisateur": utilisateur.type_utilisateur,
                     },
                 )
-                utilisateur.id = cursor.fetchone()["id_utilisateur"]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_utilisateur"]
+                utilisateur.id = cursor.fetchone()[
+                    0
+                ]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_utilisateur"]
                 # et on l'assigne à utilisateur.id. Cela suppose que notre table a un champ id_utilisateur.
         return utilisateur
 
     def find_by_nom(self, nom, prenom):
         """Pour récupérer un utilisateur depuis ses noms et prénoms.
-        
+
         Parameters
         ---------
         nom : str
             Le nom de l'utilisateur
         prenom : str
             Le prénom de l'utilisateur
-            
+
         Returns
         ------
         dict
@@ -73,31 +75,30 @@ class UtilisateurDAO:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "SELECT *                          "
-                    "  FROM utilisateur                      "
-                    " WHERE nom = %(nom)s AND prénom = %(prenom)s    ",
-                    {"nom": nom, "prénom": prenom}
+                    "  FROM base_projetinfo.utilisateur                      "
+                    " WHERE nom = %(nom)s AND prenom = %(prenom)s    ",
+                    {"nom": nom, "prenom": prenom},
                 )
                 utilisateur_bdd = cursor.fetchone()
-                          
-        utilisateur = None
-        if utilisateur_bdd:
-            utilisateur = Utilisateur(
-                id=utilisateur_bdd["id_utilisateur"],
-                pseudo=utilisateur_bdd["pseudo"],
-                nom=utilisateur_bdd["nom"],
-                prénom=utilisateur_bdd["prénom"],
-            )
-        return utilisateur
 
+        utilisateur_dict = None
+        if utilisateur_bdd:
+            utilisateur_dict = {
+                "id_utilisateur": utilisateur_bdd[0],
+                "pseudo": utilisateur_bdd[1],
+                "nom": utilisateur_bdd[2],
+                "prénom": utilisateur_bdd[3],
+            }
+        return utilisateur_dict
 
     def find_mdp(self, pseudo):
         """Pour récupérer le mot de passe d'un utilisateur à partir du pseudo.
-        
+
         Parameters
         ---------
         pseudo : str
             Le pseudo de l'utilisateur
-            
+
         Returns
         ------
         str
@@ -116,24 +117,25 @@ class UtilisateurDAO:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "SELECT mot_de_passe "
-                    "FROM utilisateur "
+                    "FROM base_projetinfo.utilisateur "
                     "WHERE pseudo = %(pseudo)s",
-                    {"pseudo": pseudo}
+                    {"pseudo": pseudo},
                 )
                 mot_de_passe = cursor.fetchone()
                 if mot_de_passe is None:
                     print("Le pseudo n'existe pas")
+                else:
+                    mot_de_passe = mot_de_passe[0]
         return mot_de_passe
-
 
     def find_id_by_pseudo(self, pseudo):
         """Pour récupérer l'identifiant d'un utilisateur à partir du pseudo.
-        
+
         Parameters
         ---------
         pseudo : str
             Le pseudo de l'utilisateur
-            
+
         Returns
         ------
         int
@@ -150,23 +152,27 @@ class UtilisateurDAO:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "SELECT id_utilisateur "
-                    "FROM utilisateur "
+                    "FROM base_projetinfo.utilisateur "
                     "WHERE pseudo = %(pseudo)s",
-                    {"pseudo": pseudo}
+                    {"pseudo": pseudo},
                 )
                 id_utilisateur = cursor.fetchone()
                 if id_utilisateur is None:
                     print("Le pseudo n'existe pas")
+                else:
+                    id_utilisateur = id_utilisateur[
+                        0
+                    ]  # Extrait le mot de passe du tuple
         return id_utilisateur
 
     def find_by_id(self, id_utilisateur):
         """Pour récupérer un utilisateur depuis son identifiant.
-        
+
         Parameters
         ---------
         id_utilisateur : int
             L'identifiant de l'utilisateur
-            
+
         Returns
         -------
         dict
@@ -185,36 +191,33 @@ class UtilisateurDAO:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "SELECT *                          "
-                    "  FROM utilisateur                      "
+                    "  FROM base_projetinfo.utilisateur                      "
                     " WHERE id_utilisateur = %(id_utilisateur)s",
-                    {"id_utilisateur": id_utilisateur}
+                    {"id_utilisateur": id_utilisateur},
                 )
                 utilisateur_bdd = cursor.fetchone()
-                        
-        utilisateur = None
+
+        utilisateur_dict = None
         if utilisateur_bdd:
-            utilisateur = Utilisateur(
-                id=utilisateur_bdd["id_utilisateur"],
-                pseudo=utilisateur_bdd["pseudo"],
-                nom=utilisateur_bdd["nom"],
-                prénom=utilisateur_bdd["prénom"],
-            )
-        return utilisateur
+            utilisateur_dict = {
+                "id_utilisateur": utilisateur_bdd[0],
+                "pseudo": utilisateur_bdd[1],
+                "nom": utilisateur_bdd[2],
+                "prénom": utilisateur_bdd[3],
+            }
+        return utilisateur_dict
 
     def get_all_ids(self):
         """Pour récupérer une liste contenant les ID des utilisateurs"""
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
-                cursor.execute(
-                    "SELECT id_utilisateur FROM utilisateur"
-                )
+                cursor.execute("SELECT id_utilisateur FROM base_projetinfo.utilisateur")
                 ids_utilisateurs = [row["id_utilisateur"] for row in cursor.fetchall()]
         return ids_utilisateurs
 
-
     def delete_utilisateur(self, id_utilisateur):
         """Pour supprimer un utilisateur de la base de données.
-        
+
         Parameters
         ---------
         id_utilisateur : int
@@ -231,10 +234,9 @@ class UtilisateurDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "DELETE FROM utilisateur "
+                    "DELETE FROM base_projetinfo.utilisateur "
                     "WHERE id_utilisateur = %(id_utilisateur)s",
-                    {"id_utilisateur": id_utilisateur}
+                    {"id_utilisateur": id_utilisateur},
                 )
                 if cursor.rowcount == 0:
                     raise IdUtilisateurInexistantError(id_utilisateur)
-

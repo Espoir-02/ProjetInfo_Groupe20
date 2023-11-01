@@ -17,9 +17,9 @@ class SuggestionsDAO:
 
         Examples
         --------
-        >>> mes_suggestions = SuggestionsDAO() 
-        >>> id_eleve = 123 
-        >>> id_stage = 456  
+        >>> mes_suggestions = SuggestionsDAO()
+        >>> id_eleve = 123
+        >>> id_stage = 456
         >>> id_professeur = 789
         >>> mes_suggestions.create_suggestion(id_eleve, id_stage, id_professeur)
         # La suggestion a été ajoutée à la liste de suggestions de l'élève.
@@ -33,13 +33,13 @@ class SuggestionsDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO suggestion (id_eleve, id_stage, id_professeur) "
+                    "INSERT INTO base_projetinfo.suggestion (id_eleve, id_stage, id_professeur) "
                     "VALUES (%(id_eleve)s, %(id_stage)s, %(id_professeur)s)",
                     {
                         "id_eleve": id_eleve,
                         "id_stage": id_stage,
-                        "id_professeur": id_professeur
-                    }
+                        "id_professeur": id_professeur,
+                    },
                 )
 
     def get_suggestions_by_id(self, id_eleve):
@@ -58,8 +58,8 @@ class SuggestionsDAO:
 
         Examples
         --------
-        >>> mes_suggestions = SuggestionsDAO() 
-        >>> id_eleve = 123  
+        >>> mes_suggestions = SuggestionsDAO()
+        >>> id_eleve = 123
         >>> suggestions=mes_suggestions.get_suggestions_by_id(id_eleve)
         print(suggestions)
         # La liste de suggestions de l'élève avec l'identifiant 123 est renvoyée.
@@ -69,19 +69,32 @@ class SuggestionsDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT * "
-                    "FROM suggestion "
-                    "WHERE id_eleve = %(id_eleve)s",
-                    {"id_eleve": id_eleve})
+                    "SELECT stage.id_stage, stage.titre, stage.lien, stage.domaine, suggestion.id_professeur "
+                    "FROM base_projetinfo.liste_envie AS le "
+                    "JOIN base_projetinfo.stage AS stage ON le.id_stage = stage.id_stage "
+                    "JOIN base_projetinfo.suggestion AS suggestion ON le.id_stage = suggestion.id_stage "
+                    "WHERE le.id_eleve = %(id_eleve)s",
+                    {"id_eleve": id_eleve},
+                )
 
                 liste_suggestions = cursor.fetchall()
                 if not liste_suggestions:
-                    print("La liste de suggestions est vide")
-        return liste_suggestions
+                    print("La liste d'élèves est vide")
+                result_list = []
+                for suggestion in liste_suggestions:
+                    suggestion_dict = {
+                        "id_stage": suggestion[0],
+                        "titre": suggestion[1],
+                        "lien": suggestion[2],
+                        "domaine": suggestion[3],
+                        "id_professeur": suggestion[4],
+                    }
+                    result_list.append(suggestion_dict)
+        return result_list
 
     def delete_suggestion(self, id_eleve, id_stage):
         """Pour supprimer un stage de la liste de suggestions d'un utilisateur.
-  
+
         Parameters
         ---------
         id_utilisateur: int
@@ -91,9 +104,9 @@ class SuggestionsDAO:
 
         Examples
         --------
-        >>> mes_suggestions = SuggestionsDAO() 
-        >>> id_utilisateur = 123 
-        >>> id_stage = 456  
+        >>> mes_suggestions = SuggestionsDAO()
+        >>> id_utilisateur = 123
+        >>> id_stage = 456
         >>> mes_suggestions.delete_suggestion(id_utilisateur, id_stage)
         """
         if not isinstance(id_eleve, int):
@@ -103,9 +116,9 @@ class SuggestionsDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "DELETE FROM suggestion "
+                    "DELETE FROM base_projetinfo.suggestion "
                     "WHERE id_eleve = %(id_eleve)s AND id_stage = %(id_stage)s",
-                    {"id_eleve": id_eleve, "id_stage": id_stage}
+                    {"id_eleve": id_eleve, "id_stage": id_stage},
                 )
                 if cursor.rowcount == 0:
                     raise IdStageInexistantError(id_stage)
