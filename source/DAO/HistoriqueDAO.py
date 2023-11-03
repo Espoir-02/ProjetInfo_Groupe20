@@ -1,4 +1,7 @@
 from source.DAO.dbconnection import DBConnection
+from source.DAO.utilitaire_dao import UtilitaireDAO
+from source.exception.exceptions import IdUtilisateurInexistantError
+from source.exception.exceptions import IdStageInexistantError
 
 
 class HistoriqueDAO:
@@ -23,6 +26,11 @@ class HistoriqueDAO:
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
         if not isinstance(id_stage, int):
             raise TypeError("l'identifiant du stage est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_utilisateur):
+            raise IdUtilisateurInexistantError(id_utilisateur)
+        if not UtilitaireDAO.check_stage_exists(id_stage):
+            raise IdStageInexistantError(id_stage)
+
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -55,6 +63,9 @@ class HistoriqueDAO:
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_utilisateur):
+            raise IdUtilisateurInexistantError(id_utilisateur)
+
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(

@@ -187,6 +187,7 @@ class UtilisateurDAO:
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -197,7 +198,8 @@ class UtilisateurDAO:
                 )
                 utilisateur_bdd = cursor.fetchone()
 
-        utilisateur_dict = None
+        if utilisateur_bdd is None:
+            raise IdUtilisateurInexistantError(id_utilisateur)
         if utilisateur_bdd:
             utilisateur_dict = {
                 "id_utilisateur": utilisateur_bdd[0],

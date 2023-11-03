@@ -1,4 +1,6 @@
 from source.DAO.dbconnection import DBConnection
+from source.DAO.utilitaire_dao import UtilitaireDAO
+from source.exception.exceptions import IdStageInexistantError
 
 
 class StageDAO:
@@ -14,6 +16,16 @@ class StageDAO:
         ------
         Stage
             L'objet stage créé avec un id attribué
+
+        Examples
+        -------
+        >>> db = StageDAO()  #
+        >>> nouveau_stage = Stage(titre="Pokémon stagiaire", lien="https://pokemon.com/stage", domaine="Pokemon",
+        ...                        salaire= 'baies', date_publication="2023-11-02", periode="5 jours",
+        ...                        niveau_etudes="Bac+3", entreprise="Evoli Inc.")
+        >>> stage_cree = db.create_stage(nouveau_stage)
+        >>> print(stage_cree.id)
+        415 # ID attribué au nouveau stage
         """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
@@ -50,9 +62,28 @@ class StageDAO:
         -------
         dict
             Un dictionnaire qui contient toutes les informations du stage.
+
+        Examples
+        -------
+        >>> db = StageDAO()
+        >>> stage_info = db.find_stage_by_id(415)
+        >>> print(stage_info)
+        {
+            "id-stage": 415,
+            "titre": "Pokémon stagiaire",
+            "lien": "https://pokemon.com/stage",
+            "domaine": "Pokemon",
+            "date_publication": "2023-11-02",
+            "salaire": 'baies',
+            "periode": "5 jours",
+            "niveau_etudes": "Bac+3",
+            "entreprise": "Evoli Inc."
+        }
         """
         if not isinstance(id_stage, int):
             raise TypeError("l'identifiant du stage est un entier numérique")
+        if not UtilitaireDAO.check_stage_exists(id_stage):
+            raise IdStageInexistantError(id_stage)
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(

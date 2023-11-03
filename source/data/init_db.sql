@@ -33,8 +33,8 @@ CREATE TABLE base_ProjetInfo.stage(
         niveau_etude     Varchar (200),
         date_publication      Varchar (70) ,
         salaire      Varchar (70),
-        periode  Varchar (50)
-        id_ent     Int,
+        periode  Varchar (50),
+        entreprise Varchar (50)
         PRIMARY KEY (id_stage)
 );
 
@@ -68,31 +68,28 @@ CREATE TABLE base_ProjetInfo.recherche(
 
 DROP TABLE IF EXISTS base_ProjetInfo.historique;
 CREATE TABLE base_ProjetInfo.historique(
-        id_historique     Int,
         id_stage     Int,
         id_utilisateur     Int,
-        PRIMARY KEY (id_historique)
+        PRIMARY KEY (id_stage, id_utilisateur)
 );
 
 
 
-DROP TABLE IF EXISTS base_ProjetInfo.voeux;
-CREATE TABLE base_ProjetInfo.liste_envie(
-        id_liste_envie     Int,
+DROP TABLE IF EXISTS base_ProjetInfo.liste_envie;
+CREATE TABLE base_ProjetInfo.liste_envie
         id_eleve     Int ,
         id_stage     Int,
-        PRIMARY KEY (id_voeux)
+        PRIMARY KEY (id_eleve, id_stage)
 );
 
 
 
 DROP TABLE IF EXISTS base_ProjetInfo.suggestion;
 CREATE TABLE base_ProjetInfo.suggestion(
-        id_suggestion     Int,
         id_eleve     Int,
         id_stage     Int,
         id_professeur    Int,
-        PRIMARY KEY (id_suggestion)
+        PRIMARY KEY (id_eleve, id_stage, id_professeur)
 );
 
 DROP TABLE IF EXISTS base_ProjetInfo.liste_eleves;
@@ -118,3 +115,26 @@ ALTER TABLE base_ProjetInfo.suggestion ADD CONSTRAINT FK_suggestion_id_utilisate
 
 ALTER TABLE base_ProjetInfo.liste_eleves ADD CONSTRAINT FK_Liste_eleves FOREIGN KEY (id_eleve) REFERENCES base_ProjetInfo.utilisateur(id_utilisateur)
 ALTER TABLE base_ProjetInfo.liste_eleves ADD CONSTRAINT FK_Liste_eleves2 FOREIGN KEY (id_professeur) REFERENCES base_ProjetInfo.utilisateur(id_utilisateur);
+
+CREATE SEQUENCE sequence_utilisateur
+    START 1
+    INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 300
+    CACHE 1;
+   
+ ALTER TABLE base_projetinfo.utilisateur 
+    ALTER COLUMN id_utilisateur SET DEFAULT nextval('sequence_utilisateur');
+
+CREATE SEQUENCE sequence_stage
+    START 400
+    INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 800
+    CACHE 1;
+   
+ ALTER TABLE base_projetinfo.stage 
+    ALTER COLUMN id_stage SET DEFAULT nextval('sequence_stage');
+
+ALTER TABLE base_projetinfo.stage 
+DROP CONSTRAINT fk_stage_id_ent;

@@ -1,6 +1,7 @@
 import pytest
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
+from source.exception.exceptions import IdUtilisateurInexistantError
 
 
 def test_create_compte():
@@ -86,6 +87,11 @@ def test_find_by_id():
     assert (
         str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
     )
+
+    # Tester avec un id_utilisateur qui n'existe pas
+    with pytest.raises(IdUtilisateurInexistantError) as exc_info:
+        mes_utilisateurs.find_by_id(id_utilisateur=999)
+    assert str(exc_info.value) == "L'utilisateur avec l'ID 999 n'existe pas."
 
 
 def test_delete_utilisateur():

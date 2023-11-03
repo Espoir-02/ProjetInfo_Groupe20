@@ -1,6 +1,7 @@
 import pytest
 from source.DAO.StageDAO import StageDAO
 from source.business_object.stage_recherche.stage import Stage
+from source.exception.exceptions import IdStageInexistantError
 
 
 def test_create_stage():
@@ -34,3 +35,8 @@ def test_find_stage_by_id():
     with pytest.raises(TypeError) as exc_info:
         mes_stages.find_stage_by_id(id_stage="pas_un_entier")
     assert str(exc_info.value) == "l'identifiant du stage est un entier numérique"
+
+    # Tester avec un id_stage qui n'existe pas
+    with pytest.raises(IdStageInexistantError) as exc_info:
+        mes_stages.find_stage_by_id(id_stage=88888)
+    assert str(exc_info.value) == "Le stage avec l'ID 88888 n'existe pas."

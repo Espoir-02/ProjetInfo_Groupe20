@@ -1,5 +1,7 @@
 from source.DAO.dbconnection import DBConnection
 from source.exception.exceptions import IdEleveInexistantError
+from source.DAO.utilitaire_dao import UtilitaireDAO
+from source.exception.exceptions import IdProfesseurInexistantError
 
 
 class ListeElevesDAO:
@@ -23,6 +25,11 @@ class ListeElevesDAO:
         """
         if not isinstance(id_professeur, int):
             raise TypeError("l'identifiant du professeur est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(eleve.id_eleve):
+            raise IdEleveInexistantError(eleve.id_eleve)
+        if not UtilitaireDAO.check_user_exists(id_professeur):
+            raise IdProfesseurInexistantError(id_professeur)
+
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -57,6 +64,11 @@ class ListeElevesDAO:
             raise TypeError("l'identifiant du professeur est un entier numérique")
         if not isinstance(id_eleve, int):
             raise TypeError("l'identifiant de l'élève est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_eleve):
+            raise IdEleveInexistantError(id_eleve)
+        if not UtilitaireDAO.check_user_exists(id_professeur):
+            raise IdProfesseurInexistantError(id_professeur)
+
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -91,6 +103,9 @@ class ListeElevesDAO:
         """
         if not isinstance(id_professeur, int):
             raise TypeError("l'identifiant du professeur est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_professeur):
+            raise IdProfesseurInexistantError(id_professeur)
+
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(

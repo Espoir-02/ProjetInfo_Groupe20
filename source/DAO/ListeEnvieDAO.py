@@ -1,5 +1,7 @@
 from source.DAO.dbconnection import DBConnection
+from source.DAO.utilitaire_dao import UtilitaireDAO
 from source.exception.exceptions import IdStageInexistantError
+from source.exception.exceptions import IdEleveInexistantError
 
 
 class ListeEnvieDAO:
@@ -24,6 +26,10 @@ class ListeEnvieDAO:
             raise TypeError("l'identifiant de l'élève est un entier numérique")
         if not isinstance(id_stage, int):
             raise TypeError("l'identifiant du stage est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_eleve):
+            raise IdEleveInexistantError(id_eleve)
+        if not UtilitaireDAO.check_stage_exists(id_stage):
+            raise IdStageInexistantError(id_stage)
 
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
@@ -51,11 +57,14 @@ class ListeEnvieDAO:
         --------
         >>> ma_liste = ListeEnvieDAO()
         >>> id_eleve = 1
-        >>> ma_liste.get_liste_envie_by_id(id_eleve)
-        10
+        >>> liste =ma_liste.get_liste_envie_by_id(id_eleve)
+        >>> print(liste)
+        # La liste des envies de l'utilisateur
         """
         if not isinstance(id_eleve, int):
             raise TypeError("l'identifiant de l'élève est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_eleve):
+            raise IdEleveInexistantError(id_eleve)
 
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
@@ -102,6 +111,10 @@ class ListeEnvieDAO:
             raise TypeError("l'identifiant de l'élève est un entier numérique")
         if not isinstance(id_stage, int):
             raise TypeError("l'identifiant du stage est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_eleve):
+            raise IdEleveInexistantError(id_eleve)
+        if not UtilitaireDAO.check_stage_exists(id_stage):
+            raise IdStageInexistantError(id_stage)
 
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
@@ -110,5 +123,3 @@ class ListeEnvieDAO:
                     "WHERE id_eleve = %(id_eleve)s AND id_stage = %(id_stage)s",
                     {"id_eleve": id_eleve, "id_stage": id_stage},
                 )
-                if cursor.rowcount == 0:
-                    raise IdStageInexistantError(id_stage)
