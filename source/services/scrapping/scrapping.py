@@ -35,6 +35,7 @@ for i in range(1, 2 ):
 
     propose = soup.find_all("div", {"class" : "advert-card-content"})
     cpt = 1
+    
     for stage in propose:
         nomstage = stage.find("h2").get_text(strip=True)
         nomentreprise = stage.find("h3").get_text(strip=True)
@@ -63,7 +64,7 @@ for i in range(1, 2 ):
             phrase = tout[i].get_text(strip=True)
             if phrase.startswith('Réf.'): 
             # Utilisez la méthode split() pour récupérer ce qui suit le premier tiret (-)
-                date_publication = phrase.split('- publié le ')[1].strip()
+                date_publication =phrase.split('- publié le ')[1].strip()
                 #etude = tout[i+3].get_text()
                 #gratification = tout[i+5].get_text()
         print(cpt)
@@ -79,7 +80,7 @@ for i in range(1, 2 ):
         print("\n")
         cpt = cpt + 1
         # Créer un objet Stage
-        nouveau_stage= Stage(titre=nomstage, lien=url2, domaine=domaine,  date_publication=date_publication, periode=periode, salaire=gratification)
+        nouveau_stage= Stage(titre=nomstage, lien=url2, domaine=domaine,  date_publication=None, periode=periode, salaire=gratification, niveau_etudes=etude, entreprise=nomentreprise)
         # Utiliser StageDAO pour créer le stage dans la base de données
         stage_dao = StageDAO()
         stage_cree = stage_dao.create_stage(nouveau_stage)
@@ -87,3 +88,8 @@ for i in range(1, 2 ):
         entreprise_DAO=EntrepriseDAO()
         entreprise_cree=entreprise_DAO.create_entreprise(nouv_entreprise)
 
+# le lieu du stage à mettre dans stage directement ou pas
+# changer la longueur des variables
+# prendre en compte l'url
+# il faut relier les stages qu'on vient de chercher à la recherche
+# date de publication a un problème

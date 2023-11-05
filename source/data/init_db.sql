@@ -27,14 +27,14 @@ CREATE TABLE base_ProjetInfo.Administrateur(
 DROP TABLE IF EXISTS base_ProjetInfo.stage;
 CREATE TABLE base_ProjetInfo.stage(
         id_stage     Int,
-        titre     Varchar (70),
+        titre     Varchar (100),
         lien     Varchar (500),
-        domaine     Varchar (50),
+        domaine     Varchar (500),
         niveau_etude     Varchar (200),
         date_publication      Varchar (70) ,
         salaire      Varchar (70),
-        periode  Varchar (50),
-        entreprise Varchar (50)
+        periode  Varchar (100),
+        entreprise Varchar (100)
         PRIMARY KEY (id_stage)
 );
 
