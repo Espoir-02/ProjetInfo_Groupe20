@@ -27,9 +27,9 @@ CREATE TABLE base_ProjetInfo.Administrateur(
 DROP TABLE IF EXISTS base_ProjetInfo.stage;
 CREATE TABLE base_ProjetInfo.stage(
         id_stage     Int,
-        titre     Varchar (100),
-        lien     Varchar (500),
-        domaine     Varchar (500),
+        titre     Varchar (800),
+        lien     Varchar (800),
+        domaine     Varchar (800),
         niveau_etude     Varchar (200),
         date_publication      Varchar (70) ,
         salaire      Varchar (70),
@@ -58,7 +58,7 @@ CREATE TABLE base_ProjetInfo.entreprise(
 DROP TABLE IF EXISTS base_ProjetInfo.recherche;
 CREATE TABLE base_ProjetInfo.recherche(
         id_recherche     Int,
-        domaine     Varchar (50),
+        domaine     Varchar (800),
         ville     Varchar (50),
         entreprise     Varchar (50),
         PRIMARY KEY (id_recherche)
