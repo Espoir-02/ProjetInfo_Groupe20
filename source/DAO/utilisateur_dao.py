@@ -25,25 +25,41 @@ class UtilisateurDAO:
         >>> print(utilisateur_cree.id)
         6
         """
-        with DBConnection().connection as conn:
-            with conn.cursor() as cursor:
-                cursor.execute(
-                    "INSERT INTO base_projetinfo.utilisateur (nom, prenom, pseudo, mot_de_passe, type_utilisateur)"
-                    "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mot_de_passe)s, %(type_utilisateur)s)"
-                    "  RETURNING id_utilisateur;                           ",
-                    {
-                        "nom": utilisateur.nom,
-                        "prenom": utilisateur.prenom,
-                        "pseudo": utilisateur.pseudo,
-                        "mot_de_passe": utilisateur.mot_de_passe,
-                        "type_utilisateur": utilisateur.type_utilisateur,
-                    },
-                )
-                utilisateur.id = cursor.fetchone()[
-                    0
-                ]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_utilisateur"]
+        try:
+            # Vérifier la longueur du mot de passe
+            if len(utilisateur.mot_de_passe) < 8:
+                raise ValueError("Le mot de passe doit contenir au moins 8 caractères.")
+
+            # Vérifier si le pseudo existe déjà dans la base de données
+            with DBConnection().connection as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute(
+                        "SELECT COUNT(*) FROM base_projetinfo.utilisateur WHERE pseudo = %(pseudo)s",
+                        {"pseudo": utilisateur.pseudo},
+                    )
+                    if cursor.fetchone()[0] > 0:
+                        raise ValueError("Ce pseudo est déjà utilisé.")
+
+                    cursor.execute(
+                        "INSERT INTO base_projetinfo.utilisateur (nom, prenom, pseudo, mot_de_passe, type_utilisateur)"
+                        "     VALUES (%(nom)s, %(prenom)s,%(pseudo)s, %(mot_de_passe)s, %(type_utilisateur)s)"
+                        "  RETURNING id_utilisateur;                           ",
+                        {
+                            "nom": utilisateur.nom,
+                            "prenom": utilisateur.prenom,
+                            "pseudo": utilisateur.pseudo,
+                            "mot_de_passe": utilisateur.mot_de_passe,
+                            "type_utilisateur": utilisateur.type_utilisateur,
+                        },
+                    )
+                    utilisateur.id = cursor.fetchone()[
+                        0
+                    ]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_utilisateur"]
                 # et on l'assigne à utilisateur.id. Cela suppose que notre table a un champ id_utilisateur.
-        return utilisateur
+            return utilisateur
+        except ValueError as e:
+            print(f"Erreur lors de la création du compte : {e}")
+            return None
 
     def find_by_nom(self, nom, prenom):
         """Pour récupérer un utilisateur depuis ses noms et prénoms.

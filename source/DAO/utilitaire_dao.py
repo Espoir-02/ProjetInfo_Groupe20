@@ -24,3 +24,15 @@ class UtilitaireDAO:
                 )
                 count = cursor.fetchone()[0]
                 return count > 0
+
+    @staticmethod
+    def check_pseudo_exists(pseudo):
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT COUNT(*) FROM base_projetinfo.utilisateur "
+                    "WHERE pseudo = %(pseudo)s",
+                    {"pseudo": pseudo},
+                )
+                count = cursor.fetchone()[0]
+                return count > 0
