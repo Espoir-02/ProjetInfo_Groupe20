@@ -65,7 +65,7 @@ for stage in stages_trouves:
     # Utiliser StageDAO pour créer le stage dans la base de données
     stage_dao = StageDAO()
     stage_cree = stage_dao.create_stage(nouveau_stage)
-    #nouv_entreprise=Entreprise(nom_entreprise=nomentreprise, adresse=lieu)
+    nouv_entreprise=Entreprise(nom_entreprise=nomentreprise, adresse=lieu)
     #entreprise_DAO=EntrepriseDAO()
     #entreprise_cree=entreprise_DAO.create_entreprise(nouv_entreprise)
 
