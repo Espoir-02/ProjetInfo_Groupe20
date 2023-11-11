@@ -22,7 +22,7 @@ class StageDAO:
         >>> db = StageDAO()  #
         >>> nouveau_stage = Stage(titre="Pokémon stagiaire", lien="https://pokemon.com/stage", domaine="Pokemon",
         ...                        salaire= 'baies', date_publication="2023-11-02", periode="5 jours",
-        ...                        niveau_etudes="Bac+3", entreprise="Evoli Inc.")
+        ...                        niveau_etudes="Bac+3", entreprise="Evoli Inc.", lieu="Bourg-Palette")
         >>> stage_cree = db.create_stage(nouveau_stage)
         >>> print(stage_cree.id)
         415 # ID attribué au nouveau stage
@@ -30,8 +30,8 @@ class StageDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO base_projetinfo.stage (titre, lien, domaine, salaire, date_publication, periode, niveau_etudes, entreprise) "
-                    "     VALUES (%(titre)s, %(lien)s,%(domaine)s, %(salaire)s, %(date_publication)s, %(periode)s, %(niveau_etudes)s, %(entreprise)s) "
+                    "INSERT INTO base_projetinfo.stage (titre, lien, domaine, salaire, date_publication, periode, niveau_etudes, entreprise, lieu) "
+                    "     VALUES (%(titre)s, %(lien)s,%(domaine)s, %(salaire)s, %(date_publication)s, %(periode)s, %(niveau_etudes)s, %(entreprise)s, %(lieu)s) "
                     "  RETURNING id_stage;                           ",
                     {
                         "titre": stage.titre,
@@ -42,11 +42,10 @@ class StageDAO:
                         "periode": stage.periode,
                         "niveau_etudes": stage.niveau_etudes,
                         "entreprise": stage.entreprise,
+                        "lieu": stage.lieu,
                     },
                 )
-                stage.id = cursor.fetchone()[
-                    0
-                ]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_stage"]
+                stage.id = cursor.fetchone()[0]  # on récupère l'ID généré à l'aide de cursor.fetchone()["id_stage"]
                 # et on l'assigne à stage.id. Cela suppose que notre table a un champ id_stage.
         return stage
 
@@ -77,7 +76,8 @@ class StageDAO:
             "salaire": 'baies',
             "periode": "5 jours",
             "niveau_etudes": "Bac+3",
-            "entreprise": "Evoli Inc."
+            "entreprise": "Evoli Inc.",
+            "lieu": "Bourg-Palette"
         }
         """
         if not isinstance(id_stage, int):
@@ -106,5 +106,6 @@ class StageDAO:
                 "periode": stage_bdd[6],
                 "niveau_etudes": stage_bdd[7],
                 "entreprise": stage_bdd[8],
+                "lieu": stage_bdd[9],
             }
         return stage_dict

@@ -38,7 +38,7 @@ class Stage:
     "Agent d'accueil"
     """
     
-    def __init__(self, titre, lien, domaine, salaire, date_publication, periode, niveau_etudes, entreprise):
+    def __init__(self, titre, lien, domaine, salaire, date_publication, periode, niveau_etudes, entreprise, lieu):
         self.titre = titre
         self.lien = lien
         self.domaine = domaine
@@ -47,24 +47,9 @@ class Stage:
         self.periode = periode
         self.niveau_etudes= niveau_etudes
         self.entreprise= entreprise
+        self.lieu= lieu
         self.id = None
 
-    def liste_nom_entreprise(self, nom_stage):
-        """
-        Méthode qui prend en entrée un stage et qui renvoie l'entreprise associée
-
-        Return
-        ------
-        str
-
-        Examples
-        -------
-        >>> nom_stage = "Conseiller"
-        >>> liste_nom_entreprise(liste_stage)
-        SNCF
-        """
-        
-        return Stage.id_entreprise_stage
        
     def __str__(self):
         """
