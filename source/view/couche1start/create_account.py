@@ -1,6 +1,7 @@
 from InquirerPy import inquirer
-from source.DAO.UtilisateurDAO import UtilisateurDAO
-from menu_view import Menu_view
+from source.DAO.utilisateur_dao import UtilisateurDAO
+from source.view.couche2menu.menu_view import Menu_view
+from source.business_object.utilisateur.utilisateur2 import Utilisateur
 
 class CreationCompte_view:
     def creer_compte(self, answers):
