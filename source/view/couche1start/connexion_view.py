@@ -1,5 +1,7 @@
 from InquirerPy import inquirer
 from menu_view import Menu_view
+
+
 # cette classe DatabaseUtilisateur est temporaire en attendant de faire le lien entre Utilisateur et la vue.
 # cette classe permet de s'inscrire et de vérifier que pseudo et mdp sont bons
 class DatabaseUtilisateur:
@@ -18,7 +20,7 @@ class DatabaseUtilisateur:
             return False
 
         # Vérifiez si le mot de passe correspond
-        if utilisateur['mot_de_passe'] == mot_de_passe:
+        if utilisateur["mot_de_passe"] == mot_de_passe:
             return True
         else:
             return False
@@ -29,22 +31,25 @@ class DatabaseUtilisateur:
         # Retournez None si l'utilisateur n'est pas trouvé, sinon retournez l'enregistrement de l'utilisateur
         pass
 
+
 class Connexion_view:
     def __init__(self):
-        self.database = DatabaseUtilisateur()  # Supposons que vous ayez une classe pour gérer la base de données des utilisateurs
+        self.database = (
+            DatabaseUtilisateur()
+        )  # Supposons que vous ayez une classe pour gérer la base de données des utilisateurs
 
     def display(self):
         while True:
             # Demande le pseudo et le mot de passe à l'utilisateur
             questions = [
-                inquirer.Text('pseudo', message='Entrez votre pseudo:'),
-                inquirer.Password('password', message='Entrez votre mot de passe:')
+                inquirer.Text("pseudo", message="Entrez votre pseudo:"),
+                inquirer.Password("password", message="Entrez votre mot de passe:"),
             ]
             answers = inquirer.prompt(questions)
 
             # Vérifie les informations d'authentification dans la base de données
-            pseudo = answers['pseudo']
-            password = answers['password']
+            pseudo = answers["pseudo"]
+            password = answers["password"]
             if self.database.verify_credentials(pseudo, password):
                 print("Connexion réussie!")
                 # Redirige vers le menu principal
