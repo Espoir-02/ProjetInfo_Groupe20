@@ -1,5 +1,5 @@
 from source.DAO.HistoriqueDAO import HistoriqueDAO
-from source.DAO.UtilisateurDAO import UtilisateurDAO
+from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.view.couche3sousmenu.detail_stage_view import detail_stage_view_eleve, detail_stage_view_prof
 from InquirerPy import inquirer
 from source.DAO.StageDAO import StageDAO
