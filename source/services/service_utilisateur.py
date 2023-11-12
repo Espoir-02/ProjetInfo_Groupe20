@@ -18,6 +18,9 @@ class UtilisateurService:
             return True
         return False
 
+    def utilisateur_authentifier_verif(self,id_utilisateur):
+        # A implementer
+        
     def recuperer_informations(self, pseudo):
         # Récupérer les informations de l'utilisateur
         utilisateur = self.utilisateur_dao.find_by_nom(pseudo)

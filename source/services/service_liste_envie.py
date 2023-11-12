@@ -1,8 +1,8 @@
-from source.DAO.liste_envie.ListeEnvieDAO import ListeEnvieDAO
+from source.DAO.ListeEnvieDAO import ListeEnvieDAO
 
 class ListeEnvieService:
     def __init__(self):
-        self.liste_envie_dao = ListeEnvieDAO()
+        self.ListeEnvieDAO = ListeEnvieDAO()
 
     def ajouter_stage_a_liste_envie(self, id_eleve, id_stage):
         """
@@ -15,7 +15,7 @@ class ListeEnvieService:
         Returns:
         bool: True si l'ajout a réussi, False sinon.
         """
-        return self.liste_envie_dao.ajouter_stage_a_liste_envie(id_eleve, id_stage)
+        return self.ListeEnvieDAO.update_liste_envie(id_eleve, id_stage)
 
     def supprimer_stage_de_liste_envie(self, id_eleve, id_stage):
         """
@@ -28,7 +28,7 @@ class ListeEnvieService:
         Returns:
         bool: True si la suppression a réussi, False sinon.
         """
-        return self.liste_envie_dao.supprimer_stage_de_liste_envie(id_eleve, id_stage)
+        return self.ListeEnvieDAO.delete_liste_envie(id_eleve, id_stage)
 
     def get_liste_envie_eleve(self, id_eleve):
         """
@@ -40,7 +40,7 @@ class ListeEnvieService:
         Returns:
         list of dict: Une liste contenant les informations des stages dans la liste d'envies.
         """
-        return self.liste_envie_dao.get_liste_envie_eleve(id_eleve)
+        return self.ListeEnvieDAO.get_liste_envie_by_id(id_eleve)
 
     def vider_liste_envie_eleve(self, id_eleve):
         """
@@ -52,4 +52,4 @@ class ListeEnvieService:
         Returns:
         bool: True si la suppression a réussi, False sinon.
         """
-        return self.liste_envie_dao.vider_liste_envie_eleve(id_eleve)
+        #OPTIONNELLE Pas encore fait 
