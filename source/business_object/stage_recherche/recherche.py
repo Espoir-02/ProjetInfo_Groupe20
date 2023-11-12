@@ -19,19 +19,19 @@ class Recherche:
 
     def lancer_recherche(self):
         url = "https://jobs-stages.letudiant.fr/stages-etudiants/offres"
-        zon = ""
+        zone = ""
         domaine = ""
         niveau_etude = ""
 
         if self.zone:
             if self.zone == 1:
-                zon = str(self.region)
+                zone = "/region-"+str(self.region)
             
             elif self.zone == 2:
-                dep = str(self.departement)
+                zone = "/departement-"+str(self.departement)
 
             elif self.zone == 3:
-                vil = str(self.ville)
+                zone = "/ville-"+str(self.ville)
 
         if self.domaine != "Non renseigné":
             if self.domaine == "Agriculture, agroalimentaire, environnement":
@@ -76,5 +76,33 @@ class Recherche:
             elif self.dommaine == "Transports, logistique":
                 dommaine = "/domaines-112+118+119+133"
 
+        if self.niveau_etude != "Non renseigné":
+            if self.niveau_etude == "Bac +5":
+                niveau_etude = "/niveaux-1"
+
+            elif self.niveau_etude == "Bac +4":
+                niveau_etude = "/niveaux-9"
+
+            elif self.niveau_etude == "Bac +3":
+                niveau_etude = "/niveaux-2"
+
+            elif self.niveau_etude == "Bac +2":
+                niveau_etude = "/niveaux-3"
+
+            elif self.niveau_etude == "Bac":
+                niveau_etude = "/niveaux-4"
+
+            elif self.niveau_etude == "CAP/BEP":
+                niveau_etude = "/niveaux-5"
+
+            elif self.niveau_etude == "Bac professionnel":
+                niveau_etude = "/niveaux-6"
+
+            elif self.niveau_etude == "3ème":
+                niveau_etude = "/niveaux-7"
+
+        urlf = url + niveau_etude + domaine + zone + ".html"
+
+        return urlf
 
 
