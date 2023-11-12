@@ -14,5 +14,4 @@ class StageService:
         self.StageBO = StageBO
         self.UtilisateurBO = UtilisateurBO
 
-    def rechercher_stages_par_titre(self, titre):
-     
+   
