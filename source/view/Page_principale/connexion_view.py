@@ -1,6 +1,6 @@
 from InquirerPy import inquirer
 from source.view.couche2menu.menu_view import Menu_view
-from source.dao.utilisateur_dao import UtilisateurDAO
+from source.services.service_utilisateur import UtilisateurService
 
 
 class ConnexionView:
@@ -15,32 +15,29 @@ class ConnexionView:
 
 class ConnexionController:
     def __init__(self):
-        self.utilisateur_dao = UtilisateurDAO()
+        self.utilisateur_service = UtilisateurService()
         self.connexion_view = ConnexionView()
 
     def display(self):
         while True:
-            # Demande le pseudo et le mot de passe à l'utilisateur
             pseudo, mot_de_passe = self.connexion_view.demander_pseudo_mot_de_passe()
 
-            # Vérifie si le pseudo existe dans la base de données
-            if self.utilisateur_dao.check_pseudo_exists(pseudo):
-                mot_de_passe_bdd = self.utilisateur_dao.find_mdp(pseudo)
-
-                if mot_de_passe == mot_de_passe_bdd:
-                    self.connexion_view.afficher_message("Connexion réussie!")
-                    # Redirection vers le menu principal
-                    Menu_view().menu_view()
-                    break
-                else:
-                    self.connexion_view.afficher_message(
-                        "Mot de passe incorrect. Veuillez réessayer."
-                    )
+            if self.utilisateur_service.verifier_identifiants(pseudo, mot_de_passe):
+                self.connexion_view.afficher_message("Connexion réussie!")
+                self.gerer_connexion_reussie(pseudo)
+                break
             else:
-                self.connexion_view.afficher_message(
-                    "Pseudo incorrect. Veuillez réessayer."
-                )
+                self.connexion_view.afficher_message("Identifiants incorrects. Veuillez réessayer.")
 
+    def gerer_connexion_reussie(self, pseudo):
+        type_utilisateur = self.utilisateur_service.get_type_utilisateur(pseudo)
+        menu_view = Menu_view()
+        result = menu_view.display(type_utilisateur)
+
+        if result == 'Exit':
+            print("L'application se termine.")
+        else:
+            print(f"Redirection vers {result}...")
 
 if __name__ == "__main__":
     connexion_controller = ConnexionController()

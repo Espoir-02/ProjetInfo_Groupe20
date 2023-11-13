@@ -233,6 +233,26 @@ class UtilisateurDAO:
                 ids_utilisateurs = [row["id_utilisateur"] for row in cursor.fetchall()]
         return ids_utilisateurs
 
+    def get_type_utilisateur(self, pseudo):
+        """Pour récupérer le type de l'utilisateur à partir de son pseudo"""
+        if not isinstance(pseudo, str):
+            raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT type_utilisateur "
+                    "FROM base_projetinfo.utilisateur "
+                    "WHERE pseudo = %(pseudo)s",
+                    {"pseudo": pseudo},
+                )
+                type_utilisateur = cursor.fetchone()
+                if type_utilisateur is None:
+                    print("Le pseudo n'existe pas")
+                else:
+                    type_utilisateur = type_utilisateur[0]
+        return type_utilisateur
+
+
     def delete_utilisateur(self, id_utilisateur):
         """Pour supprimer un utilisateur de la base de données.
 
