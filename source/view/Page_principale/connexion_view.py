@@ -1,5 +1,5 @@
 from InquirerPy import inquirer
-from source.view.couche2menu.menu_view import Menu_view
+from source.view.Page_option.menu_view import Menu_view
 from source.services.service_utilisateur import UtilisateurService
 
 
