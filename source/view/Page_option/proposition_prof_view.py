@@ -6,6 +6,9 @@ from service_suggestion_eleve import ServiceSuggestion
 
 
 class Proposition_prof_view:
+    def __init__(self,selection_stage):
+        self.selection_stage = selection_stage
+
     def display(self):
         service_utilisateur = UtilisateurService()
         id_professeur = service_utilisateur.find_id_by_pseudo(self.pseudo)
@@ -21,7 +24,7 @@ class Proposition_prof_view:
             answers_debut = inquirer.prompt(choix_eleve, raise_keyboard_interrupt=True)
 
             id_eleve = service_utilisateur.trouver_utilisateur_par_nom(answers_debut["nom"], answers_debut["prenom"]).id
-            id_stage = StageDAO.create_stage().id
+            id_stage = self.selection_stage
             SuggestionsDAO.create_suggestion(id_eleve, id_stage, id_professeur)
             print("Le stage a bien été ajouté à la liste de propositions de l'élève")
             

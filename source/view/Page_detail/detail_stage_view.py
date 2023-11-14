@@ -6,12 +6,14 @@ from source.DAO.SuggestionsDAO import SuggestionsDAO
 from source.DAO.StageDAO import StageDAO
 from source.view.couche2menu.Liste_envie_view import Liste_envie_view
 from menu_view import Menu_view
+from proposition_prof_view import Proposition_prof_view 
 
 from InquirerPy import inquirer
 
 class detail_stage_view_invite(AbstractView):
     def __init__(self, stage):
         self.stage = stage
+
 
     def display(self, selection_stage):
         # Affiche les détails du stage sélectionné
@@ -75,16 +77,11 @@ class detail_stage_view_prof(AbstractView):
         answers = inquirer.prompt(questions)
 
         if answers['choice'] == 'Proposer à mes élèves':
-            # Accède à la liste de ses élèves
-            id_professeur = UtilisateurDAO.find_id_by_pseudo().id # faut-il mettre des attributs noms et prénom du prof ???
-            liste_eleves = self.ListeEleveDAO.get_liste_eleve_by_id(id_professeur)
-
-            
-
-        
+            return Proposition_prof_view(selection_stage)
+       
         elif answers['choice'] == 'Retour en arrière':
             # Retourne à la vue précédente
-            return Liste_envie_view.liste_envie_view
+            return isteL_envie_view.liste_envie_view
         else:
             # Termine l'application
             return 'Exit'
