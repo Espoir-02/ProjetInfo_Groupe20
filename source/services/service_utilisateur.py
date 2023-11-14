@@ -5,8 +5,11 @@ class UtilisateurService:
     def __init__(self):
         self.utilisateur_dao = UtilisateurDAO()
 
+    def creer_compte_anonyme(self):
+        nouvel_utilisateur_invite=self.utilisateur_dao.create_compte(nouvel_utilisateur)
+        return nouvel_utilisateur_invite
+
     def creer_compte(self, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
-        # Créer un nouvel utilisateur
         nouvel_utilisateur = Utilisateur(nom=nom, prenom=prenom, pseudo=pseudo, mot_de_passe=mot_de_passe, type_utilisateur=type_utilisateur)
         utilisateur_cree = self.utilisateur_dao.create_compte(nouvel_utilisateur)
         return utilisateur_cree
@@ -25,15 +28,6 @@ class UtilisateurService:
         # Récupérer les informations de l'utilisateur
         utilisateur = self.utilisateur_dao.find_by_nom(pseudo)
         return utilisateur
-
-    class ServiceUtilisateur:
-    def __init__(self):
-        self.utilisateur_dao = UtilisateurDAO()
-
-    def creer_utilisateur(self, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
-        nouvel_utilisateur = Utilisateur(nom=nom, prenom=prenom, pseudo=pseudo, mot_de_passe=mot_de_passe, type_utilisateur=type_utilisateur)
-        utilisateur_cree = self.utilisateur_dao.create_compte(nouvel_utilisateur)
-        return utilisateur_cree
 
     def mettre_a_jour_utilisateur(self, id_utilisateur, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
         utilisateur_existant = self.utilisateur_dao.find_by_id(id_utilisateur)
@@ -62,6 +56,10 @@ class UtilisateurService:
 
     def trouver_utilisateur_par_nom(self, nom, prenom):
         return self.utilisateur_dao.find_by_nom(nom, prenom)
+
+    def get_type_utilisateur(self, pseudo):
+        return self.utilisateur_dao.get_type_utilisateur(pseudo)
+
         
     
     
