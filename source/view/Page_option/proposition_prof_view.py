@@ -2,12 +2,18 @@ from InquirerPy import inquirer
 from source.view.couche2menu.menu_view import Menu_view
 from session_view import Session
 from service_utilisateur import UtilisateurService
+from service_suggestion_eleve import ServiceSuggestion
+
 
 class Proposition_prof_view:
+    def __init__(self,selection_stage):
+        self.selection_stage = selection_stage
+
     def display(self):
         service_utilisateur = UtilisateurService()
         id_professeur = service_utilisateur.find_id_by_pseudo(self.pseudo)
-        liste_eleves = ListeEleveDAO.get_liste_eleve_by_id(id_professeur)
+        service_suggestion = ServiceSuggestion()
+        liste_eleves = service_suggestion.get_liste_eleve_by_id(id_professeur)
 
         if liste_eleves:
             print("Liste d'élèves du professeur:", liste_eleves)
@@ -17,8 +23,8 @@ class Proposition_prof_view:
             ]
             answers_debut = inquirer.prompt(choix_eleve, raise_keyboard_interrupt=True)
 
-            id_eleve = UtilisateurDAO.find_by_nom(answers_debut["nom"], answers_debut["prenom"]).id
-            id_stage = StageDAO.create_stage().id
+            id_eleve = service_utilisateur.trouver_utilisateur_par_nom(answers_debut["nom"], answers_debut["prenom"]).id
+            id_stage = self.selection_stage
             SuggestionsDAO.create_suggestion(id_eleve, id_stage, id_professeur)
             print("Le stage a bien été ajouté à la liste de propositions de l'élève")
             
