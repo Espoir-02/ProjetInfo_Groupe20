@@ -158,7 +158,7 @@ class UtilisateurDAO:
             L'identifiant de l'utilisateur
 
         >>> mes_utilisateurs = UtilisateurDAO()
-        >>> id = mes_utilisateurs.find_id_by_mdp("Milliris")
+        >>> id = mes_utilisateurs.find_id_by_pseudo("Milliris")
         >>> print(id)
         6
         """
@@ -252,6 +252,38 @@ class UtilisateurDAO:
                     type_utilisateur = type_utilisateur[0]
         return type_utilisateur
 
+    def update_utilisateur(self, pseudo, nouveau_mdp):
+        """Pour mettre à jour le mot de passe d'un utilisateur.
+
+        Parameters
+        ----------
+        pseudo : str
+            Le pseudo de l'utilisateur 
+
+        Examples
+        ------
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> pseudo= 'Milliris'
+        >>> nouveau_mdp = "MotDePasse456"
+        >>> mes_utilisateurs.update_utilisateur(Milliris, nouveau_mdp)
+        >>> mdp_maj = mes_utilisateurs.find_mdp("Milliris")
+        >>> print(mdp_maj)
+        "MotDePasse456"
+        """
+        if not isinstance(pseudo, str):
+            raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE base_projetinfo.utilisateur "
+                    "SET mot_de_passe = %(nouveau_mdp)s "
+                    "WHERE pseudo = %(pseudo)s",
+                    {"nouveau_mot_de_passe": nouveau_mdp, "pseudo": pseudo},
+                )
+                
+                if cursor.rowcount == 0:
+                    print("Le pseudo n'existe pas")
+        
 
     def delete_utilisateur(self, id_utilisateur):
         """Pour supprimer un utilisateur de la base de données.
