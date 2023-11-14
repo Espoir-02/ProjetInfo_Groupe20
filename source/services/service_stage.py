@@ -14,4 +14,10 @@ class StageService:
         self.StageBO = StageBO
         self.UtilisateurBO = UtilisateurBO
 
+    def create_stage(self, stage):
+        return self.stage_dao.create_stage(stage)
+
+    def find_stage_by_id(self, id_stage):
+        return self.stage_dao.find_stage_by_id(id_stage)
+
    

@@ -3,8 +3,9 @@ from source.view.couche2menu.recherche_stage_view import Recherche_Stage_View
 from source.DAO.HistoriqueDAO import HistoriqueDAO
 from source.DAO.UtilisateurDAO import UtilisateurDAO
 from source.DAO.StageDAO import StageDAO
-from source.view.couche3sousmenu.detail_stage_view import detail_stage_view_eleve
-from source.view.couche3sousmenu.detail_stage_view import detail_stage_view_prof
+from detail_stage_view import detail_stage_view_eleve
+from detail_stage_view import detail_stage_view_prof
+from service_historique import HistoriqueService
 
 class HistoriqueView:
     def __init__(self,id_utilisateur):
@@ -13,14 +14,13 @@ class HistoriqueView:
     def display(self):
 
         # Récupérez l'historique de l'utilisateur à partir de son identifiant
-        historique_dao = HistoriqueDAO()
-        historique = historique_dao.get_all_historique_by_id(self.id_utilisateur)
+        historique_service = HistoriqueService()
+        historique = historique_service.get_all_historique_by_id(self.id_utilisateur)
 
         option = []
         for element in historique :
-            #On récupère le stage par son id 
-            stage = StageDAO().find_stage_by_id(element["id_stage"])
-            #On précise les informations du stage à afficher 
+            stage_service = StageService()
+            stage = stage_service.find_stage_by_id(element["id_stage"])
             stage_info = f"Date de consultation : {element['date_consultation']}, ID du stage : {element['id_stage']}, Nom du stage : {stage['titre']}, Nom de l'entreprise : {stage['entreprise']}"
             #On rempli la liste d'affichage
             option.append(inquirer.Option(f"{index}", stage_info)) 
