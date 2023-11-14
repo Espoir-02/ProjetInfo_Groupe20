@@ -6,6 +6,7 @@ from source.DAO.StageDAO import StageDAO
 from detail_stage_view import detail_stage_view_eleve
 from detail_stage_view import detail_stage_view_prof
 from service_historique import HistoriqueService
+from session_view import Session
 
 class HistoriqueView:
     def __init__(self,id_utilisateur):
@@ -22,6 +23,7 @@ class HistoriqueView:
             stage_service = StageService()
             stage = stage_service.find_stage_by_id(element["id_stage"])
             stage_info = f"Date de consultation : {element['date_consultation']}, ID du stage : {element['id_stage']}, Nom du stage : {stage['titre']}, Nom de l'entreprise : {stage['entreprise']}"
+            
             #On rempli la liste d'affichage
             option.append(inquirer.Option(f"{index}", stage_info)) 
         
@@ -32,7 +34,6 @@ class HistoriqueView:
         element_selection_historique = historique[num_selection - 1]
 
         #Les details du stage seront différent en fonction du type d'utilisateur 
-
         utilisateur = UtilisateurDAO.find_by_id(self.id_utilisateur)
 
         if utilisateur.type_utilisateur == "eleve":
@@ -43,4 +44,8 @@ class HistoriqueView:
         elif utilisateur.type_utilisateur == "prof":
             id_stage = element_selection_historique["id_stage"]
             detail_view = detail_stage_view_prof(id_stage)
+            return detail_view.display()
+        
+        else:
+            detail_view = detail_stage_view_invite["id_stage"]
             return detail_view.display()

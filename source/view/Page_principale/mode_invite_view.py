@@ -3,6 +3,7 @@ from service_utilisateur import UtilisateurService
 from menu_view import Menu_view
 from session_view import Session
 
+
 class Mode_invite_view:
     def display(self):
         # Pas besoin de demander le type, nom, prénom, pseudo, mdp puisqu'il est anonyme
