@@ -246,6 +246,8 @@ class UtilisateurDAO:
                 columns = [col[0] for col in cursor.description]
                 result = [dict(zip(columns, row)) for row in cursor.fetchall()]
 
+        if not result:
+            print("Aucun utilisateur trouvé dans la base de données.")
         return result
 
     def get_type_utilisateur(self, pseudo):
