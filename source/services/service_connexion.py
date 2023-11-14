@@ -13,4 +13,3 @@ class UtilisateurService:
 
     def get_type_utilisateur(self, pseudo):
         return self.utilisateur_dao.get_type_utilisateur(pseudo)
-

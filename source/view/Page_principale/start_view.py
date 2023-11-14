@@ -1,17 +1,16 @@
-from InquirerPy import inquirer
 import random
 import source.data # supposition pour l'instant, nom à changer selon Espoir
 from connexion_view import Connexion_view
 from create_account import CreationCompte_view
 from mode_invite_view import Mode_invite_view
-
+from InquirerPy import inquirer
 # from source.business_object.utilisateur.  --> il faut importer une méthode vérification de connexion pour un utilisateur quelconque
         # cette méthode est dans la classe DatabaseUtilisateur
 
 class Start_view:
     def display(self):
         # Propose à l'utilisateur de se connecter
-        questions = [inquirer.List('choice', message = 'Choose an option:', choices=["Se connecter","S'inscrire","Continuer en mode invité"])]
+        questions = [inquirer.List('choice', message = 'Choisissez une option:', choices=["Se connecter","S'inscrire","Continuer en mode invité"])]
         answers = inquirer.prompt(questions)
 
         if answers['choice'] == "Se connecter":
