@@ -1,5 +1,5 @@
 from InquirerPy import inquirer
-from source.view.couche2menu.menu_view import Menu_view
+from menu_view import Menu_view
 from session_view import Session
 from service_utilisateur import UtilisateurService
 from service_suggestion_eleve import ServiceSuggestion
@@ -25,7 +25,8 @@ class Proposition_prof_view:
 
             id_eleve = service_utilisateur.trouver_utilisateur_par_nom(answers_debut["nom"], answers_debut["prenom"]).id
             id_stage = self.selection_stage
-            SuggestionsDAO.create_suggestion(id_eleve, id_stage, id_professeur)
+            service_suggestion=ServiceSuggestion()
+            service_suggestion.create_suggestion(id_eleve, id_stage, id_professeur)
             print("Le stage a bien été ajouté à la liste de propositions de l'élève")
             
             questions = [
@@ -34,11 +35,11 @@ class Proposition_prof_view:
             answers_fin = inquirer.prompt(questions)
 
             if answers_fin['choice'] == 'Proposer à mes élèves':
-                return  # à ajouter
+                return  #refaire la proposition
             elif answers_fin['choice'] == "Retour en arrière":
-                return  # à ajouter
+                return  # ?
             else:
-                return "Exit"
+                return Menu_view()
         else:
             print("La liste d'élèves est vide.")
 
