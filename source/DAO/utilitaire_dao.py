@@ -2,6 +2,9 @@ from source.DAO.dbconnection import DBConnection
 
 
 class UtilitaireDAO:
+    def __init__(self):
+        pass
+
     @staticmethod
     def check_user_exists(id_utilisateur):
         with DBConnection().connection as conn:
@@ -22,6 +25,32 @@ class UtilitaireDAO:
                     "WHERE id_stage = %(id_stage)s",
                     {"id_stage": id_stage},
                 )
+                count = cursor.fetchone()[0]
+                return count > 0
+
+    @staticmethod
+    def check_infos_stage_exists(nomstage, url2, domaine, periode, gratification, etude, nomentreprise, lieu):
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT COUNT(*) FROM base_projetinfo.stage "
+                    "WHERE titre = %(nomstage)s AND lien = %(url2)s AND "
+                    "domaine = %(domaine)s  AND "
+                    "periode = %(periode)s AND salaire = %(gratification)s AND "
+                    "niveau_etudes = %(etude)s AND entreprise = %(nomentreprise)s AND "
+                    "lieu = %(lieu)s",
+                    {
+                        "nomstage": nomstage,
+                        "url2": url2,
+                        "domaine": domaine,
+                        "periode": periode,
+                        "gratification": gratification,
+                        "etude": etude,
+                        "nomentreprise": nomentreprise,
+                        "lieu": lieu
+                    },
+                )
+
                 count = cursor.fetchone()[0]
                 return count > 0
 
