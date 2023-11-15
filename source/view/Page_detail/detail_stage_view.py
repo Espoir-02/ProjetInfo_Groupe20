@@ -54,7 +54,7 @@ class detail_stage_view_eleve(AbstractView):
         answers = inquirer.prompt(questions)
 
         if answers['choice'] == 'Retour en arrière':
-            return Liste_envie_view().liste_envie_view()
+            pass
         else:
             return 'Exit'
 
