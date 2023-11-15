@@ -1,0 +1,3 @@
+# Spécifie les dépendances et packages python à installer :
+
+inquierPy
