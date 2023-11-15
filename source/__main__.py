@@ -5,12 +5,8 @@ if __name__ == "__main__":
     current_view = Start_view()
 
     while current_view:
-        print("=" * 50)
-        print("Bienvenue")
-        print("=" * 50)
-
-        
         current_view.display_info()
+        current_view = current_view.make_choice()
 
        
        
