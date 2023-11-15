@@ -1,5 +1,5 @@
-from ListeEleveDAO import ListeElevesDAO
-from SuggestionsDAO import SuggestionsDAO
+from source.DAO.ListeEleveDAO import ListeElevesDAO
+from source.DAO.SuggestionsDAO import SuggestionsDAO
 
 class ServiceSuggestion:
     def __init__(self):
