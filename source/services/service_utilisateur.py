@@ -36,15 +36,15 @@ class UtilisateurService:
 
 
 
-User
-fait moi : ServiceUtilisateur :
+#User
+#fait moi : ServiceUtilisateur :
 
-Gère la création, la mise à jour, la suppression et la recherche d'utilisateurs.
-ChatGPT
-Voici un exemple simplifié de la classe ServiceUtilisateur qui gère la création, la mise à jour, la suppression et la recherche d'utilisateurs :
+#Gère la création, la mise à jour, la suppression et la recherche d'utilisateurs.
+#ChatGPT
+#Voici un exemple simplifié de la classe ServiceUtilisateur qui gère la création, la mise à jour, la suppression et la recherche d'utilisateurs :
 
-python
-Copy code
+#python
+#Copy code
 from source.DAO.UtilisateurDAO import UtilisateurDAO
 from source.business_object.utilisateur.Utilisateur import Utilisateur
 
