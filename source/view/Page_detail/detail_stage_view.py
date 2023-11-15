@@ -1,12 +1,12 @@
 from source.business_object.stage_recherche.stage import Stage
 from source.view.abstract_view import AbstractView
 from source.DAO.ListeEleveDAO import ListeEleves
-from source.DAO.UtilisateurDAO import UtilisateurDAO
+from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.DAO.SuggestionsDAO import SuggestionsDAO
 from source.DAO.StageDAO import StageDAO
-from source.view.couche2menu.Liste_envie_view import Liste_envie_view
-from menu_view import Menu_view
-from proposition_prof_view import Proposition_prof_view 
+from source.view.Page_option.Liste_envie_view import Liste_envie_view
+from source.view.Page_option.menu_view import Menu_view
+from source.view.Page_option.proposition_prof_view import Proposition_prof_view 
 
 from InquirerPy import inquirer
 
@@ -81,7 +81,7 @@ class detail_stage_view_prof(AbstractView):
        
         elif answers['choice'] == 'Retour en arrière':
             # Retourne à la vue précédente
-            return isteL_envie_view.liste_envie_view
+            return Liste_envie_view.liste_envie_view
         else:
             # Termine l'application
             return 'Exit'

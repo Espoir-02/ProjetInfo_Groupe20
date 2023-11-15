@@ -1,11 +1,11 @@
 from InquirerPy import inquirer
-from source.view.couche2menu.recherche_stage_view import Recherche_Stage_View
+from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
 from source.DAO.HistoriqueDAO import HistoriqueDAO
-from source.DAO.UtilisateurDAO import UtilisateurDAO
+from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.DAO.StageDAO import StageDAO
-from detail_stage_view import detail_stage_view_eleve
-from detail_stage_view import detail_stage_view_prof
-from service_historique import HistoriqueService
+from source.view.Page_detail.detail_stage_view import detail_stage_view_eleve
+from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
+from source.services.service_historique import HistoriqueService
 from session_view import Session
 
 class HistoriqueView:

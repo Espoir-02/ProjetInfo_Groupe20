@@ -1,6 +1,5 @@
 import psycopg2
 
-
 class DBConnection:
     def __init__(self):
         self.connection = psycopg2.connect(
@@ -10,7 +9,6 @@ class DBConnection:
             port="5432",
             database="id2225",
         )
-
 
 try:
     db = DBConnection()

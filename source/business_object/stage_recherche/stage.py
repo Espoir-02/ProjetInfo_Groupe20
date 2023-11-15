@@ -1,5 +1,3 @@
-
-
 class Stage:
     """
     Classe permettant de filtrer la recherche de stage suivant différents critères : Salaire, Domaine, Modalité, Date de début, Date de fin.

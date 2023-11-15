@@ -4,11 +4,10 @@ from source.view.Page_option.historique_view import HistoriqueView
 from source.view.Page_option.Liste_envie_view import Liste_envie_view 
 from source.view.Page_option.proposition_prof_view import Proposition_prof_view
 from source.view.Page_option.liste_eleves_view import ListeEleveView
-from service.utilisateur_service import UtilisateurService  
+from source.services.service_utilisateur import UtilisateurService  
 from source.view.Page_option.admin_view import AdminView
 from session_view import Session 
 from menu_view import Menu_view
-
 
 class Menu_view:
     def __init__(self):
