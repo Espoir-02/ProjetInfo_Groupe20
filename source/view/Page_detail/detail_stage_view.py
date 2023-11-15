@@ -4,11 +4,11 @@ from source.DAO.ListeEleveDAO import ListeElevesDAO
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.DAO.SuggestionsDAO import SuggestionsDAO
 from source.DAO.StageDAO import StageDAO
-from source.view.Page_option.Liste_envie_view import Liste_envie_view
 from source.view.Page_option.menu_view import Menu_view
 from source.view.Page_option.proposition_prof_view import Proposition_prof_view 
-
+from source.services.service_liste_envie import ListeEnvieService
 from InquirerPy import inquirer
+from source.view.session_view import Session
 
 class detail_stage_view_invite(AbstractView):
     def __init__(self, stage):
@@ -33,7 +33,7 @@ class detail_stage_view_invite(AbstractView):
             return Menu_view()
         else:
             # Termine l'application
-            return 'Exit'
+            return ajouter_stage_a_liste_envie(Session().user_id)
 
 
 class detail_stage_view_eleve(AbstractView):
@@ -50,13 +50,17 @@ class detail_stage_view_eleve(AbstractView):
         print(f"Salaire: {stage_details['salaire']}")
         print(f"Type: {stage_details['type']}")
         print(f"Entreprise: {stage_details['entreprise']}")
-        questions = [inquirer.List('choice', message='Choisir une option:', choices=['Retour en arrière', 'Quitter'])]
+        questions = [inquirer.List('choice', message='Choisir une option:', choices=['Ajouter à ma liste envie', 'Quitter'])]
         answers = inquirer.prompt(questions)
 
-        if answers['choice'] == 'Retour en arrière':
-            pass
+        if answers['choice'] == 'Quitter':
+            return Menu_view()
         else:
-            return 'Exit'
+            ajouter_stage_a_liste_envie(Session().user_id,selection_stage)
+            print("Stage ajouté à votre liste d'envies")
+            #il faut une suite , demander si retour au menu ou je sais pas
+
+
 
 class detail_stage_view_prof(AbstractView):
     def __init__(self, stage):
