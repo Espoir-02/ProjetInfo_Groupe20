@@ -35,6 +35,7 @@ class ConnexionController:
 
         Session().user_id = self.utilisateur_service.find_id_by_pseudo(pseudo)
         Session().user_type = type_utilisateur
+        Session().user_pseudo = pseudo
 
         menu_view = Menu_view()
         result = menu_view.display(type_utilisateur)
