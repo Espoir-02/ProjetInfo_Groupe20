@@ -1,6 +1,6 @@
 from InquirerPy import inquirer
 from source.services.service_utilisateur import UtilisateurService
-from menu_view import Menu_view
+from source.view.menu_view import Menu_view
 from utilisateur2 import Utilisateur
 
 class CreationCompte_view:
