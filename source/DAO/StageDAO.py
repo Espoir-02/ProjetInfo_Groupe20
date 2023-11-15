@@ -261,3 +261,54 @@ class StageDAO:
                     }
                     result_list.append(stage_dict)
         return result_list
+
+    def get_all_stages(self):
+        """Pour récupérer une liste contenant tous les stages.
+
+        Returns
+        -------
+        list of dict
+            La liste contenant les informations sur chaque stage
+
+        Examples
+        -------
+        >>> mes_stages = StageDAO()
+        >>> liste=mes_stages.get_all_stages()
+        >>> print(liste)
+        #Affiche la liste de tous les stages avec leurs informations associées
+        """
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM base_projetinfo.stage")
+                columns = [col[0] for col in cursor.description]
+                result = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        if not result:
+            print("Aucun stage trouvé dans la base de données.")
+        return result
+
+    def delete_stage(self, id_stage):
+        """Pour supprimer un stage de la base de données.
+
+        Parameters
+        ---------
+        id_stage : int
+            L'identifiant du stage à supprimer
+
+        Examples
+        --------
+        >>> mes_stages = StageDAO()
+        >>> id_stage_a_supprimer = 410
+        >>> mes_stages.delete_stage(id_stage_a_supprimer)
+        """
+        if not isinstance(id_stage, int):
+            raise TypeError("l'identifiant du stage est un entier numérique")
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM base_projetinfo.stage "
+                    "WHERE id_stage = %(id_stage)s",
+                    {"id_stage": id_stage},
+                )
+                if cursor.rowcount == 0:
+                    raise IdStageInexistantError(id_stage)

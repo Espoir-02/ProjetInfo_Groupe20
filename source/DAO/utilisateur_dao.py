@@ -363,8 +363,4 @@ class UtilisateurDAO:
                     raise IdUtilisateurInexistantError(id_utilisateur)
 
 
-nouvel_utilisateur_invite = Utilisateur(type_utilisateur="invité")
-utilisateur = UtilisateurDAO()
 
-oi = utilisateur.create_compte(nouvel_utilisateur_invite)
-print(oi.id)
