@@ -3,8 +3,6 @@ from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
 from source.DAO.HistoriqueDAO import HistoriqueDAO
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.DAO.StageDAO import StageDAO
-from source.view.Page_detail.detail_stage_view import detail_stage_view_eleve
-from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
 from source.services.service_historique import HistoriqueService
 from source.view.session_view import Session
 
@@ -38,11 +36,13 @@ class HistoriqueView:
 
         if utilisateur.type_utilisateur == "eleve":
             id_stage = element_selection_historique["id_stage"]
+            from source.view.Page_detail.detail_stage_view import detail_stage_view_eleve
             detail_view = detail_stage_view_eleve(id_stage)
             return detail_view.display()
 
         elif utilisateur.type_utilisateur == "prof":
             id_stage = element_selection_historique["id_stage"]
+            from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
             detail_view = detail_stage_view_prof(id_stage)
             return detail_view.display()
         
