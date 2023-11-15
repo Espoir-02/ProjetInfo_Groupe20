@@ -5,8 +5,11 @@ class UtilisateurService:
     def __init__(self):
         self.utilisateur_dao = UtilisateurDAO()
 
+    def creer_compte_anonyme(self):
+        nouvel_utilisateur_invite=self.utilisateur_dao.create_compte(nouvel_utilisateur)
+        return nouvel_utilisateur_invite
+
     def creer_compte(self, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
-        # Créer un nouvel utilisateur
         nouvel_utilisateur = Utilisateur(nom=nom, prenom=prenom, pseudo=pseudo, mot_de_passe=mot_de_passe, type_utilisateur=type_utilisateur)
         utilisateur_cree = self.utilisateur_dao.create_compte(nouvel_utilisateur)
         return utilisateur_cree
@@ -18,11 +21,15 @@ class UtilisateurService:
             return True
         return False
 
+    def utilisateur_authentifier_verif(self,id_utilisateur):
+        # A implementer
+        
     def recuperer_informations(self, pseudo):
         # Récupérer les informations de l'utilisateur
         utilisateur = self.utilisateur_dao.find_by_nom(pseudo)
         return utilisateur
 
+<<<<<<< HEAD
     class ServiceUtilisateur:
     def __init__(self):
         self.utilisateur_dao = UtilisateurDAO()
@@ -57,6 +64,8 @@ class ServiceUtilisateur:
         utilisateur_cree = self.utilisateur_dao.create_compte(nouvel_utilisateur)
         return utilisateur_cree
 
+=======
+>>>>>>> dd1abcc483b42b7c9b642ca2af0aa0e433fc2991
     def mettre_a_jour_utilisateur(self, id_utilisateur, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
         utilisateur_existant = self.utilisateur_dao.find_by_id(id_utilisateur)
         if utilisateur_existant:
@@ -65,7 +74,8 @@ class ServiceUtilisateur:
             utilisateur_existant.pseudo = pseudo
             utilisateur_existant.mot_de_passe = mot_de_passe
             utilisateur_existant.type_utilisateur = type_utilisateur
-            utilisateur_mis_a_jour = self.utilisateur_dao.update_utilisateur(utilisateur_existant)
+            utilisateur_mis_a_jour = self.utilisateur_dao.MAJ_utilisateur(utilisateur_existant)
+            #methode a créer dans utilisateur dao
             return utilisateur_mis_a_jour
         else:
             return None
@@ -83,4 +93,14 @@ class ServiceUtilisateur:
 
     def trouver_utilisateur_par_nom(self, nom, prenom):
         return self.utilisateur_dao.find_by_nom(nom, prenom)
+
+    def get_type_utilisateur(self, pseudo):
+        return self.utilisateur_dao.get_type_utilisateur(pseudo)
+
+    def find_id_by_pseudo(self,pseudo):
+        return self.utilisateur_dao.find_id_by_pseudo(pseudo)
         
+
+        
+    
+    

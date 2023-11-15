@@ -34,7 +34,8 @@ CREATE TABLE base_ProjetInfo.stage(
         date_publication      Varchar (70) ,
         salaire      Varchar (70),
         periode  Varchar (100),
-        entreprise Varchar (100)
+        entreprise Varchar (100),
+        lieu Varchar
         PRIMARY KEY (id_stage)
 );
 

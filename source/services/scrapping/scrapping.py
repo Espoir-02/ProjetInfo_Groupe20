@@ -61,11 +61,11 @@ for stage in stages_trouves:
     print("\n")
     cpt = cpt + 1
     # Créer un objet Stage
-    nouveau_stage= Stage(titre=nomstage, lien=url2, domaine=domaine,  date_publication=None, periode=periode, salaire=gratification, niveau_etudes=etude, entreprise=nomentreprise)
+    nouveau_stage= Stage(titre=nomstage, lien=url2, domaine=domaine,  date_publication=None, periode=periode, salaire=gratification, niveau_etudes=etude, entreprise=nomentreprise, lieu=lieu)
     # Utiliser StageDAO pour créer le stage dans la base de données
     stage_dao = StageDAO()
     stage_cree = stage_dao.create_stage(nouveau_stage)
-    nouv_entreprise=Entreprise(nom_entreprise=nomentreprise, adresse=lieu)
+    #nouv_entreprise=Entreprise(nom_entreprise=nomentreprise, adresse=lieu)
     #entreprise_DAO=EntrepriseDAO()
     #entreprise_cree=entreprise_DAO.create_entreprise(nouv_entreprise)
 
@@ -74,3 +74,4 @@ for stage in stages_trouves:
 # prendre en compte l'url
 # il faut relier les stages qu'on vient de chercher à la recherche
 # date de publication a un problème
+# non concordance de certaines variables de la classe stage avec stageDAO
