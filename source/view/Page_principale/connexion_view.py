@@ -1,8 +1,7 @@
 from InquirerPy import inquirer
 from source.view.Page_option.menu_view import Menu_view
 from source.services.service_utilisateur import UtilisateurService
-from source.session_view import Session
-
+from source.view.session_view import Session
 
 class ConnexionView:
     def demander_pseudo_mot_de_passe(self):

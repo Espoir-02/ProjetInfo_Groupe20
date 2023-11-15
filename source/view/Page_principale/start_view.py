@@ -1,8 +1,8 @@
 import random
 import source.data # supposition pour l'instant, nom à changer selon Espoir
-from source.view.Page_principale.connexion_view import Connexion_view
-from source.view.create_account import CreationCompte_view
-from source.view.mode_invite_view import Mode_invite_view
+from source.view.Page_principale.connexion_view import ConnexionView
+from source.view.Page_principale.create_account import CreationCompte_view
+from source.view.Page_principale.mode_invite_view import Mode_invite_view
 from InquirerPy import inquirer
 
 # from source.business_object.utilisateur.  --> il faut importer une méthode vérification de connexion pour un utilisateur quelconque

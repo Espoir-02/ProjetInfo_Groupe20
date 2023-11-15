@@ -1,8 +1,8 @@
 from InquirerPy import inquirer
 from menu_view import Menu_view
 from session_view import Session
-from service_utilisateur import UtilisateurService
-from service_suggestion_eleve import ServiceSuggestion
+from source.services.service_utilisateur import UtilisateurService
+from source.services.service_suggestion_eleve import ServiceSuggestion
 
 
 class Proposition_prof_view:
