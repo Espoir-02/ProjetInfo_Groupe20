@@ -1,6 +1,7 @@
 from InquirerPy import inquirer
-from source.view.couche2menu.menu_view import Menu_view
+from source.view.Page_option.menu_view import Menu_view
 from source.services.service_utilisateur import UtilisateurService
+from session_view import Session
 
 
 class ConnexionView:
@@ -31,8 +32,14 @@ class ConnexionController:
 
     def gerer_connexion_reussie(self, pseudo):
         type_utilisateur = self.utilisateur_service.get_type_utilisateur(pseudo)
+
+        Session().user_id = self.utilisateur_service.find_id_by_pseudo(pseudo)
+        Session().user_type = type_utilisateur
+
         menu_view = Menu_view()
         result = menu_view.display(type_utilisateur)
+
+    
 
         if result == 'Exit':
             print("L'application se termine.")

@@ -60,6 +60,10 @@ class UtilisateurService:
     def get_type_utilisateur(self, pseudo):
         return self.utilisateur_dao.get_type_utilisateur(pseudo)
 
+    def find_id_by_pseudo(self,pseudo):
+        return self.utilisateur_dao.find_id_by_pseudo(pseudo)
+        
+
         
     
     

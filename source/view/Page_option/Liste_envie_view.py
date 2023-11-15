@@ -17,4 +17,4 @@ class Liste_envie_view:
         answers = inquirer.prompt(questions)
 
         #Renvoie le pokemon sélectionné
-        return 'Stage_detail_view', answers['selection_stage']
+        return , answers['selection_stage']

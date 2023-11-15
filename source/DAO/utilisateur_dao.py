@@ -158,7 +158,7 @@ class UtilisateurDAO:
             L'identifiant de l'utilisateur
 
         >>> mes_utilisateurs = UtilisateurDAO()
-        >>> id = mes_utilisateurs.find_id_by_mdp("Milliris")
+        >>> id = mes_utilisateurs.find_id_by_pseudo("Milliris")
         >>> print(id)
         6
         """
@@ -225,16 +225,51 @@ class UtilisateurDAO:
             }
         return utilisateur_dict
 
-    def get_all_ids(self):
-        """Pour récupérer une liste contenant les ID des utilisateurs"""
+    def get_all_utilisateurs(self):
+        """Pour récupérer une liste contenant tous les utilisateurs.
+
+        Returns
+        -------
+        list of dict
+            La liste contenant les informations sur chaque utilisateur
+
+        Examples
+        -------
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> liste=mes_utilisateurs.get_all_utilisateurs()
+        >>> print(liste)
+        #Affiche la liste de tous les utilisateurs avec leurs informations associées
+        """
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT id_utilisateur FROM base_projetinfo.utilisateur")
-                ids_utilisateurs = [row["id_utilisateur"] for row in cursor.fetchall()]
-        return ids_utilisateurs
+                cursor.execute("SELECT * FROM base_projetinfo.utilisateur")
+                columns = [col[0] for col in cursor.description]
+                result = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        if not result:
+            print("Aucun utilisateur trouvé dans la base de données.")
+        return result
 
     def get_type_utilisateur(self, pseudo):
-        """Pour récupérer le type de l'utilisateur à partir de son pseudo"""
+        """Pour récupérer le type de l'utilisateur à partir de son pseudo
+
+        Parameters
+        ----------
+        pseudo: str
+            Le pseudo de l'utilisateur
+
+        Returns
+        -------
+        str
+            Le type de l'utilisateur (élève, professeur, administrateur, invité)
+
+        Examples
+        -------
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> type_utilisateur = mes_utilisateurs.get_type_utilisateur(Milliris)
+        >>> print(type_utilisateur)
+        "elève"
+        """
         if not isinstance(pseudo, str):
             raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
         with DBConnection().connection as conn:
@@ -252,6 +287,37 @@ class UtilisateurDAO:
                     type_utilisateur = type_utilisateur[0]
         return type_utilisateur
 
+    def update_utilisateur(self, pseudo, nouveau_mdp):
+        """Pour mettre à jour le mot de passe d'un utilisateur.
+
+        Parameters
+        ----------
+        pseudo : str
+            Le pseudo de l'utilisateur
+
+        Examples
+        ------
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> pseudo= 'Milliris'
+        >>> nouveau_mdp = "MotDePasse456"
+        >>> mes_utilisateurs.update_utilisateur(Milliris, nouveau_mdp)
+        >>> mdp_maj = mes_utilisateurs.find_mdp("Milliris")
+        >>> print(mdp_maj)
+        "MotDePasse456"
+        """
+        if not isinstance(pseudo, str):
+            raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE base_projetinfo.utilisateur "
+                    "SET mot_de_passe = %(nouveau_mdp)s "
+                    "WHERE pseudo = %(pseudo)s",
+                    {"nouveau_mot_de_passe": nouveau_mdp, "pseudo": pseudo},
+                )
+
+                if cursor.rowcount == 0:
+                    print("Le pseudo n'existe pas")
 
     def delete_utilisateur(self, id_utilisateur):
         """Pour supprimer un utilisateur de la base de données.
