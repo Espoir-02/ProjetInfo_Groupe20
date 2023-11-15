@@ -4,7 +4,6 @@ from source.DAO.ListeEleveDAO import ListeElevesDAO
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.DAO.SuggestionsDAO import SuggestionsDAO
 from source.DAO.StageDAO import StageDAO
-from source.view.Page_option.menu_view import Menu_view
 from source.view.Page_option.proposition_prof_view import Proposition_prof_view 
 from source.services.service_liste_envie import ListeEnvieService
 from InquirerPy import inquirer
@@ -30,6 +29,7 @@ class detail_stage_view_invite(AbstractView):
 
         if answers['choice'] == 'Retour au Menu':
             # Retourne à la vue précédente
+            from source.view.Page_option.menu_view import Menu_view
             return Menu_view()
         else:
             # Termine l'application
@@ -54,6 +54,7 @@ class detail_stage_view_eleve(AbstractView):
         answers = inquirer.prompt(questions)
 
         if answers['choice'] == 'Quitter':
+            from source.view.Page_option.menu_view import Menu_view
             return Menu_view()
         else:
             ajouter_stage_a_liste_envie(Session().user_id,selection_stage)
@@ -85,7 +86,7 @@ class detail_stage_view_prof(AbstractView):
        
         elif answers['choice'] == 'Retour en arrière':
             # Retourne à la vue précédente
-            return isteL_envie_view.liste_envie_view
+            pass
         else:
-            # Termine l'application
-            return 'Exit'
+            from source.view.Page_option.menu_view import Menu_view
+            return Menu_view()

@@ -1,6 +1,6 @@
 from InquirerPy import inquirer
-from menu_view import Menu_view
-from session_view import Session
+from source.view.Page_option.menu_view import Menu_view
+from source.view.session_view import Session
 from source.services.service_utilisateur import UtilisateurService
 from source.services.service_suggestion_eleve import ServiceSuggestion
 
