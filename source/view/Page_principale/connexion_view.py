@@ -40,14 +40,20 @@ class ConnexionController:
         Session().user_pseudo = pseudo
 
         menu_view = Menu_view()
+        menu_view.display()
+
+        """menu_view = Menu_view()
         result = menu_view.display()
- 
+        return Menu_view
     
 
         if result == 'Exit':
             print("L'application se termine.")
         else:
-            print(f"Redirection vers {result}...")
+            print(f"Redirection vers {result}...")"""
+
+    def make_choice(self):
+        return self.display()
 
 if __name__ == "__main__":
     connexion_controller = ConnexionController()

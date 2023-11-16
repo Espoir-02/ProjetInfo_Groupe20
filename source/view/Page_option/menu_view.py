@@ -16,45 +16,53 @@ class Menu_view:
     def display(self):
         pseudo = Session().user_pseudo
         type_utilisateur = Session().user_type
+        id_professeur= Session().user_id
 
-        choices = ['Rechercher un stage', 'Accéder à son historique', 'Exit']
+        while True:
 
-        if type_utilisateur in ['professeur', 'eleve', 'administrateur']:
-            choices.append("Accéder à sa liste d'envie")
+            choices = ['Rechercher un stage', 'Accéder à son historique', 'Exit']
+
+            if type_utilisateur in ['professeur', 'eleve', 'administrateur']:
+                choices.append("Accéder à sa liste d'envie")
         
-        if type_utilisateur == 'eleve':
-            choices.append("Accéder à la liste de propositions du professeur")
+            if type_utilisateur == 'eleve':
+                choices.append("Accéder à la liste de propositions du professeur")
 
-        if type_utilisateur == 'professeur':
-            choices.append("Accéder à la liste d'élèves")
+            if type_utilisateur == 'professeur':
+                choices.append("Accéder à la liste d'élèves")
 
-        if type_utilisateur== 'administrateur':
-            choices.append("Accéder aux fonctions administrateur")
+            if type_utilisateur== 'administrateur':
+                choices.append("Accéder aux fonctions administrateur")
 
-        questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
+            questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
 
-        answers = inquirer.prompt(questions)
+            answers = inquirer.prompt(questions)
 
-        if answers['choice'] == 'Rechercher un stage':
-            return Recherche_Stage_View()
+            if answers['choice'] == 'Rechercher un stage':
+                return Recherche_Stage_View()
         
-        elif answers['choice'] == 'Accéder à son historique':
-            return HistoriqueView()
+            elif answers['choice'] == 'Accéder à son historique':
+                return HistoriqueView()
 
-        elif (type_utilisateur in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
-            return Liste_envie_view()
+            elif (type_utilisateur in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
+                return Liste_envie_view()
     
-        elif (type_utilisateur == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):
-            return Proposition_prof_view()
+            elif (type_utilisateur == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):
+                return Proposition_prof_view()
 
-        elif (type_utilisateur == 'professeur') and (answers['choice'] == "Accéder à la liste d'élèves"):
-            return ListeElevesView()
+            elif (type_utilisateur == 'professeur') and (answers['choice'] == "Accéder à la liste d'élèves"):
+                liste_eleves_view = ListeElevesView(id_professeur)
+                return liste_eleves_view.display()
 
-        elif(type_utilisateur == 'administrateur') and (answers['choice']== 'Accéder aux fonctions administrateur'):
-            return AdminView()
+            elif(type_utilisateur == 'administrateur') and (answers['choice']== 'Accéder aux fonctions administrateur'):
+                return AdminView()
 
-        else:
-            return Menu_view()
+            else:
+                return Menu_view()
 
     def make_choice(self):
         return self.display()
+
+if __name__ == "__main__":
+    connexion_menu = Menu_view()
+    connexion_menu.display()
