@@ -1,3 +1,6 @@
+from source.services.scrapping.scrapping import *
+
+
 class Recherche:
     def __init__(
         self,
@@ -103,4 +106,4 @@ class Recherche:
 
         urlf = url + niveau_etude + domaine + zone + ".html"
 
-        return urlf
+        Scrapping().scrap(urlf)
