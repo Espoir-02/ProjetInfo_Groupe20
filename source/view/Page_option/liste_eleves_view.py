@@ -1,8 +1,10 @@
 from source.services.service_liste_eleves import ListeElevesService
+from source.view.session_view import Session
 
 class ListeElevesView:
 
-    def __init__(self, liste_eleves_service):
+    def __init__(self, id_professeur):
+        self.id_professeur=id_professeur
         self.liste_eleves_service = ListeElevesService()
 
     def afficher_menu(self):
@@ -11,13 +13,13 @@ class ListeElevesView:
         print("3. Supprimer un élève")
         print("4. Quitter")
 
-    def executer(self, id_professeur):
+    def executer(self):
         while True:
             self.afficher_menu()
             choix = input("Choisissez une option : ")
 
             if choix == '1':
-                self.liste_eleves_service.consulter_liste_eleves(id_professeur, option)
+                self.liste_eleves_service.consulter_liste_eleves(id_professeur)
             elif choix == '2':
                 nom_eleve = input("Entrez le nom de l'élève : ")
                 prenom_eleve = input("Entrez le prénom de l'élève : ")
@@ -32,3 +34,9 @@ class ListeElevesView:
             else:
                 print("Option invalide. Veuillez réessayer.")
 
+if __name__ == "__main__":
+
+    id_professeur = Session().user_id 
+    vue_liste_eleves = ListeElevesView(id_professeur=id_professeur)
+    vue_liste_eleves.executer()
+    
