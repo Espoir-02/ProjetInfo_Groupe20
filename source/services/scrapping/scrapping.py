@@ -53,7 +53,7 @@ class Scrapping:
             print(cpt)
             print("Titre:", nomstage)
             print("Entreprise:", nomentreprise)
-            print("Lieu", lieu)
+            print("Lieu:", lieu)
             print("Domaine:", domaine)
             print("Etude:", etude)
             print("Période:", periode)
