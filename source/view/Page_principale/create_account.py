@@ -2,6 +2,7 @@ from InquirerPy import inquirer
 from source.services.service_utilisateur import UtilisateurService
 from source.view.Page_option.menu_view import Menu_view
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
+from source.view.session_view import Session
 import inquirer
 
 class CreationCompte_view:
@@ -39,6 +40,9 @@ class CreationCompte_view:
         nouvel_utilisateur = utilisateur_service.creer_compte(utilisateur)
 
         if nouvel_utilisateur:
+            Session().user_id = nouvel_utilisateur.id
+            Session().user_type = nouvel_utilisateur.type_utilisateur
+            Session().user_pseudo = nouvel_utilisateur.pseudo
             print("Compte créé avec succès. ID de l'utilisateur :" , nouvel_utilisateur.id)
             return Menu_view().display()
 
