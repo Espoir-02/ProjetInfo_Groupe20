@@ -6,7 +6,8 @@ class UtilisateurService:
         self.utilisateur_dao = UtilisateurDAO()
 
     def creer_compte_anonyme(self):
-        nouvel_utilisateur_invite=self.utilisateur_dao.create_compte(nouvel_utilisateur)
+        utilisateur_invite=Utilisateur("invité",None,None,None,None)
+        nouvel_utilisateur_invite=self.utilisateur_dao.create_compte(utilisateur_invite)
         return nouvel_utilisateur_invite
 
     def creer_compte(self, nom, prenom, pseudo, mot_de_passe, type_utilisateur):

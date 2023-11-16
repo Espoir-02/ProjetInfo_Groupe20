@@ -7,13 +7,14 @@ from source.view.Page_option.liste_eleves_view import ListeElevesView
 from source.services.service_utilisateur import UtilisateurService  
 from source.view.Page_option.admin_view import AdminView
 from source.view.session_view import Session 
-
+import inquirer
 
 class Menu_view:
     def __init__(self):
         self.utilisateur_service = UtilisateurService()
 
-    def display(self, pseudo):
+    def display(self):
+        pseudo = Session().user_pseudo
         type_utilisateur = Session().user_type
 
         choices = ['Rechercher un stage', 'Accéder à son historique', 'Exit']
@@ -35,22 +36,25 @@ class Menu_view:
         answers = inquirer.prompt(questions)
 
         if answers['choice'] == 'Rechercher un stage':
-            return Recherche_Stage_View().recherche_stage_view()
+            return Recherche_Stage_View()
         
         elif answers['choice'] == 'Accéder à son historique':
-            return HistoriqueView().historique_view()
-        
+            return HistoriqueView()
+
         elif (type_utilisateur in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
-            return Liste_envie_view().liste_envie_view()
+            return Liste_envie_view()
     
         elif (type_utilisateur == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):
-            return Proposition_prof_view().proposition_prof_view()
+            return Proposition_prof_view()
 
         elif (type_utilisateur == 'professeur') and (answers['choice'] == "Accéder à la liste d'élèves"):
             return ListeElevesView()
 
         elif(type_utilisateur == 'administrateur') and (answers['choice']== 'Accéder aux fonctions administrateur'):
-            return AdminView().admin_view()
+            return AdminView()
 
         else:
             return Menu_view()
+
+    def make_choice(self):
+        return self.display()
