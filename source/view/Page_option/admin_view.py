@@ -1,5 +1,4 @@
 from source.services.service_admin import ServiceAdmin
-from source.view.Page_option.menu_view import Menu_view
 
 
 class AdminView:
@@ -32,6 +31,7 @@ class AdminView:
                 self.admin_service.supprimer_stage(id_stage)
             elif choix == "5":
                 print("Retour au menu principal !")
+                from source.view.Page_option.menu_view import Menu_view
                 return Menu_view()
                 # Pas sur que ça fonctionne. A priori besoin du pseudo pour repasser sur le menu principal
                 break

@@ -23,6 +23,7 @@ class UtilisateurService:
 
     def utilisateur_authentifier_verif(self,id_utilisateur):
         # A implementer
+        pass
         
     def recuperer_informations(self, pseudo):
         # Récupérer les informations de l'utilisateur

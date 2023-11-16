@@ -1,7 +1,7 @@
 from InquirerPy import inquirer
 from source.services.service_utilisateur import UtilisateurService
 from source.view.Page_option.menu_view import Menu_view
-from session_view import Session
+from source.view.session_view import Session
 
 
 class Mode_invite_view:
