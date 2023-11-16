@@ -7,7 +7,7 @@ from source.view.Page_option.liste_eleves_view import ListeElevesView
 from source.services.service_utilisateur import UtilisateurService  
 from source.view.Page_option.admin_view import AdminView
 from source.view.session_view import Session 
-
+import inquirer
 
 class Menu_view:
     def __init__(self):

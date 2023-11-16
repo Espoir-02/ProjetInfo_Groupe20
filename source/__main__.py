@@ -7,8 +7,10 @@ if __name__ == "__main__":
     while current_view: 
         current_view.display()
         
- 
+        current_view = current_view.make_choice()
+  
        
+
        
 "current_view = current_view.make_choice() pour passer à la vue suivante mais , pas cohérent avec notre implementation pour linsant"
 
