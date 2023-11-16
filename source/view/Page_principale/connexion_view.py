@@ -28,7 +28,7 @@ class ConnexionController:
             if self.connexion_service.verifier_identifiants(pseudo, mot_de_passe):
                 self.connexion_view.afficher_message("Connexion réussie!")
                 self.gerer_connexion_reussie(pseudo)
-                break
+                return
             else:
                 self.connexion_view.afficher_message("Identifiants incorrects. Veuillez réessayer.")
 

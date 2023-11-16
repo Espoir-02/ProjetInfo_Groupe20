@@ -34,7 +34,7 @@ class Start_view:
 
 
 from InquirerPy import prompt
-from source.view.Page_principale.connexion_view import ConnexionView
+from source.view.Page_principale.connexion_view import ConnexionController
 from source.view.Page_principale.create_account import CreationCompte_view
 from source.view.Page_principale.mode_invite_view import Mode_invite_view
 
@@ -60,7 +60,7 @@ class Start_view:
 
         for choice in choices:
             if choice == "Se connecter":
-                return ConnexionView()
+                return ConnexionController()
             elif choice == "S'inscrire":
                 return CreationCompte_view()
             elif choice == "Continuer en mode invité":
