@@ -32,7 +32,8 @@ class AdminView:
             elif choix == "5":
                 print("Retour au menu principal !")
                 from source.view.Page_option.menu_view import Menu_view
-                return Menu_view()
+                menu_view=Menu_view()
+                menu_view.display()
                 # Pas sur que ça fonctionne. A priori besoin du pseudo pour repasser sur le menu principal
                 break
             else:
