@@ -63,7 +63,6 @@ class Recherche_Stage_View:
         )
         stock_recherche.lancer_recherche() # exécute le scrapping via la classe Recherche
 
-        return stock_recherche
     
 
 
