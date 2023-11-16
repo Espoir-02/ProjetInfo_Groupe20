@@ -6,6 +6,7 @@ from source.business_object.stage_recherche.entreprise import Entreprise
 from bs4 import BeautifulSoup
 import requests
 
+
 url = "https://jobs-stages.letudiant.fr/stages-etudiants/offres/domaines-audiovisuel-cinema-photo-son.html"
 response = requests.get(url)
 html = response.text
