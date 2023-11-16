@@ -4,7 +4,7 @@ if __name__ == "__main__":
     # Lancer la vue du menu démarrage
     current_view = Start_view()
 
-    while current_view:
+    while current_view: 
         current_view.display()
         
         current_view = current_view.make_choice()

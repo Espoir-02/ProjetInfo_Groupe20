@@ -70,5 +70,5 @@ class Start_view:
 
     def make_choice(self):
         return self.display()
-
-
+    
+    

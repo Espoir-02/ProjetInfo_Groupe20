@@ -40,7 +40,7 @@ class ConnexionController:
         Session().user_pseudo = pseudo
 
         menu_view = Menu_view()
-        result = menu_view.display()
+        result = menu_view.display(type_utilisateur)
 
     
 

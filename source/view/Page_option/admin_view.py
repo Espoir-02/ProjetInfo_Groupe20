@@ -2,7 +2,7 @@ from source.services.service_admin import ServiceAdmin
 
 
 class AdminView:
-    def __init__(self, liste_eleves_service):
+    def __init__(self):
         self.admin_service = ServiceAdmin()
 
     def afficher_menu(self):
@@ -12,7 +12,7 @@ class AdminView:
         print("4. Supprimer un stage")
         print("5. Quitter et revenir au menu principal")
 
-    def executer(self, id_professeur):
+    def executer(self):
         while True:
             self.afficher_menu()
             choix = input("Choisissez une option : ")
@@ -37,3 +37,7 @@ class AdminView:
                 break
             else:
                 print("Option invalide. Veuillez réessayer.")
+
+if __name__ == "__main__":
+    vue_admin = AdminView()
+    vue_admin.executer()
