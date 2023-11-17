@@ -7,8 +7,8 @@ from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
 import inquirer
 
 class Liste_envie_view:
-    def __init__(self,id_eleve):
-        self.id_eleve = id_eleve
+    def __init__(self):
+        self.id_eleve = Session().user_id
         self.service_liste_envie= ListeEnvieService()
 
     def display(self):
@@ -57,7 +57,7 @@ class Liste_envie_view:
             else:
                 return detail_stage_view_prof(answers['selection'])"""
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     id_eleve = Session().user_id
     liste_envie_view = Liste_envie_view(id_eleve=id_eleve)
-    liste_envie_view.display()
+    liste_envie_view.display()"""

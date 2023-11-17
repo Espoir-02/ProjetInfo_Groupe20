@@ -50,7 +50,7 @@ class Menu_view:
                 return HistoriqueView().display()
 
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
-                liste_envie_view= Liste_envie_view(id_eleve)
+                liste_envie_view= Liste_envie_view()
                 return liste_envie_view.display()
             
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Déconnexion"):
