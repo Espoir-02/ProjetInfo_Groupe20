@@ -1,6 +1,5 @@
 from InquirerPy import inquirer
-from menu_view import Menu_view
-from session_view import Session
+from source.view.session_view import Session
 from source.services.service_utilisateur import UtilisateurService
 from source.services.service_suggestion_eleve import ServiceSuggestion
 
@@ -36,6 +35,7 @@ class Proposition_prof_view:
                 answers_fin = inquirer.prompt(questions)
 
                 if answers_fin['choice'] == 'Quitter':
+                    from source.view.Page_option.menu_view import Menu_view
                     return Menu_view()
                 #tant que le professeur ne choisit pas de quitter , on continue la boucle
             else:

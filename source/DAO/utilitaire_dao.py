@@ -16,7 +16,7 @@ class UtilitaireDAO:
                 )
                 count = cursor.fetchone()[0]
                 return count > 0
-
+    @staticmethod
     def check_stage_exists(id_stage):
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
@@ -29,22 +29,24 @@ class UtilitaireDAO:
                 return count > 0
 
     @staticmethod
-    def check_infos_stage_exists(nomstage, url2, domaine, periode, gratification, etude, nomentreprise, lieu):
+    def check_infos_stage_exists(nomstage, url2, domaine, periode,gratification, date_publication, etude, nomentreprise, lieu):
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
+                print("Parameters:", nomstage, url2, domaine, periode, gratification, date_publication, etude, nomentreprise, lieu)
                 cursor.execute(
                     "SELECT COUNT(*) FROM base_projetinfo.stage "
                     "WHERE titre = %(nomstage)s AND lien = %(url2)s AND "
-                    "domaine = %(domaine)s  AND "
+                    "domaine = %(domaine)s AND "
                     "periode = %(periode)s AND salaire = %(gratification)s AND "
-                    "niveau_etudes = %(etude)s AND entreprise = %(nomentreprise)s AND "
-                    "lieu = %(lieu)s",
+                    "date_publication = %(date_publication)s AND niveau_etudes = %(etude)s AND "
+                    "entreprise = %(nomentreprise)s AND lieu = %(lieu)s",
                     {
                         "nomstage": nomstage,
                         "url2": url2,
                         "domaine": domaine,
                         "periode": periode,
                         "gratification": gratification,
+                        "date_publication": date_publication,
                         "etude": etude,
                         "nomentreprise": nomentreprise,
                         "lieu": lieu

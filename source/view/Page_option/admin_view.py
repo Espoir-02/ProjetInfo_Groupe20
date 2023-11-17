@@ -1,9 +1,8 @@
 from source.services.service_admin import ServiceAdmin
-from source.view.Page_option.menu_view import Menu_view
 
 
 class AdminView:
-    def __init__(self, liste_eleves_service):
+    def __init__(self):
         self.admin_service = ServiceAdmin()
 
     def afficher_menu(self):
@@ -13,7 +12,7 @@ class AdminView:
         print("4. Supprimer un stage")
         print("5. Quitter et revenir au menu principal")
 
-    def executer(self, id_professeur):
+    def executer(self):
         while True:
             self.afficher_menu()
             choix = input("Choisissez une option : ")
@@ -32,8 +31,14 @@ class AdminView:
                 self.admin_service.supprimer_stage(id_stage)
             elif choix == "5":
                 print("Retour au menu principal !")
-                return Menu_view()
+                from source.view.Page_option.menu_view import Menu_view
+                menu_view=Menu_view()
+                menu_view.display()
                 # Pas sur que ça fonctionne. A priori besoin du pseudo pour repasser sur le menu principal
                 break
             else:
                 print("Option invalide. Veuillez réessayer.")
+
+if __name__ == "__main__":
+    vue_admin = AdminView()
+    vue_admin.executer()

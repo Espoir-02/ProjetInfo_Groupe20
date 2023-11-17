@@ -6,12 +6,18 @@ class UtilisateurService:
         self.utilisateur_dao = UtilisateurDAO()
 
     def creer_compte_anonyme(self):
-        nouvel_utilisateur_invite=self.utilisateur_dao.create_compte(nouvel_utilisateur)
+        utilisateur_invite=Utilisateur("invité",None,None,None,None)
+        nouvel_utilisateur_invite=self.utilisateur_dao.create_compte(utilisateur_invite)
         return nouvel_utilisateur_invite
 
-    def creer_compte(self, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
-        nouvel_utilisateur = Utilisateur(nom=nom, prenom=prenom, pseudo=pseudo, mot_de_passe=mot_de_passe, type_utilisateur=type_utilisateur)
-        utilisateur_cree = self.utilisateur_dao.create_compte(nouvel_utilisateur)
+    def creer_compte(self, utilisateur):
+        nouvel_utilisateur =  Utilisateur(
+        nom=utilisateur.nom,
+        prenom=utilisateur.prenom,
+        pseudo=utilisateur.pseudo,
+        mot_de_passe=utilisateur.mot_de_passe,
+        type_utilisateur=utilisateur.type_utilisateur)
+        utilisateur_cree= self.utilisateur_dao.create_compte(nouvel_utilisateur)
         return utilisateur_cree
 
     def authentifier(self, pseudo, mot_de_passe):
@@ -23,6 +29,7 @@ class UtilisateurService:
 
     def utilisateur_authentifier_verif(self,id_utilisateur):
         # A implementer
+        pass
         
     def recuperer_informations(self, pseudo):
         # Récupérer les informations de l'utilisateur
