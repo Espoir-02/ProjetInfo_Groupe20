@@ -4,14 +4,12 @@ from source.view.session_view import Session
 import inquirer 
 
 class HistoriqueView:
-    def __init__(self,id_utilisateur):
-        self.id_utilisateur = id_utilisateur
 
     def display(self):
 
         # Récupérez l'historique de l'utilisateur à partir de son identifiant
         historique_service = HistoriqueService()
-        historique = historique_service.get_all_historique_by_id(self.id_utilisateur)
+        historique = historique_service.get_all_historique_by_id(Session().user_id)
 
         option = []
         for element in historique :
@@ -37,17 +35,17 @@ class HistoriqueView:
             id_stage = element_selection_historique["id_stage"]
             from source.view.Page_detail.detail_stage_view import detail_stage_view_eleve
             detail_view = detail_stage_view_eleve(id_stage)
-            return detail_view.display()
+            return detail_view
 
         elif Session().user_type == "prof":
             id_stage = element_selection_historique["id_stage"]
             from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
             detail_view = detail_stage_view_prof(id_stage)
-            return detail_view.display()
+            return detail_view
         
         else:
             detail_view = detail_stage_view_invite["id_stage"]
-            return detail_view.display()
+            return detail_view
     
     def make_choice(self):
         return self.display()
