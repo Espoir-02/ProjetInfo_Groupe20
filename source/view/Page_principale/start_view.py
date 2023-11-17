@@ -37,6 +37,7 @@ from InquirerPy import prompt
 from source.view.Page_principale.connexion_view import ConnexionController
 from source.view.Page_principale.create_account import CreationCompte_view
 from source.view.Page_principale.mode_invite_view import Mode_invite_view
+from source.assets_graphiques.ascii import afficher_ascii_art
 
 
 class Start_view:
@@ -55,6 +56,7 @@ class Start_view:
         ]
     
     def display(self):
+        afficher_ascii_art()
         answers = prompt(self.__questions)
         choices = answers['choice']
 
