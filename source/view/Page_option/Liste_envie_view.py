@@ -28,7 +28,7 @@ class Liste_envie_view:
                 liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_eleve)
                 print(liste_envie_courant)
                 # Demander à l'utilisateur de sélectionner un stage
-                self.select_stage()
+                #self.select_stage()
             elif user_choice == "Supprimer un stage de la liste":
                 id_stage = int(input("Entrez l'ID du stage à supprimer : "))
                 self.service_liste_envie.supprimer_stage_de_liste_envie( self.id_eleve, id_stage)
@@ -38,7 +38,7 @@ class Liste_envie_view:
                 menu_view=Menu_view()
                 menu_view.display()
 
-    def select_stage(self):
+    """def select_stage(self):
         # Récupérer la liste d'envies
         liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_eleve)
 
@@ -55,7 +55,7 @@ class Liste_envie_view:
             if Session().user_type == "eleve":
                 return detail_stage_view_eleve(answers['selection'])
             else:
-                return detail_stage_view_prof(answers['selection'])
+                return detail_stage_view_prof(answers['selection'])"""
 
 if __name__ == "__main__":
     id_eleve = Session().user_id

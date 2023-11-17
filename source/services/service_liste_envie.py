@@ -1,4 +1,5 @@
 from source.DAO.ListeEnvieDAO import ListeEnvieDAO
+from prettytable import PrettyTable
 
 class ListeEnvieService:
     def __init__(self):
@@ -11,7 +12,17 @@ class ListeEnvieService:
         return self.liste_envie_dao.delete_liste_envie(id_eleve, id_stage)
 
     def get_liste_envie_eleve(self, id_eleve):
-        return self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
+        liste_envie= self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
+        if liste_envie:
+            table = PrettyTable()
+            table.field_names = ["ID Stage", "Titre", "Lien", "Domaine"]
+
+            for envie in liste_envie:
+                table.add_row([envie["id_stage"], envie["titre"], envie["lien"], envie["domaine"]])
+
+            print(table)
+        else:
+            print("La liste d'envies est vide.")
 
     def vider_liste_envie_eleve(self, id_eleve):
         """

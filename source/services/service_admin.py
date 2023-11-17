@@ -1,5 +1,6 @@
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.DAO.StageDAO import StageDAO
+from prettytable import PrettyTable
 
 
 class ServiceAdmin:
@@ -14,7 +15,24 @@ class ServiceAdmin:
 
     def obtenir_liste_utilisateurs(self):
         liste = self.utilisateur_dao.get_all_utilisateurs()
-        print(liste)
+        if liste:
+            table = PrettyTable()
+            table.field_names = ["ID Utilisateur", "Nom", "Prénom", "Pseudo", "Mot de passe", "Type Utilisateur"]
+
+            for utilisateur in liste:
+                table.add_row([
+                    utilisateur["id_utilisateur"],
+                    utilisateur["nom"],
+                    utilisateur["prenom"],
+                    utilisateur["pseudo"],
+                    utilisateur["mot_de_passe"],
+                    utilisateur["type_utilisateur"]
+                ])
+
+            print(table)
+        else:
+            print("La liste d'utilisateurs est vide.")
+    
 
     def supprimer_stage(self, id_stage):
         print("Stage supprimé avec succès")

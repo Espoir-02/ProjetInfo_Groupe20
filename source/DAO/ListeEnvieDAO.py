@@ -123,3 +123,4 @@ class ListeEnvieDAO:
                     "WHERE id_eleve = %(id_eleve)s AND id_stage = %(id_stage)s",
                     {"id_eleve": id_eleve, "id_stage": id_stage},
                 )
+

@@ -63,6 +63,6 @@ class ConnexionController:
     def make_choice(self):
         return self.display()
 
-"""if __name__ == "__main__":
+if __name__ == "__main__":
     connexion_controller = ConnexionController()
-    connexion_controller.display()"""
+    connexion_controller.display()
