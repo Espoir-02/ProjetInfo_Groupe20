@@ -14,15 +14,15 @@ class Menu_view:
         self.utilisateur_service = UtilisateurService()
 
     def display(self):
-        """pseudo = Session().user_pseudo
+        pseudo = Session().user_pseudo
         type_utilisateur = Session().user_type
         id_professeur= Session().user_id
         id_eleve = Session().user_id
-        """
+        
 
         while True:
 
-            choices = ['Rechercher un stage', 'Accéder à son historique', 'Exit']
+            choices = ['Rechercher un stage', 'Accéder à son historique', "Quitter l'application"]
 
             if Session().user_type in ['professeur', 'eleve', 'administrateur']:
                 choices.append("Accéder à sa liste d'envie")
@@ -35,6 +35,9 @@ class Menu_view:
 
             if Session().user_type == 'administrateur':
                 choices.append("Accéder aux fonctions administrateur")
+
+            if Session().user_type in ['professeur', 'eleve', 'administrateur']:
+                choices.append("Déconnexion")
 
             questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
 
@@ -49,6 +52,11 @@ class Menu_view:
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
                 liste_envie_view= Liste_envie_view()
                 return liste_envie_view.display()
+            
+            elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Déconnexion"):
+                from source.view.Page_principale.start_view import Start_view
+                start_view= Start_view()
+                return start_view.display()
     
             elif (Session().user_type == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):
                 return Proposition_prof_view()
@@ -66,12 +74,14 @@ class Menu_view:
                 admin_view= AdminView()
                 return admin_view.display()
 
-            else:
-                return Menu_view()
+
+            elif answers['choice'] == "Quitter l'application":
+                print("Au revoir !")
+                break
 
     def make_choice(self):
         return self.display()
 
-"""if __name__ == "__main__":
+if __name__ == "__main__":
     connexion_menu = Menu_view()
-    connexion_menu.display()"""
+    connexion_menu.display()
