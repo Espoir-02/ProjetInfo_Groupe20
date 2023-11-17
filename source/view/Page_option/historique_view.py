@@ -13,23 +13,33 @@ class HistoriqueView:
         historique_service = HistoriqueService()
         historique = historique_service.get_all_historique_by_id(Session().user_id)
 
+        if not historique:
+            print("L'historique est vide.")
+            from source.view.menu_view import Menu_view
+            return Menu_view()
+
         option = []
         for element in historique :
             stage_service = StageService()
             stage = stage_service.find_stage_by_id(element["id_stage"])
             stage_info = f"ID du stage : {element['id_stage']}, Nom du stage : {stage['titre']}, Nom de l'entreprise : {stage['entreprise']}"
             # Date de consultation : {element['date_consultation']}, 
-            #On rempli la liste d'affichage
+            # On rempli la liste d'affichage
             option.append(inquirer.Option(f"{index}", stage_info)) 
         
-        # On affiche la liste
-        answers = inquirer.prompt([inquirer.List("Stage vu précedemment", "Consulter son historique :", options)])
+        #Ajout de l'option pour retourner au menu
+        option.append(inquirer.Option(str(len(historique) + 1), "Retourner au menu"))
 
+        # Affichage de la liste
+        answers = inquirer.prompt([inquirer.List("Stage vu précedemment", "Consulter son historique :", option)])
         num_selection = int(answers["Stage vu précedemment"])
+        
+        if num_selection == len(historique) + 1:
+            # Retourner au menu principal
+            from source.view.Page_principale.menu_view import Menu_view
+            return Menu_view()
+        
         element_selection_historique = historique[num_selection - 1]
-
-        #Les details du stage seront différent en fonction du type d'utilisateur 
-
     
         if Session().user_type == "eleve":
             id_stage = element_selection_historique["id_stage"]
