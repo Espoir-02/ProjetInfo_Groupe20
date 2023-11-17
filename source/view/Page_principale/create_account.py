@@ -15,7 +15,7 @@ class CreationCompte_view:
             inquirer.Text("prenom", message="Prénom:"),  
             inquirer.Text("pseudo", message="Pseudo:"),  
             inquirer.Password("mot_de_passe", message="Mot de passe:"), #mdp caché
-            inquirer.Text("type_utilisateur", message="Type utilisateur")]
+            inquirer.List("type_utilisateur", message="Type utilisateur", choices=["administrateur", "professeur", "eleve"]),]
 
         answers = inquirer.prompt(questions, raise_keyboard_interrupt=True)
 
