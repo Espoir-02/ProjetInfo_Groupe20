@@ -4,9 +4,7 @@ from source.view.session_view import Session
 import inquirer 
 
 class HistoriqueView:
-    def __init__(self,id_utilisateur):
-        self.id_utilisateur = id_utilisateur
-
+    
     def display(self):
 
         # Récupérez l'historique de l'utilisateur à partir de son identifiant
