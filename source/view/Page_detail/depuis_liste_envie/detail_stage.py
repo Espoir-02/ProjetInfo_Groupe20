@@ -9,32 +9,6 @@ from source.services.service_liste_envie import ListeEnvieService
 from InquirerPy import inquirer
 from source.view.session_view import Session
 
-class detail_stage_view_invite(AbstractView):
-    def __init__(self, stage):
-        self.stage = stage
-
-
-    def display(self, selection_stage):
-        # Affiche les détails du stage sélectionné
-        stage_details = self.stage.get_stage_details(stage_details)
-
-        # Affiche les détails du stage et propose de retourner à la vue précédente
-        print(f"Intitulé : {stage_details['nom']}")
-        print(f"Durée: {stage_details['durée']}")
-        print(f"Salaire: {stage_details['salaire']}")
-        print(f"Type: {stage_details['type']}")
-        print(f"Entreprise: {stage_details['entreprise']}")
-        questions = [inquirer.List('choice', message='Choisir une option:', choices=['Retour au Menu', 'Quitter'])]
-        answers = inquirer.prompt(questions)
-
-        if answers['choice'] == 'Retour au Menu':
-            # Retourne à la vue précédente
-            from source.view.Page_option.menu_view import Menu_view
-            return Menu_view()
-        else:
-            # Termine l'application
-            return ajouter_stage_a_liste_envie(Session().user_id)
-
 
 class detail_stage_view_eleve(AbstractView):
     def __init__(self, stage):
