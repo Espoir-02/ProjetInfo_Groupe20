@@ -17,15 +17,28 @@ class ListeEnvieService:
             table = PrettyTable()
             table.field_names = ["ID Stage", "Titre", "Lien", "Domaine"]
 
+            # Ajustez la largeur maximale des colonnes
+            MAX_WIDTH = 50
             for envie in liste_envie:
-                table.add_row([envie["id_stage"], envie["titre"], envie["lien"], envie["domaine"]])
+                table.add_row([
+                    envie["id_stage"],
+                    ListeEnvieService.truncate_text(envie["titre"], MAX_WIDTH),
+                    ListeEnvieService.truncate_text(envie["lien"], MAX_WIDTH),
+                    ListeEnvieService.truncate_text(envie["domaine"], MAX_WIDTH),
+                ])
 
             print(table)
         else:
             print("La liste d'envies est vide.")
+
+    @staticmethod
+    def truncate_text(text, max_width):
+        """Tronque le texte si sa longueur dépasse la largeur maximale."""
+        return (text[:max_width] + '...') if len(text) > max_width else text
 
     def vider_liste_envie_eleve(self, id_eleve):
         """
         Vide la liste d'envies d'un élève.
         """
         #OPTIONNELLE Pas encore fait 
+        

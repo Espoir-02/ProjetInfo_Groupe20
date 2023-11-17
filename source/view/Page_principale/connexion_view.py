@@ -4,11 +4,17 @@ from source.services.service_utilisateur import ServiceUtilisateur
 from source.services.service_connexion import ConnexionService
 from source.view.session_view import Session
 import inquirer
+import getpass
 
 class ConnexionView:
     def demander_pseudo_mot_de_passe(self):
-        pseudo = input("Entrez votre pseudo : ")
-        mot_de_passe = input("Entrez votre mot de passe : ")
+        questions = [  
+            inquirer.Text("pseudo", message="Pseudo:"),  
+            inquirer.Password("mot_de_passe", message="Mot de passe:")] #mdp caché]
+
+        answers = inquirer.prompt(questions, raise_keyboard_interrupt=True)
+        pseudo = answers["pseudo"]
+        mot_de_passe = answers["mot_de_passe"]
         return pseudo, mot_de_passe
          
     def afficher_message(self, message):

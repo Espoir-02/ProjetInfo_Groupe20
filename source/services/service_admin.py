@@ -40,5 +40,38 @@ class ServiceAdmin:
         
 
     def obtenir_liste_stages(self):
-        liste = self.stage_dao.get_all_stages()
-        print(liste)
+        liste_stages = self.stage_dao.get_all_stages()
+        if liste_stages:
+            table = PrettyTable()
+            table.field_names = [
+                "ID Stage", "Titre", "Lien", "Domaine", "Salaire", 
+                "Date de Publication", "Période", "Niveau d'Études", 
+                "Entreprise", "Lieu"
+            ]
+
+            # Ajustez la largeur maximale des colonnes
+            max_width=20
+            for stage in liste_stages:
+                table.add_row([
+                    stage["id_stage"],
+                    ServiceAdmin.truncate_text(stage["titre"], 20),
+                    ServiceAdmin.truncate_text(stage["lien"], 20),
+                    ServiceAdmin.truncate_text(stage["domaine"], max_width),
+                    ServiceAdmin.truncate_text(stage["salaire"], max_width),
+                    ServiceAdmin.truncate_text(stage["date_publication"], max_width),
+                    ServiceAdmin.truncate_text(stage["periode"], max_width),
+                    ServiceAdmin.truncate_text(stage["niveau_etudes"], max_width),
+                    ServiceAdmin.truncate_text(stage["entreprise"], max_width),
+                    ServiceAdmin.truncate_text(stage["lieu"], max_width),
+                ])
+
+            print(table)
+        else:
+            print("Aucun stage trouvé dans la base de données.")
+
+    @staticmethod
+    def truncate_text(text, max_width):
+        """Tronque le texte si sa longueur dépasse la largeur maximale."""
+        if text is None:
+            return ""
+        return (text[:max_width] + '...') if len(text) > max_width else text
