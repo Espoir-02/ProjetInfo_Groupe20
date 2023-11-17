@@ -13,26 +13,26 @@ class Menu_view:
         self.utilisateur_service = UtilisateurService()
 
     def display(self):
-        pseudo = Session().user_pseudo
+        """pseudo = Session().user_pseudo
         type_utilisateur = Session().user_type
         id_professeur= Session().user_id
         id_eleve = Session().user_id
-        
+        """
 
         while True:
 
             choices = ['Rechercher un stage', 'Accéder à son historique', 'Exit']
 
-            if type_utilisateur in ['professeur', 'eleve', 'administrateur']:
+            if Session().user_type in ['professeur', 'eleve', 'administrateur']:
                 choices.append("Accéder à sa liste d'envie")
         
-            if type_utilisateur == 'eleve':
+            if Session().user_type == 'eleve':
                 choices.append("Accéder à la liste de propositions du professeur")
 
-            if type_utilisateur == 'professeur':
+            if Session().user_type == 'professeur':
                 choices.append("Accéder à la liste d'élèves")
 
-            if type_utilisateur== 'administrateur':
+            if Session().user_type == 'administrateur':
                 choices.append("Accéder aux fonctions administrateur")
 
             questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
@@ -45,18 +45,18 @@ class Menu_view:
             elif answers['choice'] == 'Accéder à son historique':
                 return HistoriqueView().display()
 
-            elif (type_utilisateur in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
+            elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
                 liste_envie_view= Liste_envie_view(id_eleve)
                 return liste_envie_view.display()
     
-            elif (type_utilisateur == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):
+            elif (Session().user_type == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):
                 return Proposition_prof_view()
 
-            elif (type_utilisateur == 'professeur') and (answers['choice'] == "Accéder à la liste d'élèves"):
+            elif (Session().user_type == 'professeur') and (answers['choice'] == "Accéder à la liste d'élèves"):
                 liste_eleves_view = ListeElevesView(id_professeur)
                 return liste_eleves_view.display()
 
-            elif(type_utilisateur == 'administrateur') and (answers['choice']== 'Accéder aux fonctions administrateur'):
+            elif(Session().user_type == 'administrateur') and (answers['choice']== 'Accéder aux fonctions administrateur'):
                 admin_view= AdminView()
                 return admin_view.display()
 
