@@ -2,6 +2,7 @@ from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
 from source.view.Page_option.historique_view import HistoriqueView
 from source.view.Page_option.Liste_envie_view import Liste_envie_view 
 from source.view.Page_option.proposition_prof_view import Proposition_prof_view
+from source.view.Page_option.suggestions_eleve_view import SuggestionEleveView
 from source.view.Page_option.liste_eleves_view import ListeElevesView
 from source.services.service_utilisateur import UtilisateurService  
 from source.view.Page_option.admin_view import AdminView
@@ -27,7 +28,7 @@ class Menu_view:
                 choices.append("Accéder à sa liste d'envie")
         
             if type_utilisateur == 'eleve':
-                choices.append("Accéder à la liste de propositions du professeur")
+                choices.append("Accéder à la liste de suggestions du professeur")
 
             if type_utilisateur == 'professeur':
                 choices.append("Accéder à la liste d'élèves")
@@ -49,8 +50,9 @@ class Menu_view:
                 liste_envie_view= Liste_envie_view(id_eleve)
                 return liste_envie_view.display()
     
-            elif (type_utilisateur == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):
-                return Proposition_prof_view()
+            elif (type_utilisateur == 'eleve') and (answers['choice'] == "Accéder à la liste de suggestions du professeur"):
+                suggestions_view = SuggestionEleveView(id_eleve)
+                return suggestions_view.display()
 
             elif (type_utilisateur == 'professeur') and (answers['choice'] == "Accéder à la liste d'élèves"):
                 liste_eleves_view = ListeElevesView(id_professeur)
