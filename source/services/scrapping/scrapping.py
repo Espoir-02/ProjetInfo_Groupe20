@@ -63,7 +63,6 @@ class Scrapping:
             print("Date de publication:", date_publication)
             print("Lien du stage:", url2)
             print("\n")
-            print("#################********************##################")
             cpt = cpt + 1
             stage_exist=UtilitaireDAO()
             verification = stage_exist.check_infos_stage_exists(
