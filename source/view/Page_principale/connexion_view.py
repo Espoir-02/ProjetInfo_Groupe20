@@ -9,9 +9,7 @@ class ConnexionView:
         pseudo = input("Entrez votre pseudo : ")
         mot_de_passe = input("Entrez votre mot de passe : ")
         return pseudo, mot_de_passe
-
-    def afficher_message(self, message):
-        print(message)
+         
 
 
 class ConnexionController:
