@@ -66,6 +66,6 @@ class Menu_view:
     def make_choice(self):
         return self.display()
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     connexion_menu = Menu_view()
-    connexion_menu.display()
+    connexion_menu.display()"""
