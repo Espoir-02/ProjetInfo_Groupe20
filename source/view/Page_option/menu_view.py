@@ -40,7 +40,7 @@ class Menu_view:
             answers = inquirer.prompt(questions)
 
             if answers['choice'] == 'Rechercher un stage':
-                return Recherche_Stage_View()
+                return Recherche_Stage_View().display()
         
             elif answers['choice'] == 'Accéder à son historique':
                 return HistoriqueView()
