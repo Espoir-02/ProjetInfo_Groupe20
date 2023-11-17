@@ -30,16 +30,14 @@ class HistoriqueView:
 
         #Les details du stage seront différent en fonction du type d'utilisateur 
 
-        utilisateur_service =UtilisateurService()
-        utilisateur = utilisateur_service.find_by_id(self.id_user)
-
-        if utilisateur.type_utilisateur == "eleve":
+    
+        if Session().user_type == "eleve":
             id_stage = element_selection_historique["id_stage"]
             from source.view.Page_detail.detail_stage_view import detail_stage_view_eleve
             detail_view = detail_stage_view_eleve(id_stage)
             return detail_view
 
-        elif utilisateur.type_utilisateur == "prof":
+        elif Session().user_type == "prof":
             id_stage = element_selection_historique["id_stage"]
             from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
             detail_view = detail_stage_view_prof(id_stage)
