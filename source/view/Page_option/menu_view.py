@@ -1,4 +1,3 @@
-from InquirerPy import inquirer
 from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
 from source.view.Page_option.historique_view import HistoriqueView
 from source.view.Page_option.Liste_envie_view import Liste_envie_view 

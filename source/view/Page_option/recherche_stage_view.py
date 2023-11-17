@@ -1,5 +1,5 @@
-from InquirerPy import inquirer
 from source.business_object.stage_recherche.recherche import *
+import inquirer
 
 
 class Recherche_Stage_View:
@@ -20,14 +20,17 @@ class Recherche_Stage_View:
 
         if answers_echelle['choice'] == "Toute échelle":
             stock_reponse = 0
+            region = input("Quelle région? :")
         
         elif answers_echelle['choice'] == "région":
             region = [inquirer.Text("région", message="région:")]
             stock_reponse = 1
+            departement = input("Quel département? :")
     
         elif answers_echelle['choice'] == "département":
             departement = [inquirer.Text("département", message="département:")]
             stock_reponse = 2
+            ville = input("Quelle ville? :")
 
         elif answers_echelle['choice'] == "ville":
             ville = [inquirer.Text("ville", message="ville:")]
