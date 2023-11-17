@@ -23,10 +23,10 @@ class HistoriqueView:
             option.append(inquirer.Option(f"{index}", stage_info)) 
         
         # On affiche la liste
-        """answers = inquirer.prompt([inquirer.List("Stage vu précedemment", "Consulter son historique :", options)])
+        answers = inquirer.prompt([inquirer.List("Stage vu précedemment", "Consulter son historique :", options)])
 
         num_selection = int(answers["Stage vu précedemment"])
-        element_selection_historique = historique[num_selection - 1]" """
+        element_selection_historique = historique[num_selection - 1]
 
         #Les details du stage seront différent en fonction du type d'utilisateur 
 
