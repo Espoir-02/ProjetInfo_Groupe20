@@ -1,6 +1,7 @@
 from source.DAO.dbconnection import DBConnection
 from source.exception.exceptions import IdUtilisateurInexistantError
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
+from prettytable import PrettyTable
 
 
 class UtilisateurDAO:
@@ -265,7 +266,7 @@ class UtilisateurDAO:
 
         if not result:
             print("Aucun utilisateur trouvé dans la base de données.")
-        return result
+        return(result)
 
     def get_type_utilisateur(self, pseudo):
         """Pour récupérer le type de l'utilisateur à partir de son pseudo
