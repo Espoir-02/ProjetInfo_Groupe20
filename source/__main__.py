@@ -1,5 +1,5 @@
 from source.view.Page_principale.start_view import Start_view
-
+ 
 if __name__ == "__main__":
     # Lancer la vue du menu démarrage
     current_view = Start_view()
