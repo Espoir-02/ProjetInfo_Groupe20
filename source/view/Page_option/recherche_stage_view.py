@@ -3,8 +3,8 @@ from source.business_object.stage_recherche.recherche import *
 
 
 class Recherche_Stage_View:
-    def __init__(self,id_stage):
-        self.id_stage = id_stage
+#    def __init__(self,id_stage):
+#        self.id_stage = id_stage
     
     def display(self):
         # Choix des filtres
@@ -68,3 +68,6 @@ class Recherche_Stage_View:
 
     # mettre tous les stages à la liste avec pour chaque stage le titre (position 0), l'entreprise (position 1) et le lieu (position 2)
     # l'user clique dessus et là on affiche toute la liste, plus les boutons "ajouter à la liste d'envie", "suggérer à un élève" pour le prof
+
+if __name__ == "__main__":
+    Recherche_Stage_View().display()
