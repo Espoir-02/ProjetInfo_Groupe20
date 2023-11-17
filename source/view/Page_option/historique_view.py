@@ -11,11 +11,7 @@ class HistoriqueView:
 
         # Récupérez l'historique de l'utilisateur à partir de son identifiant
         historique_service = HistoriqueService()
-<<<<<<< HEAD
-        historique = historique_service.get_all_historique_by_id(self.id_user)
-=======
         historique = historique_service.get_all_historique_by_id(Session().user_id)
->>>>>>> f31008d112ff6889549178f7d85975511aeacfe5
 
         option = []
         for element in historique :
