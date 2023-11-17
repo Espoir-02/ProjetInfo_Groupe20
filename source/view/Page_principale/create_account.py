@@ -48,6 +48,11 @@ class CreationCompte_view:
 
         else:
             print("échec lors de la création du compte")
+            vue = CreationCompte_view()
+            return vue.display()
+
+    def make_choice(self):
+        return self.display()
 
 if __name__ == "__main__":
     vue = CreationCompte_view()
