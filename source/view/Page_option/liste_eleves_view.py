@@ -11,7 +11,7 @@ class ListeElevesView:
         print("1. Consulter la liste des élèves")
         print("2. Ajouter un élève")
         print("3. Supprimer un élève")
-        print("4. Quitter")
+        print("4. Quitter et revenir au menu principal")
 
     def display(self):
         while True:
@@ -30,6 +30,9 @@ class ListeElevesView:
                 self.liste_eleves_service.supprimer_eleve_de_liste_eleves(id_eleve, self.id_professeur)
             elif choix == '4':
                 print("Au revoir !")
+                from source.view.Page_option.menu_view import Menu_view
+                menu_view=Menu_view()
+                menu_view.display()
                 break
             else:
                 print("Option invalide. Veuillez réessayer.")

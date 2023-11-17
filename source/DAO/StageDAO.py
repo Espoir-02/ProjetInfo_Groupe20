@@ -1,6 +1,7 @@
 from source.DAO.dbconnection import DBConnection
 from source.DAO.utilitaire_dao import UtilitaireDAO
 from source.exception.exceptions import IdStageInexistantError
+from prettytable import PrettyTable
 
 
 class StageDAO:

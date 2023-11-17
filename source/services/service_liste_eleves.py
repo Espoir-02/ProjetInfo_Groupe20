@@ -1,4 +1,5 @@
 from source.DAO.ListeEleveDAO import ListeElevesDAO
+from prettytable import PrettyTable
 
 
 class ListeElevesService:
@@ -17,9 +18,20 @@ class ListeElevesService:
 
     def consulter_liste_eleves(self, id_professeur):
         liste_eleves= self.liste_eleves_dao.get_liste_eleve_by_id(id_professeur)
-        print("Liste des élèves :")
+
+        if liste_eleves:
+            table = PrettyTable()
+            table.field_names = ["ID Élève", "Nom", "Prénom"]
+
+            for eleve in liste_eleves:
+                table.add_row([eleve["id_eleve"], eleve["nom"], eleve["prenom"]])
+            print(table)
+        else:
+            print("La liste d'élèves est vide.")
+
+        """print("Liste des élèves :")
         for eleve in liste_eleves:
-            print(eleve)
+            print(eleve)"""
 
 
 
