@@ -47,9 +47,22 @@ class CreationCompte_view:
             return Menu_view().display()
 
         else:
-            print("échec lors de la création du compte")
-            vue = CreationCompte_view()
-            return vue.display()
+            choices = [
+                "Réessayer",
+                "Revenir au menu précédent"
+            ]
+            questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
+
+            answers = inquirer.prompt(questions)
+
+            if answers['choice'] == 'Réessayer':
+                vue = CreationCompte_view()
+                return vue.display()
+            elif answers['choice'] == "Revenir au menu précédent":
+                from source.view.Page_principale.start_view import Start_view
+                start_view=Start_view()
+                return start_view.display()
+            
 
     def make_choice(self):
         return self.display()
