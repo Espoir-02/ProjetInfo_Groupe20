@@ -47,7 +47,6 @@ class Menu_view:
 
             elif (type_utilisateur in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
                 liste_envie_view= Liste_envie_view(id_eleve)
-                print(id)
                 return liste_envie_view.display()
     
             elif (type_utilisateur == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):

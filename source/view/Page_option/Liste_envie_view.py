@@ -10,36 +10,6 @@ class Liste_envie_view:
     def __init__(self,id_eleve):
         self.id_eleve = id_eleve
         self.service_liste_envie= ListeEnvieService()
-        
-    """
-    def display(self):
-        #Récupère la liste d'envies
-        service_liste_envie = ListeEnvieService()
-        liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_eleve)
-
-        #Affiche la liste d'envies
-        for envie in liste_envie_courant:
-            print(f"{envie['titre']} - {envie['domaine']} - {envie['id_stage']}")
-
-        #Selectionner un stage en particulier dans la liste d'envies
-        choix = [envie['id_stage'] for envie in liste_envie_courant] + ["Retour au menu"]
-        questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix)]
-        answers = inquirer.prompt(questions)
-
-        if answer == "Retour au menu":
-            # Retourner à la vue du menu principal
-            return MenuView()
-        else:
-            if Session().user_type == "eleve":
-                return detail_stage_view_eleve(answers)
-            else:
-                return detail_stage_view_prof(answers)
-
-if __name__ == "__main__":
-    id_eleve= Session().user_id
-    liste_envie_view = Liste_envie_view(id_eleve=id_eleve)
-    liste_envie_view.display()
-    """
 
     def display(self):
         while True:
@@ -64,7 +34,6 @@ if __name__ == "__main__":
                 self.service_liste_envie.supprimer_stage_de_liste_envie( self.id_eleve, id_stage)
                 print("Stage supprimé avec succès")
             elif user_choice == "Revenir au menu principal":
-                # Retourner à la vue du menu principal
                 from source.view.Page_option.menu_view import Menu_view
                 menu_view=Menu_view()
                 menu_view.display()
@@ -79,8 +48,9 @@ if __name__ == "__main__":
         answers = inquirer.prompt(questions)
 
         if answers['selection'] == "Retour au menu":
-            # Retourner à la vue du menu principal
-            return MenuView()
+            liste_envie_view= Liste_envie_view(id_eleve)
+            return liste_envie_view.display()
+            
         else:
             if Session().user_type == "eleve":
                 return detail_stage_view_eleve(answers['selection'])
