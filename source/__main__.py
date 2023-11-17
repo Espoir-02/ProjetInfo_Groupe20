@@ -11,3 +11,4 @@ if __name__ == "__main__":
          
 "current_view = current_view.make_choice() pour passer à la vue suivante mais , pas cohérent avec notre implementation pour linsant"
 
+ 
