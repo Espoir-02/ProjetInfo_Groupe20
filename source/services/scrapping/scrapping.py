@@ -36,7 +36,7 @@ class Scrapping:
             periode = nonr
             date_publication = nonr
             gratification = nonr
-            lieu = nonr
+            print("#################********************##################")
             for i in range(len(tout)):
                 if tout[i].get_text() == 'DOMAINE DE FORMATION':
                     domaine = tout[i+1].get_text()
@@ -63,18 +63,17 @@ class Scrapping:
             print("Date de publication:", date_publication)
             print("Lien du stage:", url2)
             print("\n")
+            print("#################********************##################")
             cpt = cpt + 1
             stage_exist=UtilitaireDAO()
             verification = stage_exist.check_infos_stage_exists(
                 nomstage, url2, domaine, periode, gratification, date_publication, etude, nomentreprise, lieu)
-            print("stage similaire:", verification)
             # Créer un objet Stage
             if verification==False:
                 nouveau_stage= Stage(titre=nomstage, lien=url2, domaine=domaine,  date_publication=date_publication, periode=periode, salaire=gratification, niveau_etudes=etude, entreprise=nomentreprise, lieu=lieu)
             # Utiliser StageDAO pour créer le stage dans la base de données
                 stage_dao = StageDAO()
                 stage_cree = stage_dao.create_stage(nouveau_stage)
-                print("insertion reussie")
             #nouv_entreprise=Entreprise(nom_entreprise=nomentreprise, adresse=lieu)
             #entreprise_DAO=EntrepriseDAO()
             #entreprise_cree=entreprise_DAO.create_entreprise(nouv_entreprise)

@@ -77,7 +77,7 @@ CREATE TABLE base_ProjetInfo.historique(
 
 
 DROP TABLE IF EXISTS base_ProjetInfo.liste_envie;
-CREATE TABLE base_ProjetInfo.liste_envie
+CREATE TABLE base_ProjetInfo.liste_envie(
         id_eleve     Int ,
         id_stage     Int,
         PRIMARY KEY (id_eleve, id_stage)
