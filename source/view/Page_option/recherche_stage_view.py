@@ -56,13 +56,13 @@ class Recherche_Stage_View:
         answer_etude = inquirer.prompt(niveau_etude)["choice"]
 
         # 5) Période :
-        #periode = [inquirer.List("choice", message = 'Choose an option:', choices=["Non renseigné","1 mois","2 mois","3 mois","4 mois","5 mois","6 mois"])]
-        #answer_periode = inquirer.prompt(periode)["choice"]
+        periode = [inquirer.List("choice", message = 'Choose an option:', choices=["Non renseigné","1 mois","2 mois","3 mois","4 mois","5 mois","6 mois"])]
+        answer_periode = inquirer.prompt(periode)["choice"]
         
         # Lancer la recherche
         stock_recherche = Recherche(
             zone = stock_reponse, region = region, departement = departement, ville = ville, domaine = answer_profession, 
-            niveau_etude = answer_etude
+            niveau_etude = answer_etude, periode = answer_periode
         )
         stock_recherche.lancer_recherche() # exécute le scrapping via la classe Recherche
 

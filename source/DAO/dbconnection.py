@@ -10,7 +10,6 @@ class DBConnection:
                 port="5432",
                 database="id2225",
             )
-            print("La connexion à la base de données a réussi.")
         except Exception as e:
             print(f"Erreur lors de la connexion à la base de données : {e}")
             # Si une exception se produit, assurez-vous de ne pas essayer de fermer la connexion ici
