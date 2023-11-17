@@ -3,6 +3,7 @@ from source.view.Page_option.menu_view import Menu_view
 from source.services.service_utilisateur import ServiceUtilisateur
 from source.services.service_connexion import ConnexionService
 from source.view.session_view import Session
+import inquirer
 
 class ConnexionView:
     def demander_pseudo_mot_de_passe(self):
@@ -10,13 +11,16 @@ class ConnexionView:
         mot_de_passe = input("Entrez votre mot de passe : ")
         return pseudo, mot_de_passe
          
-
+    def afficher_message(self, message):
+        print(message)
 
 class ConnexionController:
+
     def __init__(self):
         self.utilisateur_service = ServiceUtilisateur()
         self.connexion_service = ConnexionService()
         self.connexion_view = ConnexionView()
+
 
     def display(self):
         print("Bienvenue sur la page de connexion")
@@ -28,7 +32,22 @@ class ConnexionController:
                 self.gerer_connexion_reussie(pseudo)
                 return
             else:
-                self.connexion_view.afficher_message("Identifiants incorrects. Veuillez réessayer.")
+                self.connexion_view.afficher_message("Identifiants incorrects.")
+                choices = [
+                "Réessayer",
+                "Revenir au menu précédent"
+            ]
+            questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
+
+            answers = inquirer.prompt(questions)
+
+            if answers['choice'] == 'Réessayer':
+                connexion = ConnexionView()
+                return connexion .display()
+            elif answers['choice'] == "Revenir au menu précédent":
+                from source.view.Page_principale.start_view import Start_view
+                start_view=Start_view()
+                return start_view.display()
 
     def gerer_connexion_reussie(self, pseudo):
         type_utilisateur = self.connexion_service.get_type_utilisateur(pseudo)
@@ -40,15 +59,6 @@ class ConnexionController:
         menu_view = Menu_view()
         menu_view.display()
 
-        """menu_view = Menu_view()
-        result = menu_view.display()
-        return Menu_view
-    
-
-        if result == 'Exit':
-            print("L'application se termine.")
-        else:
-            print(f"Redirection vers {result}...")"""
 
     def make_choice(self):
         return self.display()
