@@ -1,17 +1,17 @@
 from InquirerPy import inquirer
 from source.services.service_historique import HistoriqueService
 from source.view.session_view import Session
-import inquirer
+import inquirer 
 
 class HistoriqueView:
-    def __init__(self):
-        self.id_user = Session().user_id
+    def __init__(self,id_utilisateur):
+        self.id_utilisateur = id_utilisateur
 
     def display(self):
 
         # Récupérez l'historique de l'utilisateur à partir de son identifiant
         historique_service = HistoriqueService()
-        historique = historique_service.get_all_historique_by_id(self.id_user)
+        historique = historique_service.get_all_historique_by_id(self.id_utilisateur)
 
         option = []
         for element in historique :
@@ -30,6 +30,7 @@ class HistoriqueView:
         element_selection_historique = historique[num_selection - 1]
 
         #Les details du stage seront différent en fonction du type d'utilisateur 
+
 
 
         if Session().user_type == "eleve":
