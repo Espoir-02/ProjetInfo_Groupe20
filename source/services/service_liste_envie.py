@@ -2,16 +2,16 @@ from source.DAO.ListeEnvieDAO import ListeEnvieDAO
 
 class ListeEnvieService:
     def __init__(self):
-        self.ListeEnvieDAO = ListeEnvieDAO()
+        self.liste_envie_dao = ListeEnvieDAO()
 
     def ajouter_stage_a_liste_envie(self, id_eleve, id_stage):
-        return self.ListeEnvieDAO.update_liste_envie(id_eleve, id_stage)
+        return self.liste_envie_dao.update_liste_envie(id_eleve, id_stage)
 
     def supprimer_stage_de_liste_envie(self, id_eleve, id_stage):
-        return self.ListeEnvieDAO.delete_liste_envie(id_eleve, id_stage)
+        return self.liste_envie_dao.delete_liste_envie(id_eleve, id_stage)
 
-    def get_liste_envie_eleve(self, id):
-        return self.ListeEnvieDAO.get_liste_envie_by_id(id)
+    def get_liste_envie_eleve(self, id_eleve):
+        return self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
 
     def vider_liste_envie_eleve(self, id_eleve):
         """
