@@ -57,6 +57,8 @@ class Start_view:
     
     def display(self):
         afficher_ascii_art()
+        
+    def make_choice(self):
         answers = prompt(self.__questions)
         choices = answers['choice']
 
@@ -70,7 +72,6 @@ class Start_view:
             else:
                 print("Option invalide. Veuillez réessayer.")
 
-    def make_choice(self):
-        return self.display()
+
     
  
