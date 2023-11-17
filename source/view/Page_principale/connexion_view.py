@@ -43,7 +43,7 @@ class ConnexionController:
 
             if answers['choice'] == 'Réessayer':
                 connexion = ConnexionView()
-                return connexion .display()
+                return connexion.demander_pseudo_mot_de_passe()
             elif answers['choice'] == "Revenir au menu précédent":
                 from source.view.Page_principale.start_view import Start_view
                 start_view=Start_view()
