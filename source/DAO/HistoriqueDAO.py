@@ -77,7 +77,7 @@ class HistoriqueDAO:
                 )
                 historique = cursor.fetchall()
                 if not historique:
-                    print("L'historique' est vide")
+                    print("L'historique est vide")
                 result_list = []
                 for recherche in historique:
                     hist_dict = {
