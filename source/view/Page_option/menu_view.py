@@ -17,6 +17,8 @@ class Menu_view:
         pseudo = Session().user_pseudo
         type_utilisateur = Session().user_type
         id_professeur= Session().user_id
+        id_eleve = Session().user_id
+        
 
         while True:
 
@@ -45,7 +47,9 @@ class Menu_view:
                 return HistoriqueView()
 
             elif (type_utilisateur in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
-                return Liste_envie_view()
+                liste_envie_view= Liste_envie_view(id_eleve)
+                print(id)
+                return liste_envie_view.display()
     
             elif (type_utilisateur == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):
                 return Proposition_prof_view()
@@ -55,7 +59,8 @@ class Menu_view:
                 return liste_eleves_view.display()
 
             elif(type_utilisateur == 'administrateur') and (answers['choice']== 'Accéder aux fonctions administrateur'):
-                return AdminView()
+                admin_view= AdminView()
+                return admin_view.display()
 
             else:
                 return Menu_view()

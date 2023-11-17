@@ -12,7 +12,7 @@ class AdminView:
         print("4. Supprimer un stage")
         print("5. Quitter et revenir au menu principal")
 
-    def executer(self):
+    def display(self):
         while True:
             self.afficher_menu()
             choix = input("Choisissez une option : ")
@@ -41,4 +41,4 @@ class AdminView:
 
 if __name__ == "__main__":
     vue_admin = AdminView()
-    vue_admin.executer()
+    vue_admin.display()

@@ -4,15 +4,18 @@ from source.services.service_liste_envie import ListeEnvieService
 from source.view.session_view import Session
 from source.view.Page_detail.detail_stage_view import detail_stage_view_eleve
 from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
+import inquirer
 
 class Liste_envie_view:
-    def __init__(self,id):
-        self.id = id
+    def __init__(self,id_eleve):
+        self.id_eleve = id_eleve
+        self.service_liste_envie= ListeEnvieService()
+        
     
     def display(self):
         #Récupère la liste d'envies
         service_liste_envie = ListeEnvieService()
-        liste_envie_courant = service_liste_envie.get_liste_envie_eleve(id)
+        liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_eleve)
 
         #Affiche la liste d'envies
         for envie in liste_envie_courant:
@@ -31,3 +34,8 @@ class Liste_envie_view:
                 return detail_stage_view_eleve(answers)
             else:
                 return detail_stage_view_prof(answers)
+
+if __name__ == "__main__":
+    id_eleve= Session().user_id
+    liste_envie_view = Liste_envie_view(id_eleve=id_eleve)
+    liste_envie_view.display()
