@@ -62,7 +62,7 @@ class Recherche_Stage_View:
         # Lancer la recherche
         stock_recherche = Recherche(
             zone = stock_reponse, region = region, departement = departement, ville = ville, domaine = answer_profession, 
-            niveau_etude = answer_etude, periode = answer_periode
+            niveau_etude = answer_etude
         )
         stock_recherche.lancer_recherche() # exécute le scrapping via la classe Recherche
 
