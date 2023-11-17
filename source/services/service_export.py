@@ -26,7 +26,7 @@ class ExporteurStage:
         print(f"Les données ont été exportées avec succès vers {chemin_fichier_sortie}.")
 
 # Remplacez ces valeurs par les informations spécifiques de l'utilisateur
-id_utilisateur = 30
+id_utilisateur = 78
 id_stage = 410
 chemin_fichier_sortie = f'../data_export/{id_utilisateur}_fichier.txt'
 
