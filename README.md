@@ -1,18 +1,19 @@
-# Projet d'informatique 2eme année : Aide à la recherche d'un stage
+# Second-year Computer Science Project: Internship Search Assistance
 
-La recherche de stage, étape indispensable à tout étudiant, peut vite se transformer en dédale administratif et temporel pour celui qui s’organise mal : écumer les sites des entreprises en quête d’offres de stage, consulter la même annonce sur différents sites sans s’en rendre compte, ne plus retrouver la liste que l’on avait tant bien que mal écrite sur un coin de feuille de papier peut vite devenir le lot quotidien, particulièrement chronophage, de tout étudiant novice en la matière.
-Les comparateurs d’offres de stage permettent donc aux étudiants de gagner du temps en centralisant les données : toutes les informations sont disponibles au même endroit.
-Par stage, nous entendons une période de formation au sein d’une entreprise privée ou dans une institution publique, déterminée par un domaine de compétences, une date de début et de fin et un salaire (qui peut être nul). 
-Dès lors, la recherche par critère offre la possibilité de trouver les propositions qui correspondent exactement à la recherche des utilisateurs, en répondant en priorité aux quatre questions essentielles de toute recherche : quand (dates), où (entreprise), quoi (domaine), combien (salaire).
+The internship search, an essential step for every student, can quickly turn into an administrative and time-consuming maze for those who are not well-organized: scouring company websites in search of internship offers, consulting the same job posting on different sites without realizing it, and no longer finding the list that was hastily written on a piece of paper can easily become the daily routine, particularly time-consuming, for any student new to the field.
 
-## Auteurs
+Internship offer comparators, therefore, allow students to save time by centralizing data: all information is available in one place. By internship, we mean a training period within a private company or a public institution, determined by a field of expertise, a start and end date, and a salary (which can be zero).
+
+Therefore, searching by criteria offers the possibility of finding proposals that exactly match the users' search, prioritizing the four essential questions of any search: when (dates), where (company), what (field), how much (salary).
+
+## Authors
 
 Groupe 20 : Enzo Camboni, Esete Estifanos, Anysia Thomas, Marc-Adrien Lencauchez, Espoir Eyram Tetshie.
 
 ## Installation
 
-Pour installer ce projet, suivez ces étapes :
+To install this project, follow these steps:
 
-1. Clonez ce dépôt : `git clone https://github.com/Espoir-02/ProjetInfo_Groupe20`
-2. Naviguez vers le répertoire du projet : `cd ProjetInfo_Groupe20`
-3. Installez les dépendances : `pip install -r requirements.txt`
+1. Clone this repository: `git clone https://github.com/Espoir-02/ProjetInfo_Groupe20`
+2. Navigate to the project directory: `cd ProjetInfo_Groupe20`
+3. Install dependencies: `pip install -r requirements.txt`

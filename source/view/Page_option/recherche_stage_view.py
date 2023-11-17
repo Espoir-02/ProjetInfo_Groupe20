@@ -1,5 +1,5 @@
 from InquirerPy import inquirer
-from source.business_object.stage_recherche.recherche import Recherche
+from source.business_object.stage_recherche.recherche import *
 
 
 class Recherche_Stage_View:
