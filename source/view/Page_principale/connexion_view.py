@@ -1,8 +1,7 @@
 from InquirerPy import inquirer
 from source.view.Page_option.menu_view import Menu_view
 from source.services.service_utilisateur import UtilisateurService
-from session_view import Session
-
+from source.view.session_view import Session
 
 class ConnexionView:
     def demander_pseudo_mot_de_passe(self):
@@ -35,6 +34,7 @@ class ConnexionController:
 
         Session().user_id = self.utilisateur_service.find_id_by_pseudo(pseudo)
         Session().user_type = type_utilisateur
+        Session().user_pseudo = pseudo
 
         menu_view = Menu_view()
         result = menu_view.display(type_utilisateur)

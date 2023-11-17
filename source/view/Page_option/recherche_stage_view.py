@@ -1,6 +1,7 @@
 from InquirerPy import inquirer
 from source.business_object.stage_recherche.recherche import Recherche
 
+
 class Recherche_Stage_View:
     def __init__(self,id_stage):
         self.id_stage = id_stage

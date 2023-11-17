@@ -1,7 +1,7 @@
 from InquirerPy import inquirer
 from source.services.service_utilisateur import UtilisateurService
-from menu_view import Menu_view
-from utilisateur2 import Utilisateur
+from source.view.Page_option.menu_view import Menu_view
+from source.business_object.utilisateur.utilisateur2 import Utilisateur
 
 class CreationCompte_view:
 

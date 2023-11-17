@@ -1,5 +1,5 @@
-from source.DAO.utilisateur import UtilisateurDAO
-from source.business_object.utilisateur.Utilisateur import Utilisateur
+from source.DAO.utilisateur_dao import UtilisateurDAO
+from source.business_object.utilisateur.utilisateur2 import Utilisateur
 
 class UtilisateurService:
     def __init__(self):
@@ -28,6 +28,27 @@ class UtilisateurService:
         # Récupérer les informations de l'utilisateur
         utilisateur = self.utilisateur_dao.find_by_nom(pseudo)
         return utilisateur
+
+#User
+#fait moi : ServiceUtilisateur :
+
+#Gère la création, la mise à jour, la suppression et la recherche d'utilisateurs.
+#ChatGPT
+#Voici un exemple simplifié de la classe ServiceUtilisateur qui gère la création, la mise à jour, la suppression et la recherche d'utilisateurs :
+
+#python
+#Copy code
+from source.DAO.utilisateur_dao import UtilisateurDAO
+from source.business_object.utilisateur.utilisateur2 import Utilisateur
+
+class ServiceUtilisateur:
+    def __init__(self):
+        self.utilisateur_dao = UtilisateurDAO()
+
+    def creer_utilisateur(self, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
+        nouvel_utilisateur = Utilisateur(nom=nom, prenom=prenom, pseudo=pseudo, mot_de_passe=mot_de_passe, type_utilisateur=type_utilisateur)
+        utilisateur_cree = self.utilisateur_dao.create_compte(nouvel_utilisateur)
+        return utilisateur_cree
 
     def mettre_a_jour_utilisateur(self, id_utilisateur, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
         utilisateur_existant = self.utilisateur_dao.find_by_id(id_utilisateur)
