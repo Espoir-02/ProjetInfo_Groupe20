@@ -1,4 +1,5 @@
 from source.DAO.HistoriqueDAO import HistoriqueDAO
+from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.DAO.StageDAO import StageDAO
 
 class HistoriqueService:

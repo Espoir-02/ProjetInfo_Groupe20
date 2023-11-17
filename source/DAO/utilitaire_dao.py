@@ -32,6 +32,7 @@ class UtilitaireDAO:
     def check_infos_stage_exists(nomstage, url2, domaine, periode , gratification, date_publication, etude, nomentreprise, lieu):
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
+                print("Parameters:", nomstage, url2, domaine, periode, gratification, date_publication, etude, nomentreprise, lieu)
                 cursor.execute(
                     "SELECT COUNT(*) FROM base_projetinfo.stage "
                     "WHERE titre = %(nomstage)s AND lien = %(url2)s AND "

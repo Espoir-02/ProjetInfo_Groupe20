@@ -1,7 +1,10 @@
 from InquirerPy import inquirer
+from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
+from source.DAO.HistoriqueDAO import HistoriqueDAO
+from source.DAO.utilisateur_dao import UtilisateurDAO
+from source.DAO.StageDAO import StageDAO
 from source.services.service_historique import HistoriqueService
 from source.view.session_view import Session
-import inquirer 
 
 class HistoriqueView:
     def display(self):
@@ -14,29 +17,27 @@ class HistoriqueView:
         for element in historique :
             stage_service = StageService()
             stage = stage_service.find_stage_by_id(element["id_stage"])
-            stage_info = f"ID du stage : {element['id_stage']}, Nom du stage : {stage['titre']}, Nom de l'entreprise : {stage['entreprise']}"
-            #Date de consultation : {element['date_consultation']}, 
+            stage_info = f"Date de consultation : {element['date_consultation']}, ID du stage : {element['id_stage']}, Nom du stage : {stage['titre']}, Nom de l'entreprise : {stage['entreprise']}"
+            
             #On rempli la liste d'affichage
             option.append(inquirer.Option(f"{index}", stage_info)) 
         
-        #On affiche la liste
+        # On affiche la liste
         answers = inquirer.prompt([inquirer.List("Stage vu précedemment", "Consulter son historique :", options)])
-        #Les stages seront choisit avec leur numéro de stage
+
         num_selection = int(answers["Stage vu précedemment"])
-        #
         element_selection_historique = historique[num_selection - 1]
 
         #Les details du stage seront différent en fonction du type d'utilisateur 
+        utilisateur = UtilisateurDAO.find_by_id(self.id_utilisateur)
 
-
-
-        if Session().user_type == "eleve":
+        if utilisateur.type_utilisateur == "eleve":
             id_stage = element_selection_historique["id_stage"]
             from source.view.Page_detail.detail_stage_view import detail_stage_view_eleve
             detail_view = detail_stage_view_eleve(id_stage)
             return detail_view
 
-        elif Session().user_type == "prof":
+        elif utilisateur.type_utilisateur == "prof":
             id_stage = element_selection_historique["id_stage"]
             from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
             detail_view = detail_stage_view_prof(id_stage)
