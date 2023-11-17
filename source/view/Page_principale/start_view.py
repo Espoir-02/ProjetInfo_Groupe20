@@ -30,9 +30,9 @@ class Start_view:
 
         elif choice == "Continuer en mode invité":
             return Mode_invite_view()
+
+
 """
-
-
 from InquirerPy import prompt
 from source.view.Page_principale.connexion_view import ConnexionController
 from source.view.Page_principale.create_account import CreationCompte_view
@@ -73,4 +73,4 @@ class Start_view:
     def make_choice(self):
         return self.display()
     
-    
+ 

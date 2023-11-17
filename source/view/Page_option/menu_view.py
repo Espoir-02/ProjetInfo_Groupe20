@@ -43,7 +43,7 @@ class Menu_view:
                 return Recherche_Stage_View().display()
         
             elif answers['choice'] == 'Accéder à son historique':
-                return HistoriqueView()
+                return HistoriqueView().display()
 
             elif (type_utilisateur in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
                 liste_envie_view= Liste_envie_view(id_eleve)
