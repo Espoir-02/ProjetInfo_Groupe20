@@ -16,19 +16,26 @@ class ExporteurStage:
 
                 # Récupération des résultats
                 resultats = cursor.fetchall()
+                print(resultats)
 
-                # Écriture des résultats dans un fichier texte
-                with open(chemin_fichier_sortie, 'w') as fichier_sortie:
-                    for resultat in resultats:
-                        ligne = ', '.join(str(colonne) for colonne in resultat)
-                        fichier_sortie.write(f"{ligne}\n")
+                 # Écriture des résultats dans un fichier texte
+                try:
+                    with open(chemin_fichier_sortie, 'w') as fichier_sortie:
+                        for resultat in resultats:
+                            print("Seul:", resultat)
+                            ligne = ', '.join(str(colonne) for colonne in resultat)
+                            print("Ma ligne:", ligne)
+                            fichier_sortie.write(f"{ligne}\n")  # Écriture des résultats dans un fichier texte
+                except Exception as e:
+                    print("Erreur lors de l'écriture dans le fichier :", str(e))
 
-        print(f"Les données ont été exportées avec succès vers {chemin_fichier_sortie}.")
+
+       # print(f"Les données ont été exportées avec succès vers {chemin_fichier_sortie}.")
 
 # Remplacez ces valeurs par les informations spécifiques de l'utilisateur
-id_utilisateur = 78
-id_stage = 410
-chemin_fichier_sortie = f'../data_export/{id_utilisateur}_fichier.txt'
+id_utilisateur = 18
+id_stage = 746
+chemin_fichier_sortie = f'{id_utilisateur}_fichierExport.csv'
 
 # Exporter les données pour cet utilisateur
 ExporteurStage.exporter_donnees(id_utilisateur, id_stage, chemin_fichier_sortie)

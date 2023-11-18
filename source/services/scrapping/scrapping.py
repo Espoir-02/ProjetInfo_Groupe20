@@ -9,7 +9,23 @@ import requests
 
 
 class Scrapping:
-    def scrap(self, url):
+           
+   def display_additional_info(self, stage_info):
+        print(f"{'*' * 40}")
+        print(f"Titre: {stage_info['titre']}")
+        print(f"Entreprise: {stage_info['entreprise']}")
+        print(f"Lieu: {stage_info['lieu']}")
+        print(f"Lien du stage: {stage_info['lien']}")
+        print(f"{'-' * 40}")
+        print(f"Domaine: {stage_info['domaine']}")
+        print(f"Etude: {stage_info['etude']}")
+        print(f"Période: {stage_info['periode']}")
+        print(f"Gratification: {stage_info['gratification']}")
+        print(f"Date de publication: {stage_info['date_publication']}")
+        print(f"{'*' * 40}\n")
+
+
+   def scrap(self, url):
         response = requests.get(url)
         html = response.text
 
@@ -18,6 +34,7 @@ class Scrapping:
         stages_trouves = soup.find_all("div", {"class": "advert-card-content"})
 
         cpt = 1
+        all_stages_info = []
 
         for stage in stages_trouves:
             nomstage = stage.find("h2").get_text(strip=True)
@@ -36,7 +53,7 @@ class Scrapping:
             periode = nonr
             date_publication = nonr
             gratification = nonr
-            print("#################********************##################")
+
             for i in range(len(tout)):
                 if tout[i].get_text() == 'DOMAINE DE FORMATION':
                     domaine = tout[i+1].get_text()
@@ -52,19 +69,7 @@ class Scrapping:
                     date_publication = phrase.split('- publié le ')[1].strip()
             #etude = tout[i+3].get_text()
             #gratification = tout[i+5].get_text()
-            print(cpt)
-            print("Titre:", nomstage)
-            print("Entreprise:", nomentreprise)
-            print("Lieu:", lieu)
-            print("Domaine:", domaine)
-            print("Etude:", etude)
-            print("Période:", periode)
-            print("Gratification:", gratification)
-            print("Date de publication:", date_publication)
-            print("Lien du stage:", url2)
-            print("\n")
-            print("#################********************##################")
-            cpt = cpt + 1
+            
             stage_exist=UtilitaireDAO()
             verification = stage_exist.check_infos_stage_exists(
                 nomstage, url2, domaine, periode, gratification, date_publication, etude, nomentreprise, lieu)
@@ -72,10 +77,39 @@ class Scrapping:
             if verification==False:
                 nouveau_stage= Stage(titre=nomstage, lien=url2, domaine=domaine,  date_publication=date_publication, periode=periode, salaire=gratification, niveau_etudes=etude, entreprise=nomentreprise, lieu=lieu)
             # Utiliser StageDAO pour créer le stage dans la base de données
-                stage_dao = StageDAO()
-                stage_cree = stage_dao.create_stage(nouveau_stage)
-            #nouv_entreprise=Entreprise(nom_entreprise=nomentreprise, adresse=lieu)
-            #entreprise_DAO=EntrepriseDAO()
-            #entreprise_cree=entreprise_DAO.create_entreprise(nouv_entreprise)
+                stage_cree = StageDAO().create_stage(nouveau_stage)
 
+            # Créez un dictionnaire avec les informations du stage
+            stage_info = {
+                'titre': nomstage,
+                'entreprise': nomentreprise,
+                'lieu': lieu,
+                'lien': url2,
+                'domaine': domaine,
+                'etude': etude,
+                'periode': periode,
+                'gratification': gratification,
+                'date_publication': date_publication
+            }
 
+            all_stages_info.append(stage_info)
+
+            # Affichez les informations de base du stage
+            print(f"{cpt}. {nomstage} - {nomentreprise} - {lieu}")
+            print(f"{'*' * 60}\n")
+
+            cpt = cpt + 1
+    # Demandez à l'utilisateur de choisir un stage
+        for i in range(1,20):
+            user_choice = input("Veuillez entrer le numéro du stage pour plus d'informations (ou tapez 'q' pour quitter): ")
+            if user_choice.lower() == 'q':
+                break
+
+            try:
+                # Obtenez les informations du stage sélectionné
+                selected_stage_info = all_stages_info[int(user_choice) - 1]
+                 # Affichez les informations supplémentaires
+                self.display_additional_info(selected_stage_info)
+
+            except (ValueError, IndexError):
+                print("Choix invalide. Veuillez entrer un numéro valide.")
