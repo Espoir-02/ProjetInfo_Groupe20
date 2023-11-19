@@ -3,6 +3,8 @@ from source.DAO.StageDAO import StageDAO
 from source.business_object.stage_recherche.stage import Stage
 #from source.business_object.stage_recherche.entreprise import Entreprise
 from source.DAO.utilitaire_dao import UtilitaireDAO
+from source.services.service_export import ExporteurStage
+from source.view.session_view import Session
 
 from bs4 import BeautifulSoup
 import requests
@@ -35,7 +37,7 @@ class Scrapping:
 
         cpt = 1
         all_stages_info = []
-
+        liste_id_stages=[]
         for stage in stages_trouves:
             nomstage = stage.find("h2").get_text(strip=True)
             nomentreprise = stage.find("h3").get_text(strip=True)
@@ -98,8 +100,14 @@ class Scrapping:
             print(f"{cpt}. {nomstage} - {nomentreprise} - {lieu}")
             print(f"{'*' * 60}\n")
 
+            # RECUPERATIONS DES ID DES STAGES
+            stage_id = UtilitaireDAO().get_stage_ids(nomstage, url2, domaine, periode, gratification, date_publication, etude, nomentreprise, lieu)
+            # LA LISTE DES ID DES STAGES 
+            liste_id_stages.append(stage_id)
+
             cpt = cpt + 1
-    # Demandez à l'utilisateur de choisir un stage
+        
+
         for i in range(1,20):
             user_choice = input("Veuillez entrer le numéro du stage pour plus d'informations (ou tapez 'q' pour quitter): ")
             if user_choice.lower() == 'q':
@@ -113,3 +121,10 @@ class Scrapping:
 
             except (ValueError, IndexError):
                 print("Choix invalide. Veuillez entrer un numéro valide.")
+
+        id_utilisateur=Session().user_id 
+        chemin_fichier_sortie = f'{id_utilisateur}_fichierExport.csv'
+
+        # APPEL DE LA CLASSE EXPOTEURSTAGE POUR GERER L'EXPORTATION
+        ExporteurStage().exporter_donnees(liste_id_stages, id_utilisateur,  chemin_fichier_sortie)
+            
