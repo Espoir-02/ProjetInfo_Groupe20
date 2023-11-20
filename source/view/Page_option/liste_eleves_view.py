@@ -1,6 +1,7 @@
 from source.services.service_liste_eleves import ListeElevesService
 from source.view.session_view import Session
 from inquirer import prompt, List
+import inquirer
  
 
 class ListeElevesView:
@@ -16,6 +17,7 @@ class ListeElevesView:
                      'Consulter la liste des élèves',
                      'Ajouter un élève',
                      'Supprimer un élève',
+                     'Vider la liste des élèves',
                      'Quitter et revenir au menu principal'
                  ]),
         ]
@@ -35,6 +37,12 @@ class ListeElevesView:
             elif choix == 'Supprimer un élève':
                 id_eleve = int(input("Entrez l'ID de l'élève à supprimer : "))
                 self.liste_eleves_service.supprimer_eleve_de_liste_eleves(id_eleve, self.id_professeur)
+            elif choix== 'Vider la liste des élèves':
+                confirmation = inquirer.confirm(message="Êtes-vous sûr de vouloir vider la liste des élèves?")
+                if confirmation:
+                    self.liste_eleves_service.vider_liste_eleves(self.id_professeur)
+                else:
+                    print("Opération annulée.")
             elif choix == 'Quitter et revenir au menu principal':
                 print("Au revoir !")
                 menu_view = Menu_view()

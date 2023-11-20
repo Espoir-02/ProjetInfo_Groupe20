@@ -21,6 +21,10 @@ class ListeEnvieService:
         except IdStageInexistantError as e:
             print(f"Erreur lors de la suppression du stage dans la liste d'envie : {e}")
 
+    def vider_liste_envie_eleve(self, id_eleve):
+        print("Liste d'envie supprimée avec succès")
+        return self.liste_envie_dao.delete_all_liste_envie(id_eleve)
+
     def get_liste_envie_eleve(self, id_eleve):
         liste_envie= self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
         if liste_envie:
@@ -46,9 +50,5 @@ class ListeEnvieService:
         """Tronque le texte si sa longueur dépasse la largeur maximale."""
         return (text[:max_width] + '...') if len(text) > max_width else text
 
-    def vider_liste_envie_eleve(self, id_eleve):
-        """
-        Vide la liste d'envies d'un élève.
-        """
-        #OPTIONNELLE Pas encore fait 
+    
         

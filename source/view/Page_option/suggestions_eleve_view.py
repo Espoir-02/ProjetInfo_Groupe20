@@ -1,7 +1,7 @@
 from source.services.service_suggestion_eleve import ServiceSuggestion
 from source.view.session_view import Session
 from inquirer import prompt, List
-
+import inquirer
 
 class SuggestionEleveView:
 
@@ -16,6 +16,7 @@ class SuggestionEleveView:
                  choices=[
                      'Consulter la liste de suggestions',
                      'Supprimer une suggestion',
+                     'Vider la liste de suggestions',
                      'Quitter et revenir au menu principal'
                  ]),
         ]
@@ -30,6 +31,12 @@ class SuggestionEleveView:
             elif choix == 'Supprimer une suggestion':
                 id_stage = int(input("Entrez l'ID du stage à supprimer : "))
                 self.suggestions_eleves_service.delete_suggestion(self.id_eleve, id_stage)
+            elif choix== 'Vider la liste de suggestions':
+                confirmation = inquirer.confirm(message="Êtes-vous sûr de vouloir vider la liste de suggestions ?")
+                if confirmation:
+                    self.suggestions_eleves_service.vider_liste_suggestions(self.id_eleve)
+                else:
+                    print("Opération annulée.")
             elif choix == 'Quitter et revenir au menu principal':
                 print("Au revoir !")
                 menu_view = Menu_view()

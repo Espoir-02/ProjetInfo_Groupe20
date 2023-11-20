@@ -39,9 +39,11 @@ class ListeElevesService:
         else:
             print("La liste d'élèves est vide.")
 
-        """print("Liste des élèves :")
-        for eleve in liste_eleves:
-            print(eleve)"""
+    def vider_liste_eleves(self, id_professeur):
+        print("Liste vidée avec succès")
+        return self.liste_eleves_dao.delete_all_liste(id_professeur)
+
+
 
 
 

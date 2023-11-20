@@ -98,8 +98,8 @@ class ListeElevesDAO:
         >>> ma_liste = ListeElevesDAO()
         >>> id_professeur = 456
         >>> liste_eleves = ma_liste.get_liste_eleve_by_id(id_professeur)
-        >>> for eleve in liste_eleves:
-        ...     print(f"Nom: {eleve['nom']}, Prénom: {eleve['prénom']}")
+        # On obtient une liste de dictionnaire qui contient l'identifiant,
+        # nom et prénom de chaque élève
         """
         if not isinstance(id_professeur, int):
             raise TypeError("l'identifiant du professeur est un entier numérique")
@@ -127,4 +127,31 @@ class ListeElevesDAO:
                     result_list.append(eleve_dict)
         return result_list
 
+
+    def delete_all_liste(self, id_professeur):
+        """Pour vider la liste d'élèves d'un professeur.
+
+        Parameters
+        ----------
+        id_prof : int
+            L'identifiant du professeur dont la liste d'élèves doit être vidée.
+
+        Examples
+        --------
+        >>> ma_liste = ListeElevesDAO()
+        >>> id_professeur = 456
+        >>> ma_liste.delete_all_liste(id_professeur)
+        """
+        if not isinstance(id_professeur, int):
+            raise TypeError("L'identifiant du professeur doit être un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_professeur):
+            raise IdProfesseurInexistantError(id_professeur)
+
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM base_projetinfo.liste_eleves "
+                    "WHERE id_professeur = %(id_professeur)s",
+                    {"id_professeur": id_professeur},
+                )
 

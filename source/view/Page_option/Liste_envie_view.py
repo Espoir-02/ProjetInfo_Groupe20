@@ -18,6 +18,7 @@ class ListeEnvieView:
                           choices=[
                               'Consulter la liste d\'envies',
                               'Supprimer un stage de la liste',
+                              'Vider la liste d\'envie',
                               'Revenir au menu principal'
                           ])
         ]
@@ -33,6 +34,12 @@ class ListeEnvieView:
             elif choix == 'Supprimer un stage de la liste':
                 id_stage = int(input("Entrez l'ID du stage à supprimer : "))
                 self.service_liste_envie.supprimer_stage_de_liste_envie(self.id_eleve, id_stage)
+            elif choix == 'Vider la liste d\'envie':
+                confirmation = inquirer.confirm(message="Êtes-vous sûr de vouloir vider la liste d'envies?")
+                if confirmation:
+                    self.service_liste_envie.vider_liste_envie_eleve(self.id_eleve)
+                else:
+                    print("Opération annulée.")
             elif choix == 'Revenir au menu principal':
                 print("Au revoir !")
                 menu_view = Menu_view()

@@ -124,3 +124,29 @@ class ListeEnvieDAO:
                     {"id_eleve": id_eleve, "id_stage": id_stage},
                 )
 
+    def delete_all_liste_envie(self, id_eleve):
+        """Pour vider la liste d'envies d'un élève.
+
+        Parameters
+        ---------
+        id_eleve: int
+            L'identifiant de l'élève dont la liste d'envies doit être vidée.
+
+        Examples
+        --------
+        >>> ma_liste = ListeEnvieDAO()
+        >>> id_eleve = 6
+        >>> ma_liste.delete_all_liste_envie(id_eleve)
+        """
+        if not isinstance(id_eleve, int):
+            raise TypeError("L'identifiant de l'élève doit être un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_eleve):
+            raise IdEleveInexistantError(id_eleve)
+
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM base_projetinfo.liste_envie "
+                    "WHERE id_eleve = %(id_eleve)s",
+                    {"id_eleve": id_eleve},
+                )

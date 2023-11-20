@@ -4,6 +4,7 @@ from source.DAO.utilitaire_dao import UtilitaireDAO
 from source.exception.exceptions import IdStageInexistantError
 
 class ServiceSuggestion:
+
     def __init__(self):
         self.utilitaire_dao = UtilitaireDAO()
         self.suggestions_dao = SuggestionsDAO()
@@ -28,6 +29,9 @@ class ServiceSuggestion:
         except IdStageInexistantError as e:
             print(f"Erreur lors de la suppression de la suggestion : {e}")
   
+    def vider_liste_suggestions(id_eleve):
+        print("Liste de suggestions vidée avec succès")
+        return self.suggestions_dao.delete_all_suggestions(id_eleve)
 
     " Méthode où on stocke dans la liste de suggestion de l'élève les suggestions du prof"
     " Méthode permettant à un professeur de faire ds propositions aux élèves "
