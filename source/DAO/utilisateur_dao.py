@@ -305,7 +305,7 @@ class UtilisateurDAO:
                     type_utilisateur = type_utilisateur[0]
         return type_utilisateur
 
-    def update_utilisateur(self, pseudo, nouveau_mdp):
+    def update_utilisateur_mdp(self, pseudo, nouveau_mdp):
         """Pour mettre à jour le mot de passe d'un utilisateur.
 
         Parameters
@@ -332,6 +332,38 @@ class UtilisateurDAO:
                     "SET mot_de_passe = %(nouveau_mdp)s "
                     "WHERE pseudo = %(pseudo)s",
                     {"nouveau_mot_de_passe": nouveau_mdp, "pseudo": pseudo},
+                )
+
+                if cursor.rowcount == 0:
+                    print("Le pseudo n'existe pas")
+
+    def update_utilisateur_pseudo(self, id_utilisateur, nouveau_pseudo):
+        """Pour mettre à jour le mot de passe d'un utilisateur.
+
+        Parameters
+        ----------
+        id_utilisateur : int
+            L'identifiant de l'utilisateur
+
+        Examples
+        ------
+        >>> mes_utilisateurs = UtilisateurDAO()
+        >>> id_utilisateur= 18
+        >>> nouveau_pseudo = "Chasseurdestage"
+        >>> mes_utilisateurs.update_utilisateur_pseudo(18, nouveau_mdp)
+        >>> utilisateur_maj = mes_utilisateurs.find_by_id(18)
+        >>> print(utilisateur_maj.pseudo)
+        "Chasseurdestage"
+        """
+        if not isinstance(id_utilisateur, int):
+            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE base_projetinfo.utilisateur "
+                    "SET pseudo = %(nouveau_pseudo)s "
+                    "WHERE id_utilisateur = %(id_utilisateur)s",
+                    {"nouveau_pseudo": nouveau_pseudo, "id_utilisateur": id_utilisateur},
                 )
 
                 if cursor.rowcount == 0:
