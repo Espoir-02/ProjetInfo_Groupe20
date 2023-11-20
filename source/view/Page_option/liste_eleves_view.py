@@ -55,7 +55,6 @@ class ListeElevesView:
         return self.display()
 
 if __name__ == "__main__":
-
     id_professeur = Session().user_id 
     vue_liste_eleves = ListeElevesView(id_professeur=id_professeur)
     vue_liste_eleves.display()
