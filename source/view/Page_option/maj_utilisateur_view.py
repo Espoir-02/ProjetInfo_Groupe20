@@ -1,5 +1,6 @@
 from source.services.service_utilisateur import ServiceUtilisateur
 from source.view.session_view import Session
+from source.view.Page_option.menu_view import Menu_view
 from inquirer import prompt, List, Text
 import inquirer
 
@@ -15,7 +16,7 @@ class MajUtilisateurView:
             List(
                 "choix",
                 message="Choisissez une option",
-                choices=["Modifier le pseudo", "Modifier le mot de passe", "Quitter"],
+                choices=["Modifier le pseudo", "Modifier le mot de passe", "Quitter et revenir au menu principal"],
             ),
         ]
 
@@ -33,8 +34,10 @@ class MajUtilisateurView:
                 self.utilisateur_service.maj_mdp(self.pseudo, nouveau_mdp)
                 print("Mot de passe mis à jour avec succès.")
             elif choix == "Quitter":
-                print("Au revoir !")
+                menu_view = Menu_view()
+                menu_view.display()
                 break
+                
             else:
                 print("Option invalide. Veuillez réessayer.")
 

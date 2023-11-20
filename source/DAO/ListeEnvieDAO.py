@@ -78,7 +78,7 @@ class ListeEnvieDAO:
 
                 liste_envie = cursor.fetchall()
                 if not liste_envie:
-                    print("La liste d'élèves est vide")
+                    print("La liste d'envies est vide")
                 result_list = []
                 for envie in liste_envie:
                     envie_dict = {

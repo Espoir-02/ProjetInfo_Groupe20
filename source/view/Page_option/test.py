@@ -1,15 +1,15 @@
+from source.business_object.listes.voeux import Voeux
 from InquirerPy import inquirer
 from source.services.service_liste_envie import ListeEnvieService
 from source.view.session_view import Session
-from source.services.service_stage import StageService
+from source.view.Page_detail.detail_stage_view import detail_stage_view_eleve
+from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
 import inquirer
-
 
 class ListeEnvieView:
     def __init__(self, id_eleve):
         self.id_eleve = id_eleve
         self.service_liste_envie = ListeEnvieService()
-        self.stage_service = StageService()
 
     def afficher_menu(self):
         return [
@@ -29,18 +29,19 @@ class ListeEnvieView:
         if not liste_envie_courant:
             print("La liste d'envies est vide.")
         else:
-            choix_stage = [f"{envie['id_stage']} - {envie['titre']}" for envie in liste_envie_courant] + ["Retour au menu"]
-            questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]
-            answers = inquirer.prompt(questions)
-
-            selected_stage = int(answers['selection'].split(' - ')[0])# Pour récupérer l'ID du stage sélectionné
+            choix_stage = [envie['id_stage'] for envie in liste_envie_courant] + ["Retour au menu"]
+            selected_stage = inquirer.select(
+                message='Sélectionner un stage:',
+                choices=choix_stage
+            ).execute()
 
             if selected_stage == "Retour au menu":
                 self.display()
             else:
-                stage =self.stage_service.find_stage_by_id(selected_stage)
-                print(stage)
-                
+                if Session().user_type == "eleve":
+                    detail_stage_view_eleve(selected_stage)
+                else:
+                    detail_stage_view_prof(selected_stage)
 
     def display(self):
         while True:

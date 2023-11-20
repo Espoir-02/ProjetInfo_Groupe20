@@ -1,12 +1,11 @@
-from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
-from source.view.Page_option.historique_view import HistoriqueView
-from source.view.Page_option.Liste_envie_view import Liste_envie_view 
+#from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
+#from source.view.Page_option.historique_view import HistoriqueView
+from source.view.Page_option.Liste_envie_view import ListeEnvieView 
 from source.view.Page_option.proposition_prof_view import Proposition_prof_view
 from source.view.Page_option.suggestions_eleve_view import SuggestionEleveView
 from source.view.Page_option.liste_eleves_view import ListeElevesView
 from source.services.service_utilisateur import UtilisateurService  
 from source.view.Page_option.admin_view import AdminView
-from source.view.Page_option.maj_utilisateur_view import MajUtilisateurView
 from source.view.session_view import Session 
 import inquirer
 
@@ -54,10 +53,11 @@ class Menu_view:
                 return HistoriqueView().display()
 
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
-                liste_envie_view= Liste_envie_view()
+                liste_envie_view= ListeEnvieView(id_eleve)
                 return liste_envie_view.display()
 
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Modifier ses informations"):
+                from source.view.Page_option.maj_utilisateur_view import MajUtilisateurView
                 maj_utilisateur_view = MajUtilisateurView()
                 return maj_utilisateur_view.display()
             
