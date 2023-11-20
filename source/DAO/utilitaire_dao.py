@@ -16,6 +16,7 @@ class UtilitaireDAO:
                 )
                 count = cursor.fetchone()[0]
                 return count > 0
+                
     @staticmethod
     def check_stage_exists(id_stage):
         with DBConnection().connection as conn:
