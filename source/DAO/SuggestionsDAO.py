@@ -136,3 +136,30 @@ class SuggestionsDAO:
                     "WHERE id_eleve = %(id_eleve)s AND id_stage = %(id_stage)s",
                     {"id_eleve": id_eleve, "id_stage": id_stage},
                 )
+
+    def delete_all_suggestions(self, id_eleve):
+        """Pour vider la liste de suggestions d'un élève à partir de son identifiant.
+
+        Parameters
+        ----------
+        id_eleve: int
+            L'identifiant de l'élève
+
+        Examples
+        --------
+        >>> mes_suggestions = SuggestionsDAO()
+        >>> id_eleve = 123
+        >>> mes_suggestions.delete_all_suggestions(id_eleve)
+        """
+        if not isinstance(id_eleve, int):
+            raise TypeError("l'identifiant de l'élève est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_eleve):
+            raise IdEleveInexistantError(id_eleve)
+
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM base_projetinfo.suggestion "
+                    "WHERE id_eleve = %(id_eleve)s",
+                    {"id_eleve": id_eleve},
+                )

@@ -91,7 +91,8 @@ class ServiceUtilisateur:
     def find_id_by_pseudo(self,pseudo):
         return self.utilisateur_dao.find_id_by_pseudo(pseudo)
         
-
+    def maj_mdp(self, mot_de_passe):
+        return self.utilisateur_dao.update_utilisateur(mot_de_passe)
         
     
     
