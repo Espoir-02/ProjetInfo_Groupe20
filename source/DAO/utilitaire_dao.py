@@ -1,5 +1,5 @@
 from source.DAO.dbconnection import DBConnection
-from source.services.scrapping.scrapping import Scrapping
+#from source.services.scrapping.scrapping import Scrapping
 
 class UtilitaireDAO:
     def __init__(self):
