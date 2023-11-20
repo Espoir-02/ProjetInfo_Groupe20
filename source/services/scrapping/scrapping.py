@@ -149,6 +149,4 @@ class Scrapping:
 
         
 
-        # APPEL DE LA CLASSE EXPOTEURSTAGE POUR GERER L'EXPORTATION
-        ExporteurStage().exporter_donnees(liste_id_stages, id_utilisateur,  chemin_fichier_sortie)
             

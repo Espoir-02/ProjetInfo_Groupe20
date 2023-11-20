@@ -26,13 +26,14 @@ class ListeEnvieService:
         return self.liste_envie_dao.delete_all_liste_envie(id_eleve)
 
     def get_liste_envie_eleve(self, id_eleve):
-        liste_envie= self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
+        return self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
+        """liste_envie= self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
         if liste_envie:
             table = PrettyTable()
             table.field_names = ["ID Stage", "Titre", "Lien", "Domaine"]
 
             # Ajustez la largeur maximale des colonnes
-            MAX_WIDTH = 50
+            MAX_WIDTH = 40
             for envie in liste_envie:
                 table.add_row([
                     envie["id_stage"],
@@ -47,8 +48,8 @@ class ListeEnvieService:
 
     @staticmethod
     def truncate_text(text, max_width):
-        """Tronque le texte si sa longueur dépasse la largeur maximale."""
-        return (text[:max_width] + '...') if len(text) > max_width else text
+        Tronque le texte si sa longueur dépasse la largeur maximale."""
+           #return (text[:max_width] + '...') if len(text) > max_width else text
 
     
         
