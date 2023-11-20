@@ -1,4 +1,6 @@
 from source.DAO.utilisateur_dao import UtilisateurDAO
+from source.DAO.utilitaire_dao import UtilitaireDAO
+from source.exception.exceptions import IdUtilisateurInexistantError, IdStageInexistantError
 from source.DAO.StageDAO import StageDAO
 from prettytable import PrettyTable
 
@@ -6,11 +8,19 @@ from prettytable import PrettyTable
 class ServiceAdmin:
     def __init__(self):
         self.utilisateur_dao = UtilisateurDAO()
+        self.utilitaire_dao = UtilitaireDAO()
         self.stage_dao = StageDAO()
 
     def supprimer_utilisateur(self, id_utilisateur):
-        print("Utilisateur supprimé avec succès.")
-        return self.utilisateur_dao.delete_utilisateur(id_utilisateur)
+        try:
+            if not self.utilitaire_dao.check_user_exists(id_utilisateur):
+                raise IdUtilisateurInexistantError(id_utilisateur)
+
+            print("Utilisateur supprimé avec succès.")
+            return self.utilisateur_dao.delete_utilisateur(id_utilisateur)
+        except IdUtilisateurInexistantError as e:
+            print(f"Erreur lors de la suppression de l'utilisateur : {e}")
+        
         
 
     def obtenir_liste_utilisateurs(self):
@@ -35,8 +45,15 @@ class ServiceAdmin:
     
 
     def supprimer_stage(self, id_stage):
-        print("Stage supprimé avec succès")
-        return self.stage_dao.delete_stage(id_stage)
+        try:
+            if not self.utilitaire_dao.check_stage_exists(id_stage):
+                raise IdStageInexistantError(id_stage)
+
+            print("Stage supprimé avec succès.")
+            return self.stage_dao.delete_stage(id_stage)
+        except IdStageInexistantError as e:
+            print(f"Erreur lors de la suppression du stage : {e}")
+
         
 
     def obtenir_liste_stages(self):

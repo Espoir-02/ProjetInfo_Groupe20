@@ -6,39 +6,44 @@ from source.view.Page_detail.detail_stage_view import detail_stage_view_eleve
 from source.view.Page_detail.detail_stage_view import detail_stage_view_prof
 import inquirer
 
-class Liste_envie_view:
-    def __init__(self):
-        self.id_eleve = Session().user_id
-        self.service_liste_envie= ListeEnvieService()
+class ListeEnvieView:
+    def __init__(self, id_eleve):
+        self.id_eleve = id_eleve
+        self.service_liste_envie = ListeEnvieService()
+
+    def afficher_menu(self):
+        return [
+            inquirer.List('choix',
+                          message="Choississez une option",
+                          choices=[
+                              'Consulter la liste d\'envies',
+                              'Supprimer un stage de la liste',
+                              'Revenir au menu principal'
+                          ])
+        ]
+ 
 
     def display(self):
         while True:
-            # Proposer trois choix à l'utilisateur
-            questions = [
-                inquirer.List('menu', message='Que souhaitez-vous faire ?', choices=[
-                    "Consulter la liste d'envies",
-                    "Supprimer un stage de la liste",
-                    "Revenir au menu principal"
-                ])
-            ]
-            user_choice = inquirer.prompt(questions)['menu']
+            reponse = inquirer.prompt(self.afficher_menu())
+            choix = reponse['choix']
 
-            if user_choice == "Consulter la liste d'envies":
-                # Récupérer et afficher la liste d'envies
-                liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_eleve)
-                print(liste_envie_courant)
-                # Demander à l'utilisateur de sélectionner un stage
-                #self.select_stage()
-            elif user_choice == "Supprimer un stage de la liste":
+            if choix == 'Consulter la liste d\'envies':
+                self.service_liste_envie.get_liste_envie_eleve(self.id_eleve)
+            elif choix == 'Supprimer un stage de la liste':
                 id_stage = int(input("Entrez l'ID du stage à supprimer : "))
-                self.service_liste_envie.supprimer_stage_de_liste_envie( self.id_eleve, id_stage)
-                print("Stage supprimé avec succès")
-            elif user_choice == "Revenir au menu principal":
-                from source.view.Page_option.menu_view import Menu_view
-                menu_view=Menu_view()
+                self.service_liste_envie.supprimer_stage_de_liste_envie(self.id_eleve, id_stage)
+            elif choix == 'Revenir au menu principal':
+                print("Au revoir !")
+                menu_view = Menu_view()
                 menu_view.display()
+                break
+            else:
+                print("Option invalide. Veuillez réessayer.")
 
-    """def select_stage(self):
+
+
+"""def select_stage(self):
         # Récupérer la liste d'envies
         liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_eleve)
 
@@ -57,7 +62,7 @@ class Liste_envie_view:
             else:
                 return detail_stage_view_prof(answers['selection'])"""
 
-"""if __name__ == "__main__":
+if __name__ == "__main__":
     id_eleve = Session().user_id
-    liste_envie_view = Liste_envie_view(id_eleve=id_eleve)
-    liste_envie_view.display()"""
+    liste_envie_view = ListeEnvieView(id_eleve=id_eleve)
+    liste_envie_view.display()

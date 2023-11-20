@@ -1,15 +1,25 @@
 from source.DAO.ListeEnvieDAO import ListeEnvieDAO
+from source.DAO.utilitaire_dao import UtilitaireDAO
+from source.exception.exceptions import IdStageInexistantError
 from prettytable import PrettyTable
 
 class ListeEnvieService:
     def __init__(self):
         self.liste_envie_dao = ListeEnvieDAO()
+        self.utilitaire_dao = UtilitaireDAO()
 
     def ajouter_stage_a_liste_envie(self, id_eleve, id_stage):
         return self.liste_envie_dao.update_liste_envie(id_eleve, id_stage)
 
     def supprimer_stage_de_liste_envie(self, id_eleve, id_stage):
-        return self.liste_envie_dao.delete_liste_envie(id_eleve, id_stage)
+        try:
+            if not self.utilitaire_dao.check_stage_exists(id_stage):
+                raise IdStageInexistantError(id_stage)
+
+            print("Stage supprimé avec succès de la liste d'envie")
+            return self.liste_envie_dao.delete_liste_envie(id_eleve, id_stage)
+        except IdStageInexistantError as e:
+            print(f"Erreur lors de la suppression du stage dans la liste d'envie : {e}")
 
     def get_liste_envie_eleve(self, id_eleve):
         liste_envie= self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
