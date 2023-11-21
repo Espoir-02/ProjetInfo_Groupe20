@@ -1,6 +1,6 @@
 from InquirerPy import inquirer
 from source.view.session_view import Session
-from source.services.service_utilisateur import UtilisateurService
+from source.services.service_utilisateur import ServiceUtilisateur
 from source.services.service_suggestion_eleve import ServiceSuggestion
 
 

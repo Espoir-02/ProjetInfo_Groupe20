@@ -90,3 +90,23 @@ def test_delete_suggestion():
     with pytest.raises(IdStageInexistantError) as exc_info:
         mes_suggestions.delete_suggestion(id_eleve=8, id_stage=88888)
     assert str(exc_info.value) == "Le stage avec l'ID 88888 n'existe pas."
+
+
+    def test_delete_all_suggestions(self):
+        mes_suggestions = SuggestionsDAO()
+
+        # Test avec des paramètres valides
+        id_eleve_valide = 123
+        mes_suggestions.delete_all_suggestions(id_eleve_valide)
+
+        # Test avec un id_eleve invalide 
+        with pytest.raises(TypeError) as exc_info:
+            id_eleve_invalide = "pas_un_entier"
+            mes_suggestions.delete_all_suggestions(id_eleve_invalide)
+        assert str(exc_info.value) == "L'identifiant de l'élève doit être un entier numérique"
+
+        # Test avec un id_eleve inexistant
+        with pytest.raises(IdEleveInexistantError) as exc_info:
+            id_eleve_inexistant = 9999
+            mes_suggestions.delete_all_suggestions(id_eleve_inexistant)
+        assert str(exc_info.value) == "L'élève avec l'identifiant '9999' n'existe pas"

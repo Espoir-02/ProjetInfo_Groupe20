@@ -1,7 +1,8 @@
 import pytest
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
-from source.exception.exceptions import IdUtilisateurInexistantError
+from source.exception.exceptions import IdUtilisateurInexistantError, PseudoDejaExistantError
+
 
 
 def test_create_compte():
@@ -93,6 +94,32 @@ def test_find_by_id():
         mes_utilisateurs.find_by_id(id_utilisateur=999)
     assert str(exc_info.value) == "L'utilisateur avec l'ID 999 n'existe pas."
 
+def test_update_utilisateur_pseudo(self):
+        mes_utilisateurs = UtilisateurDAO()
+        id_utilisateur = 18
+        ancien_pseudo = mes_utilisateurs.find_by_id(id_utilisateur).pseudo
+
+        # Test de la mise à jour avec des paramètres valides
+        nouveau_pseudo = "Chasseurdestage"
+        mes_utilisateurs.update_utilisateur_pseudo(id_utilisateur, nouveau_pseudo)
+        utilisateur_maj = mes_utilisateurs.find_by_id(id_utilisateur)
+
+        assert utilisateur_maj.pseudo == nouveau_pseudo
+        assert utilisateur_maj.pseudo != ancien_pseudo
+
+        # Tester avec un id_utilisateur invalide
+        with pytest.raises(TypeError) as exc_info:
+            mes_utilisateurs.update_utilisateur_pseudo(id_utilisateur="pas_un_entier", nouveau_pseudo= nouveau_pseudo)
+        assert (
+            str(exc_info.value) == "l'identifiant de l'utilisateur est un entier numérique"
+        )
+
+         # Tester avec un id_utilisateur qui n'existe pas
+        with pytest.raises(PseudoDejaExistantError) as exc_info:
+            mes_utilisateurs.update_utilisateur_pseudo(id_utilisateur, "Milliris")
+        assert str(exc_info.value) == "Le pseudo Milliris existe déjà."
+
+        
 
 def test_delete_utilisateur():
     mes_utilisateurs = UtilisateurDAO()

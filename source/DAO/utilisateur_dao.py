@@ -1,6 +1,7 @@
 from source.DAO.dbconnection import DBConnection
-from source.exception.exceptions import IdUtilisateurInexistantError
+from source.exception.exceptions import IdUtilisateurInexistantError, PseudoDejaExistantError
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
+from source.DAO.utilitaire_dao import UtilitaireDAO
 from prettytable import PrettyTable
 
 
@@ -325,6 +326,8 @@ class UtilisateurDAO:
         """
         if not isinstance(pseudo, str):
             raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
+        if len(nouveau_mdp) <= 8:
+            raise ValueError("Le nouveau mot de passe doit contenir plus de 8 caractères")
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -338,7 +341,7 @@ class UtilisateurDAO:
                     print("Le pseudo n'existe pas")
 
     def update_utilisateur_pseudo(self, id_utilisateur, nouveau_pseudo):
-        """Pour mettre à jour le mot de passe d'un utilisateur.
+        """Pour mettre à jour le pseudo d'un utilisateur.
 
         Parameters
         ----------
@@ -350,13 +353,16 @@ class UtilisateurDAO:
         >>> mes_utilisateurs = UtilisateurDAO()
         >>> id_utilisateur= 18
         >>> nouveau_pseudo = "Chasseurdestage"
-        >>> mes_utilisateurs.update_utilisateur_pseudo(18, nouveau_mdp)
+        >>> mes_utilisateurs.update_utilisateur_pseudo(18, nouveau_pseudo)
         >>> utilisateur_maj = mes_utilisateurs.find_by_id(18)
         >>> print(utilisateur_maj.pseudo)
         "Chasseurdestage"
         """
         if not isinstance(id_utilisateur, int):
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+        if UtilitaireDAO.check_pseudo_exists(nouveau_pseudo):
+            raise PseudoDejaExistantError(nouveau_pseudo)
+        
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(

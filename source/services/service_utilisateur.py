@@ -1,56 +1,12 @@
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
-
-class UtilisateurService:
-    def __init__(self):
-        self.utilisateur_dao = UtilisateurDAO()
-
-    def creer_compte_anonyme(self):
-        utilisateur_invite=Utilisateur("invité",None,None,None,None)
-        nouvel_utilisateur_invite=self.utilisateur_dao.create_compte(utilisateur_invite)
-        return nouvel_utilisateur_invite
-
-    def creer_compte(self, utilisateur):
-        nouvel_utilisateur =  Utilisateur(
-        nom=utilisateur.nom,
-        prenom=utilisateur.prenom,
-        pseudo=utilisateur.pseudo,
-        mot_de_passe=utilisateur.mot_de_passe,
-        type_utilisateur=utilisateur.type_utilisateur)
-        utilisateur_cree= self.utilisateur_dao.create_compte(nouvel_utilisateur)
-        return utilisateur_cree
-
-    def authentifier(self, pseudo, mot_de_passe):
-        # Vérifier l'authentification de l'utilisateur
-        mot_de_passe_utilisateur = self.utilisateur_dao.find_mdp(pseudo)
-        if mot_de_passe_utilisateur and mot_de_passe == mot_de_passe_utilisateur:
-            return True
-        return False
-
-    def utilisateur_authentifier_verif(self,id_utilisateur):
-        # A implementer
-        pass
-        
-    def recuperer_informations(self, pseudo):
-        # Récupérer les informations de l'utilisateur
-        utilisateur = self.utilisateur_dao.find_by_nom(pseudo)
-        return utilisateur
-
-#User
-#fait moi : ServiceUtilisateur :
-
-#Gère la création, la mise à jour, la suppression et la recherche d'utilisateurs.
-#ChatGPT
-#Voici un exemple simplifié de la classe ServiceUtilisateur qui gère la création, la mise à jour, la suppression et la recherche d'utilisateurs :
-
-#python
-#Copy code
-from source.DAO.utilisateur_dao import UtilisateurDAO
-from source.business_object.utilisateur.utilisateur2 import Utilisateur
+from source.DAO.utilitaire_dao import UtilitaireDAO
+from source.exception.exceptions import PseudoDejaExistantError
 
 class ServiceUtilisateur:
     def __init__(self):
         self.utilisateur_dao = UtilisateurDAO()
+        self.utilitaire_dao = UtilitaireDAO()
 
     def creer_utilisateur(self, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
         nouvel_utilisateur = Utilisateur(nom=nom, prenom=prenom, pseudo=pseudo, mot_de_passe=mot_de_passe, type_utilisateur=type_utilisateur)
@@ -94,8 +50,12 @@ class ServiceUtilisateur:
     def maj_mdp(self, pseudo,nouveau_mdp):
         return self.utilisateur_dao.update_utilisateur_mdp(pseudo,nouveau_mdp)
     
-    def maj_pseudo (self, id_utilisateur,nouveau_pseudo):
-        return self.utilisateur_dao.update_utilisateur_pseudo(id_utilisateur, nouveau_pseudo)
-        
-    
-    
+    def maj_pseudo(self, id_utilisateur, nouveau_pseudo):
+        try:
+            if self.utilitaire_dao.check_pseudo_exists(nouveau_pseudo):
+                raise PseudoDejaExistantError(nouveau_pseudo)
+
+            print("Pseudo modifié avec succès")
+            return self.utilisateur_dao.update_utilisateur_pseudo(id_utilisateur, nouveau_pseudo)
+        except PseudoDejaExistantError as e:
+            print(f"Erreur de mise à jour du pseudo : {e}")

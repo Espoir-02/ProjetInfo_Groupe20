@@ -20,3 +20,8 @@ class IdProfesseurInexistantError(Exception):
     def __init__(self, id_professeur):
         self.id_professeur = id_professeur
         super().__init__(f"Le professeur avec l'ID {id_professeur} n'existe pas.")
+
+class PseudoDejaExistantError(Exception):
+    def __init__(self, pseudo):
+        self.pseudo = pseudo
+        super().__init__(f"Le pseudo {pseudo} existe déjà.")

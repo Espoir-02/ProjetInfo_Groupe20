@@ -4,14 +4,14 @@ from source.view.Page_option.Liste_envie_view import ListeEnvieView
 from source.view.Page_option.proposition_prof_view import Proposition_prof_view
 from source.view.Page_option.suggestions_eleve_view import SuggestionEleveView
 from source.view.Page_option.liste_eleves_view import ListeElevesView
-from source.services.service_utilisateur import UtilisateurService  
+from source.services.service_utilisateur import ServiceUtilisateur  
 from source.view.Page_option.admin_view import AdminView
 from source.view.session_view import Session 
 import inquirer
 
 class Menu_view:
     def __init__(self):
-        self.utilisateur_service = UtilisateurService()
+        self.utilisateur_service = ServiceUtilisateur()
 
     def display(self):
         pseudo = Session().user_pseudo
@@ -58,7 +58,7 @@ class Menu_view:
 
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Modifier ses informations"):
                 from source.view.Page_option.maj_utilisateur_view import MajUtilisateurView
-                maj_utilisateur_view = MajUtilisateurView()
+                maj_utilisateur_view = MajUtilisateurView(pseudo)
                 return maj_utilisateur_view.display()
             
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Déconnexion"):
