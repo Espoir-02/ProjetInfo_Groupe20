@@ -1,7 +1,7 @@
 from InquirerPy import inquirer
-from source.view.Page_option.menu_view import Menu_view
 from source.services.service_utilisateur import ServiceUtilisateur
 from source.services.service_connexion import ConnexionService
+from source.view.Page_option.menu_view import Menu_view
 from source.view.session_view import Session
 import inquirer
 import getpass

@@ -31,9 +31,7 @@ class ListeEnvieView:
             inquirer.List('choix', message="Choisissez une option", choices=menu_options)
         ]
 
-    def consulter_liste_envies(self):
-        liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_utilisateur)
-
+    def choisir_stage(self, liste_envie_courant):
         if not liste_envie_courant:
             print("La liste d'envies est vide.")
         else:
@@ -41,42 +39,38 @@ class ListeEnvieView:
             questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]
             answers = inquirer.prompt(questions)
 
-            selected_stage = int(answers['selection'].split(' - ')[0])# Pour récupérer l'ID du stage sélectionné
+            selected_stage = int(answers['selection'].split(' - ')[0])
 
             if selected_stage == "Retour au menu":
                 self.display()
             else:
-                stage =self.stage_service.find_stage_by_id(selected_stage)
-                print(stage)
-                
+                return selected_stage
+
+    def consulter_liste_envies(self):
+        liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_utilisateur)
+        selected_stage = self.choisir_stage(liste_envie_courant)
+
+        if selected_stage is not None:
+            stage = self.stage_service.find_stage_by_id(selected_stage)
+            print(stage)
+
     def proposer_stage(self):
         liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_utilisateur)
+        selected_stage = self.choisir_stage(liste_envie_courant)
 
-        if not liste_envie_courant:
-            print("La liste d'envies est vide.")
-        else:
-            choix_stage = [f"{envie['id_stage']} - {envie['titre']}" for envie in liste_envie_courant] + ["Retour au menu"]
-            questions = [inquirer.List('selection', message='Sélectionner le stage à suggérer:', choices=choix_stage)]
-            answers = inquirer.prompt(questions)
+        if selected_stage is not None:
+            try:
+                nom_eleve = input("Entrez le nom de l'élève : ")
+                prenom_eleve = input("Entrez le prénom de l'élève : ")
+                eleve = self.utilisateur_service.trouver_utilisateur_par_nom(nom_eleve, prenom_eleve)
 
-            selected_stage = int(answers['selection'].split(' - ')[0])# Pour récupérer l'ID du stage sélectionné
-
-            if selected_stage == "Retour au menu":
-                self.display()
-            else:
-                try :
-                    nom_eleve =input("Entrez le nom de l'élève : ")
-                    prenom_eleve = input("Entrez le prénom de l'élève :")
-                    eleve= self.utilisateur_service.trouver_utilisateur_par_nom(nom_eleve, prenom_eleve)
-
-                    if eleve is not None:
-                        id_eleve = eleve.get("id_utilisateur")
-                        self.suggestions_service.create_suggestion(id_eleve, selected_stage, self.id_utilisateur)
-                    else:
-                        print("Aucun utilisateur trouvé avec les nom et prénom spécifiés.")
-                except UtilisateurInexistantError as e:
-                    print(f"Erreur : {e}")
-
+                if eleve is not None:
+                    id_eleve = eleve.get("id_utilisateur")
+                    self.suggestions_service.create_suggestion(id_eleve, selected_stage, self.id_utilisateur)
+                else:
+                    print("Aucun utilisateur trouvé avec les nom et prénom spécifiés.")
+            except UtilisateurInexistantError as e:
+                print(f"Erreur : {e}")
 
     def display(self):
         while True:

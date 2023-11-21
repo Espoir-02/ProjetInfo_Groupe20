@@ -8,18 +8,11 @@ class HistoriqueService:
         self.historique_dao = HistoriqueDAO()
 
     def get_all_historique_by_id(self, id_utilisateur):
-        liste_historique = self.historique_dao.get_all_historique_by_id(id_utilisateur)
-        if liste_historique:
-            table = PrettyTable()
-            table.field_names = ["ID Stage", "Titre", "Lien", "Domaine"]
-
-            for recherche in liste_historique:
-                table.add_row([recherche["id_stage"], recherche["titre"], recherche["lien"], recherche["domaine"]])
-
-            print(table)
-        else:
-            print("L'historique est vide.")
+        return self.historique_dao.get_all_historique_by_id(id_utilisateur)
 
     def ajouter_stage_a_historique(self, id_utilisateur,stage_id):
-        return self.utilisateur_dao.update_historique(id_utilisateur, stage_id)
-       
+        return self.historique_dao.update_historique(id_utilisateur, stage_id)
+
+    def vider_historique(self, id_utilisateur):
+        print("Historique supprimé avec succès")
+        return self.historique_dao.delete_all_historique_by_id(id_utilisateur)

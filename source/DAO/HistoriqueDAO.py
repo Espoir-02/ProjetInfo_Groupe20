@@ -88,3 +88,29 @@ class HistoriqueDAO:
                     }
                     result_list.append(hist_dict)
         return result_list
+
+    def delete_all_historique_by_id(self, id_utilisateur):
+        """Vide l'historique d'un utilisateur à partir de son identifiant.
+
+        Parameters
+        ----------
+        id_utilisateur : int
+            L'identifiant de l'utilisateur.
+
+        Examples
+        --------
+        >>> mes_historique = HistoriqueDAO()
+        >>> id_utilisateur = 30
+        >>> mes_historiques.vider_historique_by_id(id_utilisateur)
+        """
+        if not isinstance(id_utilisateur, int):
+            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_utilisateur):
+            raise IdUtilisateurInexistantError(id_utilisateur)
+
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM base_projetinfo.historique WHERE id_utilisateur = %(id_utilisateur)s",
+                    {"id_utilisateur": id_utilisateur},
+                )
