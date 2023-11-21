@@ -41,6 +41,7 @@ class ListeEnvieView:
                 stage =self.stage_service.find_stage_by_id(selected_stage)
                 print(stage)
                 
+                
 
     def display(self):
         while True:
