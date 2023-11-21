@@ -72,3 +72,22 @@ def test_delete_eleve():
     with pytest.raises(IdEleveInexistantError) as exc_info:
         ma_liste_eleve.delete_eleve(id_eleve=999, id_professeur=10)
     assert str(exc_info.value) == "L'élève avec l'ID 999 n'existe pas."
+
+    def test_delete_all_liste(self):
+        ma_liste = ListeElevesDAO()
+
+        # Test avec des paramètres valides
+        id_professeur_valide = 18
+        ma_liste.delete_all_liste(id_professeur_valide)
+
+        # Test avec un id_professeur invalide (type incorrect)
+        with pytest.raises(TypeError) as exc_info:
+            id_professeur_invalide = "pas_un_entier"
+            ma_liste.delete_all_liste(id_professeur_invalide)
+        assert str(exc_info.value) == "L'identifiant du professeur doit être un entier numérique"
+
+        # Test avec un id_professeur inexistant
+        with pytest.raises(IdProfesseurInexistantError) as exc_info:
+            id_professeur_inexistant = 9999
+            ma_liste.delete_all_liste(id_professeur_inexistant)
+        assert str(exc_info.value) == "Le professeur avec l'identifiant '9999' n'existe pas"

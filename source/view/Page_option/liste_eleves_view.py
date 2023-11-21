@@ -1,4 +1,6 @@
 from source.services.service_liste_eleves import ListeElevesService
+from source.services.service_utilisateur import ServiceUtilisateur
+from source.exception.exceptions import UtilisateurInexistantError
 from source.view.session_view import Session
 from inquirer import prompt, List
 import inquirer
@@ -6,8 +8,9 @@ import inquirer
 
 class ListeElevesView:
     def __init__(self, id_professeur):
-        self.id_professeur = id_professeur
+        self.id_professeur = Session().user_id
         self.liste_eleves_service = ListeElevesService()
+        self.utilisateur_service = ServiceUtilisateur()
 
     def afficher_menu(self):
         return [
@@ -22,6 +25,24 @@ class ListeElevesView:
                  ]),
         ]
 
+    def ajout_eleve(self):
+        try:
+            nom_eleve = input("Entrez le nom de l'élève : ")
+            prenom_eleve = input("Entrez le prénom de l'élève : ")
+        
+            eleve = self.utilisateur_service.trouver_utilisateur_par_nom(nom_eleve, prenom_eleve)
+
+            if eleve is not None:
+                id_eleve = eleve.get("id_utilisateur")
+                self.liste_eleves_service.ajouter_eleve_a_liste_eleves(id_eleve, self.id_professeur)
+            else:
+                print("Aucun utilisateur trouvé avec les nom et prénom spécifiés.")
+
+        except UtilisateurInexistantError as e:
+            print(f"Erreur : {e}")
+
+
+
     def display(self):
         while True:
             reponse = prompt(self.afficher_menu())
@@ -30,10 +51,7 @@ class ListeElevesView:
             if choix == 'Consulter la liste des élèves':
                 self.liste_eleves_service.consulter_liste_eleves(self.id_professeur)
             elif choix == 'Ajouter un élève':
-                nom_eleve = input("Entrez le nom de l'élève : ")
-                prenom_eleve = input("Entrez le prénom de l'élève : ")
-                eleve = {"nom": nom_eleve, "prenom": prenom_eleve}
-                self.liste_eleves_service.ajouter_eleve_a_liste_eleves(eleve, self.id_professeur)
+                self.ajout_eleve()
             elif choix == 'Supprimer un élève':
                 id_eleve = int(input("Entrez l'ID de l'élève à supprimer : "))
                 self.liste_eleves_service.supprimer_eleve_de_liste_eleves(id_eleve, self.id_professeur)

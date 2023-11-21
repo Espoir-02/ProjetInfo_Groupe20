@@ -1,4 +1,7 @@
 from source.services.service_suggestion_eleve import ServiceSuggestion
+from source.services.service_stage import StageService
+from source.services.service_historique import HistoriqueService
+from source.services.service_liste_envie import ListeEnvieService
 from source.view.session_view import Session
 from inquirer import prompt, List
 import inquirer
@@ -8,6 +11,9 @@ class SuggestionEleveView:
     def __init__(self, id_eleve):
         self.id_eleve = id_eleve
         self.suggestions_eleves_service = ServiceSuggestion()
+        self.stage_service = StageService()
+        self.historique_service = HistoriqueService()
+        self.liste_envie_service = ListeEnvieService()
 
     def afficher_menu(self):
         return [
@@ -21,12 +27,52 @@ class SuggestionEleveView:
                  ]),
         ]
 
+    def consulter_suggestions(self):
+        try:
+            liste_suggestions_courant = self.suggestions_eleves_service.get_suggestions_by_id(self.id_eleve)
+
+            if not liste_suggestions_courant:
+                print("La liste de suggestions est vide.")
+            else:
+                choix_stage = [f"{suggestion['id_stage']} - {suggestion['titre']}" for suggestion in liste_suggestions_courant] + ["Retour au menu"]
+                questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]
+                answers = inquirer.prompt(questions)
+
+                selected_stage = int(answers['selection'].split(' - ')[0])  # Pour récupérer l'ID du stage sélectionné
+
+                if selected_stage == "Retour au menu":
+                    self.display()
+                else:
+                    try:
+                        stage = self.stage_service.find_stage_by_id(selected_stage)
+
+                        if stage is not None:
+                            self.historique_service.ajouter_stage_a_historique(self.id_eleve, selected_stage)
+                            print(stage)
+
+                            # Demander à l'utilisateur s'il souhaite ajouter le stage à sa liste d'envies
+                            ajout_envie = inquirer.confirm(message="Voulez-vous ajouter ce stage à votre liste d'envies?")
+                            if ajout_envie:
+                                self.liste_envie_service.ajouter_stage_a_liste_envie(self.id_eleve, selected_stage)
+                                print("Le stage a été ajouté à votre liste d'envies.")
+                            else:
+                                print("Le stage n'a pas été ajouté à votre liste d'envies.")
+                        else:
+                            print("Aucun stage trouvé avec l'ID spécifié.")
+                    except Exception as e:
+                        print(f"Une erreur s'est produite lors de la recherche du stage : {e}")
+
+        except Exception as e:
+            print(f"Une erreur s'est produite lors de la récupération des suggestions : {e}")
+
+
     def display(self):
         while True:
             reponse = prompt(self.afficher_menu())
             choix = reponse['choix']
 
             if choix == 'Consulter la liste de suggestions':
+                self.consulter_suggestions()
                 self.suggestions_eleves_service.get_suggestions_by_id(self.id_eleve)
             elif choix == 'Supprimer une suggestion':
                 id_stage = int(input("Entrez l'ID du stage à supprimer : "))

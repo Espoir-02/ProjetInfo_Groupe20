@@ -9,8 +9,8 @@ class ListeElevesService:
         self.liste_eleves_dao = ListeElevesDAO()
         self.utilitaire_dao = UtilitaireDAO
 
-    def ajouter_eleve_a_liste_eleves(self, eleve, id_professeur):
-        return self.liste_eleves_dao.update_liste_eleve(eleve, id_professeur)
+    def ajouter_eleve_a_liste_eleves(self, id_eleve, id_professeur):
+        return self.liste_eleves_dao.update_liste_eleve(id_eleve, id_professeur)
         print("Élève ajouté avec succès.")
 
 

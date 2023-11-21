@@ -94,6 +94,37 @@ def test_find_by_id():
         mes_utilisateurs.find_by_id(id_utilisateur=999)
     assert str(exc_info.value) == "L'utilisateur avec l'ID 999 n'existe pas."
 
+def test_update_utilisateur_mdp(self):
+        mes_utilisateurs = UtilisateurDAO()
+
+        # Test avec des paramètres valides
+        pseudo_valide = 'Milliris'
+        ancien_mdp = mes_utilisateurs.find_mdp(pseudo_valide)
+        nouveau_mdp_valide = "MotDePasse456"
+        mes_utilisateurs.update_utilisateur_mdp(pseudo_valide, nouveau_mdp_valide)
+        mdp_maj = mes_utilisateurs.find_mdp(pseudo_valide)
+        assert mdp_maj == nouveau_mdp_valide
+        assert mdp_maj != ancien_mdp
+
+        # Test avec un pseudo invalide (type incorrect)
+        with pytest.raises(TypeError) as exc_info:
+            pseudo_invalide = 123
+            nouveau_mdp_invalide = "MotDePasse789"
+            mes_utilisateurs.update_utilisateur_mdp(pseudo_invalide, nouveau_mdp_invalide)
+        assert str(exc_info.value) == "Le pseudo de l'utilisateur doit être une chaîne de caractères"
+
+        # Test avec un nouveau mot de passe trop court
+        with pytest.raises(ValueError) as exc_info:
+            nouveau_mdp_trop_court = "Pass123"
+            mes_utilisateurs.update_utilisateur_mdp(pseudo_valide, nouveau_mdp_trop_court)
+        assert str(exc_info.value) == "Le nouveau mot de passe doit contenir plus de 8 caractères"
+
+        # Test avec un pseudo inexistant
+        with pytest.raises(Exception) as exc_info:
+            pseudo_inexistant = 'Inexistant'
+            mes_utilisateurs.update_utilisateur_mdp(pseudo_inexistant, nouveau_mdp_valide)
+        assert "Le pseudo n'existe pas" in str(exc_info.value)
+
 def test_update_utilisateur_pseudo(self):
         mes_utilisateurs = UtilisateurDAO()
         id_utilisateur = 18

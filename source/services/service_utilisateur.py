@@ -1,7 +1,7 @@
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
 from source.DAO.utilitaire_dao import UtilitaireDAO
-from source.exception.exceptions import PseudoDejaExistantError
+from source.exception.exceptions import PseudoDejaExistantError,UtilisateurInexistantError
 
 class ServiceUtilisateur:
     def __init__(self):
@@ -39,7 +39,15 @@ class ServiceUtilisateur:
         return self.utilisateur_dao.find_by_id(id_utilisateur)
 
     def trouver_utilisateur_par_nom(self, nom, prenom):
-        return self.utilisateur_dao.find_by_nom(nom, prenom)
+        try:
+            eleve = self.utilisateur_dao.find_by_nom(nom, prenom)
+
+            if eleve is not None:
+                return eleve
+            else:
+                raise UtilisateurInexistantError(f"Aucun utilisateur trouvé avec le nom '{nom}' et le prénom '{prenom}'.")
+        except UtilisateurInexistantError as e:
+            print(f"Une erreur s'est produite lors de la recherche de l'utilisateur : {e}")
 
     def get_type_utilisateur(self, pseudo):
         return self.utilisateur_dao.get_type_utilisateur(pseudo)
@@ -59,3 +67,4 @@ class ServiceUtilisateur:
             return self.utilisateur_dao.update_utilisateur_pseudo(id_utilisateur, nouveau_pseudo)
         except PseudoDejaExistantError as e:
             print(f"Erreur de mise à jour du pseudo : {e}")
+

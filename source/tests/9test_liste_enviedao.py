@@ -76,3 +76,22 @@ def test_delete_liste_envie():
     with pytest.raises(IdStageInexistantError) as exc_info:
         ma_liste_envie.delete_liste_envie(id_eleve=6, id_stage=88888)
     assert str(exc_info.value) == "Le stage avec l'ID 88888 n'existe pas."
+
+    def test_delete_all_liste_envie(self):
+        ma_liste_envie = ListeEnvieDAO()
+
+        # Test avec des paramètres valides
+        id_eleve_valide = 6
+        ma_liste_envie.delete_all_liste_envie(id_eleve_valide)
+
+        # Test avec un id_eleve invalide 
+        with pytest.raises(TypeError) as exc_info:
+            id_eleve_invalide = "pas_un_entier"
+            ma_liste_envie.delete_all_liste_envie(id_eleve_invalide)
+        assert str(exc_info.value) == "L'identifiant de l'élève doit être un entier numérique"
+
+        # Test avec un id_eleve inexistant
+        with pytest.raises(IdEleveInexistantError) as exc_info:
+            id_eleve_inexistant = 9999
+            ma_liste_envie.delete_all_liste_envie(id_eleve_inexistant)
+        assert str(exc_info.value) == "L'élève avec l'identifiant '9999' n'existe pas"

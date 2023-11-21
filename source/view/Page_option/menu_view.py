@@ -18,6 +18,7 @@ class Menu_view:
         type_utilisateur = Session().user_type
         id_professeur= Session().user_id
         id_eleve = Session().user_id
+        id_utilisateur = Session().user_id
         
 
         while True:
@@ -53,7 +54,7 @@ class Menu_view:
                 return HistoriqueView().display()
 
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
-                liste_envie_view= ListeEnvieView(id_eleve)
+                liste_envie_view= ListeEnvieView(id_utilisateur)
                 return liste_envie_view.display()
 
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Modifier ses informations"):
