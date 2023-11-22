@@ -42,6 +42,22 @@ class ListeElevesView:
             print(f"Erreur : {e}")
 
 
+    def supprimer_eleve(self):
+        while True:
+            id_eleve = input("Entrez l'ID de l'élève à supprimer (ou appuyez sur Entrée pour annuler) : ")
+
+            if not id_eleve.strip():
+                print("L'ID de l'élève ne peut pas être vide.")
+                return  # Annuler l'opération si l'ID est vide
+
+            try:
+                id_eleve = int(id_eleve)
+                break  # Sortir de la boucle si la conversion en entier réussit
+            except ValueError:
+                print("L'ID de l'élève doit être un nombre entier. Veuillez réessayer.")
+
+        self.liste_eleves_service.supprimer_eleve_de_liste_eleves(id_eleve, self.id_professeur)
+
 
     def display(self):
         while True:
@@ -53,12 +69,7 @@ class ListeElevesView:
             elif choix == 'Ajouter un élève':
                 self.ajout_eleve()
             elif choix == 'Supprimer un élève':
-                id_eleve = input("Entrez l'ID de l'élève à supprimer : ")
-                if not id_eleve.strip():
-                    print("L'ID de l'élève ne peut pas être vide.")
-                    return
-                id_eleve = int(id_eleve)
-                self.liste_eleves_service.supprimer_eleve_de_liste_eleves(id_eleve, self.id_professeur)
+                self.supprimer_eleve()
             elif choix== 'Vider la liste des élèves':
                 confirmation = inquirer.confirm(message="Êtes-vous sûr de vouloir vider la liste des élèves?")
                 if confirmation:
