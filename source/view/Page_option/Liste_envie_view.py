@@ -85,6 +85,22 @@ class ListeEnvieView:
             except UtilisateurInexistantError as e:
                 print(f"Erreur : {e}")
 
+    def supprimer_envie(self):
+        while True:
+            id_stage = input("Entrez l'ID du stage à supprimer (ou appuyez sur Entrée pour annuler) : ")
+
+            if not id_stage.strip():
+                print("L'ID du stage ne peut pas être vide.")
+                return  # Annuler l'opération si l'ID est vide
+
+            try:
+                id_stage = int(id_stage)
+                break  # Sortir de la boucle si la conversion en entier réussit
+            except ValueError:
+                print("L'ID du stage doit être un nombre entier. Veuillez réessayer.")
+
+        self.service_liste_envie.supprimer_stage_de_liste_envie(self.id_utilisateur, id_stage)
+
     def display(self):
         while True:
             reponse = inquirer.prompt(self.afficher_menu())
@@ -93,8 +109,7 @@ class ListeEnvieView:
             if choix == 'Consulter la liste d\'envies':
                 self.consulter_liste_envies()
             elif choix == 'Supprimer un stage de la liste':
-                id_stage = int(input("Entrez l'ID du stage à supprimer : "))
-                self.service_liste_envie.supprimer_stage_de_liste_envie(self.id_utilisateur, id_stage)
+                self.supprimer_envie()
             elif choix == 'Vider la liste d\'envie':
                 confirmation = inquirer.confirm(message="Êtes-vous sûr de vouloir vider la liste d'envies?")
                 if confirmation:

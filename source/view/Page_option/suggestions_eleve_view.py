@@ -76,6 +76,23 @@ class SuggestionEleveView:
             print(f"Une erreur s'est produite lors de la récupération des suggestions : {e}")
 
 
+    def supprimer_suggestion(self):
+        while True:
+            id_stage = input("Entrez l'ID du stage à supprimer (ou appuyez sur Entrée pour annuler) : ")
+
+            if not id_stage.strip():
+                print("L'ID du stage ne peut pas être vide.")
+                return  # Annuler l'opération si l'ID est vide
+
+            try:
+                id_stage = int(id_stage)
+                break  # Sortir de la boucle si la conversion en entier réussit
+            except ValueError:
+                print("L'ID du stage doit être un nombre entier. Veuillez réessayer.")
+
+        self.suggestions_eleves_service.delete_suggestion(self.id_eleve, id_stage)
+
+
     def display(self):
         while True:
             reponse = prompt(self.afficher_menu())
@@ -85,8 +102,7 @@ class SuggestionEleveView:
                 self.consulter_suggestions()
                 self.suggestions_eleves_service.get_suggestions_by_id(self.id_eleve)
             elif choix == 'Supprimer une suggestion':
-                id_stage = int(input("Entrez l'ID du stage à supprimer : "))
-                self.suggestions_eleves_service.delete_suggestion(self.id_eleve, id_stage)
+                self.supprimer_suggestion()
             elif choix== 'Vider la liste de suggestions':
                 confirmation = inquirer.confirm(message="Êtes-vous sûr de vouloir vider la liste de suggestions ?")
                 if confirmation:
