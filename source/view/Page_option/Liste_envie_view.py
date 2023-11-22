@@ -4,6 +4,7 @@ from source.view.session_view import Session
 from source.services.service_stage import StageService
 from source.services.service_utilisateur import ServiceUtilisateur
 from source.services.service_suggestion_eleve import ServiceSuggestion
+from source.exception.exceptions import UtilisateurInexistantError
 import inquirer
 
 
@@ -52,7 +53,18 @@ class ListeEnvieView:
 
         if selected_stage is not None:
             stage = self.stage_service.find_stage_by_id(selected_stage)
-            print(stage)
+            if stage is not None:
+                print("Informations sur le stage :")
+                print(f"   ID du stage : {stage['id_stage']}")
+                print(f"   Titre : {stage['titre']}")
+                print(f"   Lien : {stage['lien']}")
+                print(f"   Domaine : {stage['domaine']}")
+                print(f"   Salaire : {stage['salaire']}")
+                print(f"   Date de publication : {stage['date_publication']}")
+                print(f"   Période : {stage['periode']}")
+                print(f"   Niveau d'études : {stage['niveau_etudes']}")
+                print(f"   Entreprise : {stage['entreprise']}")
+                print(f"   Lieu : {stage['lieu']}")
 
     def proposer_stage(self):
         liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_utilisateur)
@@ -67,6 +79,7 @@ class ListeEnvieView:
                 if eleve is not None:
                     id_eleve = eleve.get("id_utilisateur")
                     self.suggestions_service.create_suggestion(id_eleve, selected_stage, self.id_utilisateur)
+                    print(f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}.")
                 else:
                     print("Aucun utilisateur trouvé avec les nom et prénom spécifiés.")
             except UtilisateurInexistantError as e:

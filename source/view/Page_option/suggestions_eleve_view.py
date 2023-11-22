@@ -48,7 +48,17 @@ class SuggestionEleveView:
 
                         if stage is not None:
                             self.historique_service.ajouter_stage_a_historique(self.id_eleve, selected_stage)
-                            print(stage)
+                            print("Informations sur le stage :")
+                            print(f"   ID du stage : {stage['id_stage']}")
+                            print(f"   Titre : {stage['titre']}")
+                            print(f"   Lien : {stage['lien']}")
+                            print(f"   Domaine : {stage['domaine']}")
+                            print(f"   Salaire : {stage['salaire']}")
+                            print(f"   Date de publication : {stage['date_publication']}")
+                            print(f"   Période : {stage['periode']}")
+                            print(f"   Niveau d'études : {stage['niveau_etudes']}")
+                            print(f"   Entreprise : {stage['entreprise']}")
+                            print(f"   Lieu : {stage['lieu']}")
 
                             # Demander à l'utilisateur s'il souhaite ajouter le stage à sa liste d'envies
                             ajout_envie = inquirer.confirm(message="Voulez-vous ajouter ce stage à votre liste d'envies?")

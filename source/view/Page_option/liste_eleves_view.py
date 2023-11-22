@@ -53,7 +53,11 @@ class ListeElevesView:
             elif choix == 'Ajouter un élève':
                 self.ajout_eleve()
             elif choix == 'Supprimer un élève':
-                id_eleve = int(input("Entrez l'ID de l'élève à supprimer : "))
+                id_eleve = input("Entrez l'ID de l'élève à supprimer : ")
+                if not id_eleve.strip():
+                    print("L'ID de l'élève ne peut pas être vide.")
+                    return
+                id_eleve = int(id_eleve)
                 self.liste_eleves_service.supprimer_eleve_de_liste_eleves(id_eleve, self.id_professeur)
             elif choix== 'Vider la liste des élèves':
                 confirmation = inquirer.confirm(message="Êtes-vous sûr de vouloir vider la liste des élèves?")

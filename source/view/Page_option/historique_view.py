@@ -55,15 +55,26 @@ class HistoriqueView:
 
         if selected_stage is not None:
             stage = self.stage_service.find_stage_by_id(selected_stage)
-            print(stage)
+            print("Informations sur le stage :")
+            print(f"   ID du stage : {stage['id_stage']}")
+            print(f"   Titre : {stage['titre']}")
+            print(f"   Lien : {stage['lien']}")
+            print(f"   Domaine : {stage['domaine']}")
+            print(f"   Salaire : {stage['salaire']}")
+            print(f"   Date de publication : {stage['date_publication']}")
+            print(f"   Période : {stage['periode']}")
+            print(f"   Niveau d'études : {stage['niveau_etudes']}")
+            print(f"   Entreprise : {stage['entreprise']}")
+            print(f"   Lieu : {stage['lieu']}")
 
             # Demander à l'utilisateur s'il souhaite ajouter le stage à sa liste d'envies
-            ajout_envie = inquirer.confirm(message="Voulez-vous ajouter ce stage à votre liste d'envies?")
-            if ajout_envie:
-                self.liste_envie_service.ajouter_stage_a_liste_envie(self.id_utilisateur, selected_stage)
-                print("Le stage a été ajouté à votre liste d'envies.")
-            else:
-                print("Le stage n'a pas été ajouté à votre liste d'envies.")
+            if self.type_utilisateur in ['professeur', 'eleve', 'administrateur']:
+                ajout_envie = inquirer.confirm(message="Voulez-vous ajouter ce stage à votre liste d'envies?")
+                if ajout_envie:
+                    self.liste_envie_service.ajouter_stage_a_liste_envie(self.id_utilisateur, selected_stage)
+                    print("Le stage a été ajouté à votre liste d'envies.")
+                else:
+                    print("Le stage n'a pas été ajouté à votre liste d'envies.")
 
             # Demander à l'utilisateur s'il souhaite proposer le stage à un élève
             if self.type_utilisateur == 'professeur':
@@ -77,6 +88,7 @@ class HistoriqueView:
                         if eleve is not None:
                             id_eleve = eleve.get("id_utilisateur")
                             self.suggestions_service.create_suggestion(id_eleve, selected_stage, self.id_utilisateur)
+                            print(f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}.")
                         else:
                                 print("Aucun utilisateur trouvé avec les nom et prénom spécifiés.")
                     except UtilisateurInexistantError as e:

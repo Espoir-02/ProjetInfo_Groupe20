@@ -71,7 +71,7 @@ class StageDAO:
         >>> stage_info = db.find_stage_by_id(415)
         >>> print(stage_info)
         {
-            "id-stage": 415,
+            "id_stage": 415,
             "titre": "Pokémon stagiaire",
             "lien": "https://pokemon.com/stage",
             "domaine": "Pokemon",
@@ -100,7 +100,7 @@ class StageDAO:
         stage_dict = None
         if stage_bdd:
             stage_dict = {
-                "id-stage": stage_bdd[0],
+                "id_stage": stage_bdd[0],
                 "titre": stage_bdd[1],
                 "lien": stage_bdd[2],
                 "domaine": stage_bdd[3],

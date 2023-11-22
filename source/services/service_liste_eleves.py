@@ -16,13 +16,37 @@ class ListeElevesService:
 
     def supprimer_eleve_de_liste_eleves(self, id_eleve, id_professeur):
         try:
+            # Validation de l'ID de l'élève
+            if not id_eleve:
+                print("ID de l'élève non fourni.")
+                return False
+
+            try:
+                id_eleve = int(id_eleve)
+            except ValueError:
+                print("Veuillez entrer un ID d'élève valide.")
+                return False
+
+            # Validation de l'existence de l'élève
+            if not self.utilitaire_dao.check_user_exists(id_eleve):
+                raise IdEleveInexistantError(id_eleve)
+
+            print("Élève supprimé avec succès.")
+            return self.liste_eleves_dao.delete_eleve(id_eleve, id_professeur)
+
+        except IdEleveInexistantError as e:
+            print(f"Erreur lors de la suppression de l'élève : {e}")
+            return False
+        
+        """
+        try:
             if not self.utilitaire_dao.check_user_exists(id_eleve):
                 raise IdEleveInexistantError(id_eleve)
 
             print("Élève supprimé avec succès.")
             return self.liste_eleves_dao.delete_eleve(id_eleve, id_professeur)
         except IdEleveInexistantError as e:
-            print(f"Erreur lors de la suppression de l'élève : {e}")
+            print(f"Erreur lors de la suppression de l'élève : {e}")"""
         
 
 
