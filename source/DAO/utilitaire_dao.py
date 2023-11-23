@@ -89,6 +89,18 @@ class UtilitaireDAO:
                 count = cursor.fetchone()[0]
                 return count > 0
 
+    @staticmethod
+    def check_eleve_exist_dans_liste(id_eleve, id_professeur):
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT COUNT(*) FROM base_projetinfo.liste_envie "
+                    "WHERE id_eleve = %(id_eleve)s AND id_professeur = %(id_professeur)s",
+                    {"id_eleve": id_eleve, "id_professeur": id_professeur},
+                )
+                count = cursor.fetchone()[0]
+                return count > 0
+
 
     @staticmethod
     def check_infos_stage_exists(nomstage, url2, domaine, periode , gratification, date_publication, etude, nomentreprise, lieu):

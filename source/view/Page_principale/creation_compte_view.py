@@ -9,41 +9,43 @@ class CreationCompte_view:
 
     def __init__(self):
         self.utilisateur_service = ServiceUtilisateur()
+        self.answers = {}
 
     def display(self):
-        while True:
-            questions = [
-                inquirer.Text("nom", message="Nom:"),  
-                inquirer.Text("prenom", message="Prénom:"),  
-                inquirer.Text("pseudo", message="Pseudo:"),  
-                inquirer.Password("mot_de_passe", message="Mot de passe:"),  # mdp caché
-                inquirer.Password("confirmer_mot_de_passe", message="Confirmer le mot de passe:"),
-                inquirer.List("type_utilisateur", message="Type utilisateur", choices=["administrateur", "professeur", "eleve"]),
-                inquirer.Confirm("recommencer", message="Voulez-vous recommencer la saisie ?", default=False)
-            ]
+        questions = [
+            inquirer.Text("nom", message="Nom:"),  
+            inquirer.Text("prenom", message="Prénom:"),  
+            inquirer.Text("pseudo", message="Pseudo:"),  
+            inquirer.Password("mot_de_passe", message="Mot de passe:"), #mdp caché
+            inquirer.Password("confirmation_mot_de_passe", message="Confirmez le mot de passe:"),
+            inquirer.List("type_utilisateur", message="Type utilisateur", choices=["administrateur", "professeur", "eleve"]),
+        ]
 
-            answers = inquirer.prompt(questions, raise_keyboard_interrupt=True)
+        for question in questions:
+            key = question.name
+            if key in self.answers:
+                modifier = inquirer.confirm(message=f"Voulez-vous modifier {key} (actuel: {self.answers[key]})?")
+                if modifier:
+                    self.answers[key] = inquirer.prompt([question])[key]
+            else:
+                self.answers[key] = inquirer.prompt([question])[key]
 
-            if answers["recommencer"]:
-                continue  # Si l'utilisateur veut recommencer, retourner au début de la boucle
-            else :
-                self.creer_compte(answers)
+        self.creer_compte()
 
-            
+    def creer_compte(self):
+        nom = self.answers["nom"]
+        prenom = self.answers["prenom"]
+        pseudo = self.answers["pseudo"]
+        mot_de_passe = self.answers["mot_de_passe"]
+        confirmation_mot_de_passe = self.answers["confirmation_mot_de_passe"]
+        type_utilisateur = self.answers["type_utilisateur"] 
 
-    def creer_compte(self, answers):
-        nom = answers["nom"]
-        prenom = answers["prenom"]
-        pseudo = answers["pseudo"]
-        mot_de_passe = answers["mot_de_passe"]
-        confirmer_mot_de_passe = answers["confirmer_mot_de_passe"]
-        type_utilisateur = answers["type_utilisateur"]
-
-        if self.informations_obligatoires_remplies(nom, prenom, pseudo, mot_de_passe, confirmer_mot_de_passe, type_utilisateur):
+        if self.informations_obligatoires_remplies(nom, prenom, pseudo, mot_de_passe, confirmation_mot_de_passe, type_utilisateur):
             if self.nom_et_prenom_valides(nom, prenom):
                 if self.pseudo_valide(pseudo):
-                    if self.mots_de_passe_correspondent(mot_de_passe, confirmer_mot_de_passe):
+                    if self.mot_de_passe_confirme(mot_de_passe, confirmation_mot_de_passe):
                         utilisateur = Utilisateur(nom=nom, prenom=prenom, pseudo=pseudo, mot_de_passe=mot_de_passe, type_utilisateur=type_utilisateur)
+
                         nouvel_utilisateur = self.utilisateur_service.creer_utilisateur(utilisateur)
 
                         if nouvel_utilisateur:
@@ -55,8 +57,8 @@ class CreationCompte_view:
 
         self.afficher_options_erreur_creation_compte()
 
-    def informations_obligatoires_remplies(self, nom, prenom, pseudo, mot_de_passe, confirmer_mot_de_passe, type_utilisateur):
-        if not (nom and prenom and pseudo and mot_de_passe and confirmer_mot_de_passe and type_utilisateur):
+    def informations_obligatoires_remplies(self, nom, prenom, pseudo, mot_de_passe, confirmation_mot_de_passe, type_utilisateur):
+        if not (nom and prenom and pseudo and mot_de_passe and confirmation_mot_de_passe and type_utilisateur):
             print("Veuillez remplir toutes les informations obligatoires.")
             return False
         return True
@@ -73,9 +75,9 @@ class CreationCompte_view:
             return False
         return True
 
-    def mots_de_passe_correspondent(self, mot_de_passe, confirmer_mot_de_passe):
-        if mot_de_passe != confirmer_mot_de_passe:
-            print("Les mots de passe ne correspondent pas.")
+    def mot_de_passe_confirme(self, mot_de_passe, confirmation_mot_de_passe):
+        if mot_de_passe != confirmation_mot_de_passe:
+            print("La confirmation du mot de passe ne correspond pas.")
             return False
         return True
 
@@ -100,4 +102,3 @@ class CreationCompte_view:
 
 if __name__ == "__main__":
     vue = CreationCompte_view()
-    vue.display()

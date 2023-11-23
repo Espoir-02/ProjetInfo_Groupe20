@@ -10,7 +10,6 @@ class ServiceUtilisateur:
 
     def creer_utilisateur(self, utilisateur):
         utilisateur_cree = self.utilisateur_dao.create_compte(utilisateur)
-        print("Utilisateur créé dans la base de données avec succès.")
         return utilisateur_cree
 
 
