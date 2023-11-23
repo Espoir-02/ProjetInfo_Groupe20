@@ -38,11 +38,12 @@ class SuggestionEleveView:
                 questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]
                 answers = inquirer.prompt(questions)
 
-                selected_stage = int(answers['selection'].split(' - ')[0])  # Pour récupérer l'ID du stage sélectionné
+                selected_stage_str = answers['selection'].split(' - ')[0]
 
-                if selected_stage == "Retour au menu":
+                if selected_stage_str == "Retour au menu":
                     self.display()
                 else:
+                    selected_stage = int(selected_stage_str)
                     try:
                         stage = self.stage_service.find_stage_by_id(selected_stage)
 
@@ -111,9 +112,9 @@ class SuggestionEleveView:
                     print("Opération annulée.")
             elif choix == 'Quitter et revenir au menu principal':
                 print("Au revoir !")
+                from source.view.Page_option.menu_view import Menu_view
                 menu_view = Menu_view()
-                menu_view.display()
-                break
+                return menu_view.display()
             else:
                 print("Option invalide. Veuillez réessayer.")
 

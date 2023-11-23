@@ -28,16 +28,19 @@ class CreationCompte_view:
         prenom = answers["prenom"]
         pseudo = answers["pseudo"]
         mot_de_passe = answers["mot_de_passe"]
-        type_utilisateur = answers["type_utilisateur"] # Remplacez par le type d'utilisateur approprié
+        type_utilisateur = answers["type_utilisateur"] 
+
+        if not (nom and prenom and pseudo and mot_de_passe and type_utilisateur):
+            print("Veuillez remplir toutes les informations obligatoires.")
+            return self.display()
 
         # Créez un objet Utilisateur avec les informations fournies par l'utilisateur
         utilisateur = Utilisateur(nom=nom, prenom=prenom, pseudo=pseudo, mot_de_passe=mot_de_passe, type_utilisateur=type_utilisateur)
 
-        # Appelez la méthode create_compte dans le service pour créer le compte en base de données
 
         utilisateur_service = ServiceUtilisateur()
 
-        nouvel_utilisateur = utilisateur_service.creer_compte(utilisateur)
+        nouvel_utilisateur = utilisateur_service.creer_utilisateur(utilisateur)
 
         if nouvel_utilisateur:
             Session().user_id = nouvel_utilisateur.id

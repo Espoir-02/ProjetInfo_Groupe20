@@ -1,31 +1,24 @@
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
 from source.DAO.utilitaire_dao import UtilitaireDAO
-from source.exception.exceptions import PseudoDejaExistantError,UtilisateurInexistantError
+from source.exception.exceptions import PseudoDejaExistantError, UtilisateurInexistantError
 
 class ServiceUtilisateur:
     def __init__(self):
         self.utilisateur_dao = UtilisateurDAO()
         self.utilitaire_dao = UtilitaireDAO()
 
-    def creer_utilisateur(self, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
-        nouvel_utilisateur = Utilisateur(nom=nom, prenom=prenom, pseudo=pseudo, mot_de_passe=mot_de_passe, type_utilisateur=type_utilisateur)
-        utilisateur_cree = self.utilisateur_dao.create_compte(nouvel_utilisateur)
+    def creer_utilisateur(self, utilisateur):
+        print("Début de la création d'utilisateur dans le service.")
+        print("Utilisateur créé avec succès.")
+    
+        print("Début de l'appel à la méthode DAO pour créer l'utilisateur dans la base de données.")
+        utilisateur_cree = self.utilisateur_dao.create_compte(utilisateur)
+        print("Utilisateur créé dans la base de données avec succès.")
+
         return utilisateur_cree
 
-    def mettre_a_jour_utilisateur(self, id_utilisateur, nom, prenom, pseudo, mot_de_passe, type_utilisateur):
-        utilisateur_existant = self.utilisateur_dao.find_by_id(id_utilisateur)
-        if utilisateur_existant:
-            utilisateur_existant.nom = nom
-            utilisateur_existant.prenom = prenom
-            utilisateur_existant.pseudo = pseudo
-            utilisateur_existant.mot_de_passe = mot_de_passe
-            utilisateur_existant.type_utilisateur = type_utilisateur
-            utilisateur_mis_a_jour = self.utilisateur_dao.MAJ_utilisateur(utilisateur_existant)
-            #methode a créer dans utilisateur dao
-            return utilisateur_mis_a_jour
-        else:
-            return None
+
 
     def supprimer_utilisateur(self, id_utilisateur):
         utilisateur_existant = self.utilisateur_dao.find_by_id(id_utilisateur)
@@ -67,4 +60,3 @@ class ServiceUtilisateur:
             return self.utilisateur_dao.update_utilisateur_pseudo(id_utilisateur, nouveau_pseudo)
         except PseudoDejaExistantError as e:
             print(f"Erreur de mise à jour du pseudo : {e}")
-

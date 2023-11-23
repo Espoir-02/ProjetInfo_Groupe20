@@ -42,11 +42,12 @@ class HistoriqueView:
             questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]
             answers = inquirer.prompt(questions)
 
-            selected_stage = int(answers['selection'].split(' - ')[0])
+            selected_stage_str = answers['selection'].split(' - ')[0]
 
-            if selected_stage == "Retour au menu":
+            if selected_stage_str == "Retour au menu":
                 self.display()
             else:
+                selected_stage = int(selected_stage_str)
                 return selected_stage
 
     def consulter_historique(self):
@@ -112,9 +113,10 @@ class HistoriqueView:
             elif choix == 'Vider l\'historique':
                 self.vider_historique()
             elif choix == 'Revenir au menu principal':
-                menu_view=Menu_view()
-                menu_view.display()
-                break
+                from source.view.Page_option.menu_view import Menu_view
+                menu_view = Menu_view()
+                return menu_view.display()
+                
             else:
                 print("Option invalide. Veuillez réessayer.")
 

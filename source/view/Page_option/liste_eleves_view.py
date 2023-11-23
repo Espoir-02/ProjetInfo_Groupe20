@@ -78,9 +78,9 @@ class ListeElevesView:
                     print("Opération annulée.")
             elif choix == 'Quitter et revenir au menu principal':
                 print("Au revoir !")
+                from source.view.Page_option.menu_view import Menu_view
                 menu_view = Menu_view()
-                menu_view.display()
-                break
+                return menu_view.display()
             else:
                 print("Option invalide. Veuillez réessayer.")
 
