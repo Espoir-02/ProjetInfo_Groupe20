@@ -43,14 +43,26 @@ class ServiceUtilisateur:
         return self.utilisateur_dao.find_id_by_pseudo(pseudo)
         
     def maj_mdp(self, pseudo,nouveau_mdp):
-        return self.utilisateur_dao.update_utilisateur_mdp(pseudo,nouveau_mdp)
+        try :
+            if nouveau_mdp is None:
+                raise ValueError("Le mot de passe ne peut pas être vide")
+
+            return self.utilisateur_dao.update_utilisateur_mdp(pseudo,nouveau_mdp)
+        except ValueError as e:
+            print(f"Erreur de mise à jour du mot de passe : {e}")
+
     
     def maj_pseudo(self, id_utilisateur, nouveau_pseudo):
         try:
+            if nouveau_pseudo is None:
+                print("Le pseudo ne peut pas être None. Modification annulée.")
+                return
+
             if self.utilitaire_dao.check_pseudo_exists(nouveau_pseudo):
                 raise PseudoDejaExistantError(nouveau_pseudo)
 
-            print("Pseudo modifié avec succès")
             return self.utilisateur_dao.update_utilisateur_pseudo(id_utilisateur, nouveau_pseudo)
         except PseudoDejaExistantError as e:
+            print(f"Erreur de mise à jour du pseudo : {e}")
+        except ValueError as e:
             print(f"Erreur de mise à jour du pseudo : {e}")

@@ -66,6 +66,7 @@ class ListeEnvieView:
                 print(f"   Niveau d'études : {stage['niveau_etudes']}")
                 print(f"   Entreprise : {stage['entreprise']}")
                 print(f"   Lieu : {stage['lieu']}")
+                input("Appuyez sur Entrée pour continuer...")
 
     def proposer_stage(self):
         liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(self.id_utilisateur)
@@ -131,3 +132,5 @@ if __name__ == "__main__":
     id_utilisateur = Session().user_id
     liste_envie_view = ListeEnvieView(id_utilisateur=id_utilisateur)
     liste_envie_view.display()
+
+
