@@ -33,7 +33,7 @@ class MajUtilisateurView:
                 nouveau_mdp = self.demander_nouveau_mdp()
                 self.utilisateur_service.maj_mdp(self.pseudo, nouveau_mdp)
                 print("Mot de passe mis à jour avec succès.")
-            elif choix == "Quitter":
+            elif choix == "Quitter et revenir au menu principal":
                 menu_view = Menu_view()
                 menu_view.display()
                 break
