@@ -13,6 +13,12 @@ class ServiceUtilisateur:
         return utilisateur_cree
 
 
+    def creer_compte_anonyme(self):
+        utilisateur_invite=Utilisateur("invité",None,None,None,None)
+        nouvel_utilisateur_invite=self.utilisateur_dao.create_compte(utilisateur_invite)
+        return nouvel_utilisateur_invite
+
+
     def supprimer_utilisateur(self, id_utilisateur):
         utilisateur_existant = self.utilisateur_dao.find_by_id(id_utilisateur)
         if utilisateur_existant:

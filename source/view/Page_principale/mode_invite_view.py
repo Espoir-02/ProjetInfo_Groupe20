@@ -12,9 +12,11 @@ class Mode_invite_view:
         #Pas besoin de demander le type, nom, prénom, pseudo, mdp puisqu'il est anonyme
         #On crée juste l'identifiant aléatoire
         utilisateur_service = ServiceUtilisateur()  # noqa: E999
-        id_non_authentifie = utilisateur_service.creer_utilisateur().id # On met rien dedans, juste crée un id aléatoire (unique ?) 
+        id_non_authentifie = utilisateur_service.creer_compte_anonyme().id # On met rien dedans, juste crée un id aléatoire (unique ?) 
 
         Session().user_id = id_non_authentifie
         Session().user_type ="invité"
 
         return Menu_view()
+
+    
