@@ -9,15 +9,9 @@ class ServiceUtilisateur:
         self.utilitaire_dao = UtilitaireDAO()
 
     def creer_utilisateur(self, utilisateur):
-        print("Début de la création d'utilisateur dans le service.")
-        print("Utilisateur créé avec succès.")
-    
-        print("Début de l'appel à la méthode DAO pour créer l'utilisateur dans la base de données.")
         utilisateur_cree = self.utilisateur_dao.create_compte(utilisateur)
         print("Utilisateur créé dans la base de données avec succès.")
-
         return utilisateur_cree
-
 
 
     def supprimer_utilisateur(self, id_utilisateur):

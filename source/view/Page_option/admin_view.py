@@ -67,6 +67,7 @@ class AdminView:
                 self.supprimer_stage()
             elif choix == 'Quitter et revenir au menu principal':
                 print("Retour au menu principal !")
+                from source.view.Page_option.menu_view import Menu_view
                 menu_view = Menu_view()
                 menu_view.display()
                 break
