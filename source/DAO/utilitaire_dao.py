@@ -94,7 +94,7 @@ class UtilitaireDAO:
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT COUNT(*) FROM base_projetinfo.liste_envie "
+                    "SELECT COUNT(*) FROM base_projetinfo.liste_eleves "
                     "WHERE id_eleve = %(id_eleve)s AND id_professeur = %(id_professeur)s",
                     {"id_eleve": id_eleve, "id_professeur": id_professeur},
                 )

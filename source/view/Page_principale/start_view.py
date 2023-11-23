@@ -12,7 +12,7 @@ class Start_view:
             inquirer.List('choice', message='Choisissez une option:', choices=["Se connecter", "S'inscrire", "Continuer en mode invité"])]
 
 
-    def display(self):
+    def make_choice(self):
         choice = inquirer.prompt(self.__questions)['choice']
 
         if choice == "Se connecter":
@@ -26,8 +26,8 @@ class Start_view:
 
 
 
-    def make_choice(self):
-        return self.display()
+    def display(self):
+        pass
 """
 from InquirerPy import prompt
 from source.view.Page_principale.connexion_view import ConnexionController

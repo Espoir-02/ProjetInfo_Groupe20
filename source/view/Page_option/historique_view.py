@@ -3,6 +3,7 @@ from source.services.service_utilisateur import ServiceUtilisateur
 from source.services.service_historique import HistoriqueService
 from source.services.service_liste_envie import ListeEnvieService
 from source.services.service_suggestion_eleve import ServiceSuggestion
+from source.services.service_liste_eleves import ListeElevesService
 from source.services.service_stage import StageService
 from source.view.session_view import Session
 from source.exception.exceptions import UtilisateurInexistantError
@@ -15,6 +16,7 @@ class HistoriqueView:
         self.historique_service = HistoriqueService()
         self.id_utilisateur= Session().user_id
         self.liste_envie_service = ListeEnvieService()
+        self.liste_eleves_service = ListeElevesService()
         self.stage_service = StageService()
         self.suggestions_service = ServiceSuggestion()
         self.utilisateur_service = ServiceUtilisateur()
@@ -87,8 +89,11 @@ class HistoriqueView:
 
                         if eleve is not None:
                             id_eleve = eleve.get("id_utilisateur")
-                            self.suggestions_service.create_suggestion(id_eleve, selected_stage, self.id_utilisateur)
-                            print(f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}.")
+                            if self.service_liste_eleves.verifier_eleve_dans_liste(id_eleve, self.id_utilisateur):
+                                self.suggestions_service.create_suggestion(id_eleve, selected_stage, self.id_utilisateur)
+                                print(f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}.")
+                            else:
+                                print("Vous ne pouvez pas proposer de stage à cet élève. Il n'est pas dans votre liste.")
                         else:
                                 print("Aucun utilisateur trouvé avec les nom et prénom spécifiés.")
                     except UtilisateurInexistantError as e:

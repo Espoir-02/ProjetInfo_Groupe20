@@ -71,8 +71,8 @@ class ListeElevesService:
                 print("Erreur lors de la suppression de la liste")
             return succes
 
-
-
+    def verifier_eleve_dans_liste(self, id_eleve, id_professeur):
+        return self.utilitaire_dao.check_eleve_exist_dans_liste(id_eleve, id_professeur)
 
 
 
