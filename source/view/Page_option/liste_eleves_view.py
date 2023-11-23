@@ -66,6 +66,7 @@ class ListeElevesView:
 
             if choix == 'Consulter la liste des élèves':
                 self.liste_eleves_service.consulter_liste_eleves(self.id_professeur)
+                input("Appuyez sur Entrée pour continuer...")
             elif choix == 'Ajouter un élève':
                 self.ajout_eleve()
             elif choix == 'Supprimer un élève':

@@ -8,48 +8,52 @@ class ListeEnvieService:
         self.liste_envie_dao = ListeEnvieDAO()
         self.utilitaire_dao = UtilitaireDAO()
 
+
+
     def ajouter_stage_a_liste_envie(self, id_eleve, id_stage):
-        return self.liste_envie_dao.update_liste_envie(id_eleve, id_stage)
+        if self.utilitaire_dao.check_envie_exists(id_eleve, id_stage):
+            print("Le stage est déjà dans la liste d'envies.")
+            return False
+        else:
+            success = self.liste_envie_dao.update_liste_envie(id_eleve, id_stage)
+            if success:
+                print("Le stage a été ajouté à la liste d'envies avec succès.")
+            else:
+                print("Erreur lors de l'ajout du stage à la liste d'envies.")
+            return success
+
+ 
+
 
     def supprimer_stage_de_liste_envie(self, id_eleve, id_stage):
         try:
             if not self.utilitaire_dao.check_stage_exists(id_stage):
                 raise IdStageInexistantError(id_stage)
 
-            print("Stage supprimé avec succès de la liste d'envie")
-            return self.liste_envie_dao.delete_liste_envie(id_eleve, id_stage)
+            succes = self.liste_envie_dao.delete_liste_envie(id_eleve, id_stage)
+            if succes :
+                print(f"Stages ID {id_stage} supprimé avec succès de la liste d'envie.")
+            else:
+                print("Erreur lors de la suppression de l'envie.")
         except IdStageInexistantError as e:
             print(f"Erreur lors de la suppression du stage dans la liste d'envie : {e}")
 
+
+
     def vider_liste_envie_eleve(self, id_eleve):
-        print("Liste d'envie supprimée avec succès")
-        return self.liste_envie_dao.delete_all_liste_envie(id_eleve)
+        if not self.utilitaire_dao.check_liste_envie_exists(id_eleve):
+            print("La liste d'envie est déjà vide.")
+            return False
+        else :
+            succes = self.liste_envie_dao.delete_all_liste_envie(id_eleve)
+            if succes:
+                print("Liste d'envie vidée avec succès")
+            else:
+                print("Erreur lors de la suppression de la liste d'envie")
+            return succes
+
 
     def get_liste_envie_eleve(self, id_eleve):
         return self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
-        """liste_envie= self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
-        if liste_envie:
-            table = PrettyTable()
-            table.field_names = ["ID Stage", "Titre", "Lien", "Domaine"]
 
-            # Ajustez la largeur maximale des colonnes
-            MAX_WIDTH = 40
-            for envie in liste_envie:
-                table.add_row([
-                    envie["id_stage"],
-                    ListeEnvieService.truncate_text(envie["titre"], MAX_WIDTH),
-                    ListeEnvieService.truncate_text(envie["lien"], MAX_WIDTH),
-                    ListeEnvieService.truncate_text(envie["domaine"], MAX_WIDTH),
-                ])
-
-            print(table)
-        else:
-            print("La liste d'envies est vide.")
-
-    @staticmethod
-    def truncate_text(text, max_width):
-        Tronque le texte si sa longueur dépasse la largeur maximale."""
-           #return (text[:max_width] + '...') if len(text) > max_width else text
-
-    
         

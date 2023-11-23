@@ -13,10 +13,10 @@ class ServiceSuggestion:
         return ListeElevesDAO().get_liste_eleve_by_id(id_professeur)
 
     def create_suggestion(self, id_eleve, id_stage, id_professeur):
-        return SuggestionsDAO().create_suggestion(id_eleve, id_stage, id_professeur)
+        return self.suggestions_dao.create_suggestion(id_eleve, id_stage, id_professeur)
 
     def get_suggestions_by_id(self, id_eleve):
-        return SuggestionsDAO().get_suggestions_by_id(id_eleve)
+        return self.suggestions_dao.get_suggestions_by_id(id_eleve)
   
     def delete_suggestion(self,id_eleve, id_stage):
         try:
@@ -24,15 +24,19 @@ class ServiceSuggestion:
             if not self.utilitaire_dao.check_stage_exists(id_stage):
                 raise IdStageInexistantError(id_stage)
 
-            print("Suggestion supprimée avec succès")
             return self.suggestions_dao.delete_suggestion(id_eleve, id_stage)
         except IdStageInexistantError as e:
             print(f"Erreur lors de la suppression de la suggestion : {e}")
   
-    def vider_liste_suggestions(id_eleve):
-        print("Liste de suggestions vidée avec succès")
-        return self.suggestions_dao.delete_all_suggestions(id_eleve)
+    def vider_liste_suggestions(self,id_eleve):
+        if not self.utilitaire_dao.check_liste_suggestions_exists(id_eleve):
+            print("La liste de suggestions est déjà vide.")
+            return False
+        else :
+            succes = self.suggestions_dao.delete_all_suggestions(id_eleve)
+            if succes:
+                print("Liste de suggestions vidées avec succès")
+            else:
+                print("Erreur lors de la suppression de la liste")
+            return succes
 
-    " Méthode où on stocke dans la liste de suggestion de l'élève les suggestions du prof"
-    " Méthode permettant à un professeur de faire ds propositions aux élèves "
-    " Méthode où le professeur peut consulter la liste de ses élèves"

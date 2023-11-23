@@ -30,7 +30,7 @@ class Menu_view:
                 choices.append("Accéder à sa liste d'envie")
         
             if Session().user_type == 'eleve':
-                choices.append("Accéder à la liste de propositions du professeur")
+                choices.append("Accéder à la liste de suggestions du professeur")
 
             if Session().user_type == 'professeur':
                 choices.append("Accéder à la liste d'élèves")
@@ -69,8 +69,6 @@ class Menu_view:
                 start_view= Start_view()
                 return start_view.display()
     
-            elif (Session().user_type == 'eleve') and (answers['choice'] == "Accéder à la liste de propositions du professeur"):
-                return Proposition_prof_view()
 
             elif (Session().user_type  == 'eleve') and (answers['choice'] == "Accéder à la liste de suggestions du professeur"):
                 suggestions_view = SuggestionEleveView(id_eleve)

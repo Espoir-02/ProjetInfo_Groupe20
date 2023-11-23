@@ -65,7 +65,6 @@ class SuggestionEleveView:
                             ajout_envie = inquirer.confirm(message="Voulez-vous ajouter ce stage à votre liste d'envies?")
                             if ajout_envie:
                                 self.liste_envie_service.ajouter_stage_a_liste_envie(self.id_eleve, selected_stage)
-                                print("Le stage a été ajouté à votre liste d'envies.")
                             else:
                                 print("Le stage n'a pas été ajouté à votre liste d'envies.")
                         else:

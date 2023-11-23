@@ -30,6 +30,67 @@ class UtilitaireDAO:
                 return count > 0
 
     @staticmethod
+    def check_historique_exists(id_utilisateur):
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT COUNT(*) FROM base_projetinfo.historique "
+                    "WHERE id_utilisateur = %(id_utilisateur)s",
+                    {"id_utilisateur": id_utilisateur},
+                )
+                count = cursor.fetchone()[0]
+                return count > 0
+
+    @staticmethod
+    def check_liste_eleves_exists(id_professeur):
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT COUNT(*) FROM base_projetinfo.liste_eleves "
+                    "WHERE id_professeur = %(id_professeur)s",
+                    {"id_professeur": id_professeur},
+                )
+                count = cursor.fetchone()[0]
+                return count > 0
+
+    @staticmethod
+    def check_liste_envie_exists( id_eleve):
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT COUNT(*) FROM base_projetinfo.liste_envie "
+                    "WHERE id_eleve = %(id_eleve)s",
+                    {"id_eleve": id_eleve},
+                )
+                count = cursor.fetchone()[0]
+                return count > 0
+
+    @staticmethod
+    def check_liste_suggestions_exists(id_eleve):
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT COUNT(*) FROM base_projetinfo.suggestion "
+                    "WHERE id_eleve = %(id_eleve)s",
+                    {"id_eleve": id_eleve},
+                )
+                count = cursor.fetchone()[0]
+                return count > 0
+
+    @staticmethod
+    def check_envie_exists(id_eleve, id_stage):
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT COUNT(*) FROM base_projetinfo.liste_envie "
+                    "WHERE id_eleve = %(id_eleve)s AND id_stage = %(id_stage)s",
+                    {"id_eleve": id_eleve, "id_stage": id_stage},
+                )
+                count = cursor.fetchone()[0]
+                return count > 0
+
+
+    @staticmethod
     def check_infos_stage_exists(nomstage, url2, domaine, periode , gratification, date_publication, etude, nomentreprise, lieu):
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:

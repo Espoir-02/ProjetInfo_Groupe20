@@ -31,23 +31,18 @@ class ListeElevesService:
             if not self.utilitaire_dao.check_user_exists(id_eleve):
                 raise IdEleveInexistantError(id_eleve)
 
-            print("Élève supprimé avec succès.")
-            return self.liste_eleves_dao.delete_eleve(id_eleve, id_professeur)
+            success = self.liste_eleves_dao.delete_eleve(id_eleve, id_professeur)
+
+            if success:
+                print(f"Suppression de l'élève avec l'ID {id_eleve} réussie.")
+            else:
+                print("Erreur lors de la suppression de l'élève.")
+            return success
 
         except IdEleveInexistantError as e:
             print(f"Erreur lors de la suppression de l'élève : {e}")
             return False
-        
-        """
-        try:
-            if not self.utilitaire_dao.check_user_exists(id_eleve):
-                raise IdEleveInexistantError(id_eleve)
-
-            print("Élève supprimé avec succès.")
-            return self.liste_eleves_dao.delete_eleve(id_eleve, id_professeur)
-        except IdEleveInexistantError as e:
-            print(f"Erreur lors de la suppression de l'élève : {e}")"""
-        
+ 
 
 
     def consulter_liste_eleves(self, id_professeur):
@@ -63,9 +58,18 @@ class ListeElevesService:
         else:
             print("La liste d'élèves est vide.")
 
+
     def vider_liste_eleves(self, id_professeur):
-        print("Liste vidée avec succès")
-        return self.liste_eleves_dao.delete_all_liste(id_professeur)
+        if not self.utilitaire_dao.check_liste_eleves_exists(id_professeur):
+            print("La liste d'élèves est déjà vide.")
+            return False
+        else :
+            succes = self.liste_eleves_dao.delete_all_liste(id_professeur)
+            if succes:
+                print("Liste vidée avec succès")
+            else:
+                print("Erreur lors de la suppression de la liste")
+            return succes
 
 
 
