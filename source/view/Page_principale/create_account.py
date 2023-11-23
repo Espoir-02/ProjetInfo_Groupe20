@@ -1,5 +1,5 @@
 from InquirerPy import inquirer
-from source.services.service_utilisateur import UtilisateurService
+from source.services.service_utilisateur import ServiceUtilisateur
 from source.view.Page_option.menu_view import Menu_view
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
 from source.view.session_view import Session
@@ -35,7 +35,7 @@ class CreationCompte_view:
 
         # Appelez la méthode create_compte dans le service pour créer le compte en base de données
 
-        utilisateur_service = UtilisateurService()
+        utilisateur_service = ServiceUtilisateur()
 
         nouvel_utilisateur = utilisateur_service.creer_compte(utilisateur)
 
