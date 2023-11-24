@@ -1,6 +1,5 @@
 from source.services.scrapping.scrapping import *
-
-
+from source.services.scrapping.scrapping2 import *
 class Recherche:
     def __init__(
         self,
@@ -81,29 +80,29 @@ class Recherche:
 
         if self.niveau_etude != "Non renseigné":
             if self.niveau_etude == "Bac +5":
-                niveau_etude = "/niveaux-1"
+                niveau_etude = "/niveaux-bac-5"
 
             elif self.niveau_etude == "Bac +4":
-                niveau_etude = "/niveaux-9"
+                niveau_etude = "/niveaux-bac-4"
 
             elif self.niveau_etude == "Bac +3":
-                niveau_etude = "/niveaux-2"
+                niveau_etude = "/niveaux-bac-3"
 
             elif self.niveau_etude == "Bac +2":
-                niveau_etude = "/niveaux-3"
+                niveau_etude = "/niveaux-bac-2"
 
             elif self.niveau_etude == "Bac":
-                niveau_etude = "/niveaux-4"
+                niveau_etude = "/niveaux-bac"
 
             elif self.niveau_etude == "CAP/BEP":
-                niveau_etude = "/niveaux-5"
+                niveau_etude = "/niveaux-cap-bep"
 
             elif self.niveau_etude == "Bac professionnel":
-                niveau_etude = "/niveaux-6"
+                niveau_etude = "/niveaux-bac-professionel"
 
             elif self.niveau_etude == "3ème":
-                niveau_etude = "/niveaux-7"
+                niveau_etude = "/niveaux-3eme"
 
         urlf = url + niveau_etude + domaine + zone + ".html"
 
-        Scrapping().scrap(urlf)
+        Scrapping2().scrap(urlf)

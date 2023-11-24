@@ -27,7 +27,7 @@ class ListeEnvieView:
             'Revenir au menu principal'
         ]
 
-        if (Session().user_type == 'professeur'):
+        if (Session().user_type in ['professeur', 'administrateur']): 
             menu_options.append('Proposer un stage à partir de la liste d\'envies')
 
         return [
@@ -36,7 +36,7 @@ class ListeEnvieView:
 
     def choisir_stage(self, liste_envie_courant):
         if not liste_envie_courant:
-            print("La liste d'envies est vide.")
+            print(" ")#on doit rien mettre si la DAO renvoie déja un msg
         else:
             choix_stage = [f"{envie['id_stage']} - {envie['titre']}" for envie in liste_envie_courant] + ["Retour au menu"]
             questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]

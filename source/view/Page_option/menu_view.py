@@ -1,5 +1,5 @@
-#from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
-#from source.view.Page_option.historique_view import HistoriqueView
+from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
+from source.view.Page_option.historique_view import HistoriqueView
 from source.view.Page_option.Liste_envie_view import ListeEnvieView 
 from source.view.Page_option.proposition_prof_view import Proposition_prof_view
 from source.view.Page_option.suggestions_eleve_view import SuggestionEleveView
@@ -9,6 +9,7 @@ from source.services.service_utilisateur import ServiceUtilisateur
 from source.view.Page_option.admin_view import AdminView
 from source.view.session_view import Session 
 import inquirer
+import sys
 
 class Menu_view:
     def __init__(self):
@@ -43,6 +44,9 @@ class Menu_view:
             
             if Session().user_type in ['professeur', 'eleve', 'administrateur']:
                 choices.append("Déconnexion")
+            
+            if Session().user_type in ['professeur', 'eleve', 'administrateur']:
+                choices.append("Voir mes informations")
 
             questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
 
@@ -58,6 +62,8 @@ class Menu_view:
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
                 liste_envie_view= ListeEnvieView(id_utilisateur)
                 return liste_envie_view.display()
+                """from source.view.Page_option.view_envie2_essaie import ListeEnvieView
+                return ListeEnvieView(Session().user_id).display()"""
 
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Modifier ses informations"):
                 from source.view.Page_option.maj_utilisateur_view import MajUtilisateurView
@@ -66,8 +72,13 @@ class Menu_view:
             
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Déconnexion"):
                 from source.view.Page_principale.start_view import Start_view
-                start_view= Start_view()
-                return start_view.display()
+                return Start_view().make_choice()
+    
+        
+            elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Voir mes informations"):
+                from source.view.Page_option.mes_info import MesInfos
+                info= MesInfos()
+                return info.display()
     
 
             elif (Session().user_type  == 'eleve') and (answers['choice'] == "Accéder à la liste de suggestions du professeur"):
@@ -86,7 +97,7 @@ class Menu_view:
 
             elif answers['choice'] == "Quitter l'application":
                 print("Au revoir !")
-                break
+                sys.exit()
 
     def make_choice(self):
         return self.display()

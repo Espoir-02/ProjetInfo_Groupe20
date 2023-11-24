@@ -8,21 +8,14 @@ class ListeEnvieService:
         self.liste_envie_dao = ListeEnvieDAO()
         self.utilitaire_dao = UtilitaireDAO()
 
-
-
     def ajouter_stage_a_liste_envie(self, id_eleve, id_stage):
         if self.utilitaire_dao.check_envie_exists(id_eleve, id_stage):
             print("Le stage est déjà dans la liste d'envies.")
             return False
         else:
+            print("Le stage a été ajouté à la liste d'envies avec succès.")
             success = self.liste_envie_dao.update_liste_envie(id_eleve, id_stage)
-            if success:
-                print("Le stage a été ajouté à la liste d'envies avec succès.")
-            else:
-                print("Erreur lors de l'ajout du stage à la liste d'envies.")
-            return success
-
- 
+            return success 
 
 
     def supprimer_stage_de_liste_envie(self, id_eleve, id_stage):
@@ -45,15 +38,12 @@ class ListeEnvieService:
             print("La liste d'envie est déjà vide.")
             return False
         else :
+            print("Liste d'envie vidée avec succès")
             succes = self.liste_envie_dao.delete_all_liste_envie(id_eleve)
-            if succes:
-                print("Liste d'envie vidée avec succès")
-            else:
-                print("Erreur lors de la suppression de la liste d'envie")
             return succes
+
 
 
     def get_liste_envie_eleve(self, id_eleve):
         return self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
 
-        

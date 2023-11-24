@@ -71,3 +71,9 @@ class ServiceUtilisateur:
             print(f"Erreur de mise à jour du pseudo : {e}")
         except ValueError as e:
             print(f"Erreur de mise à jour du pseudo : {e}")
+    
+    def information(self,id_utilisateur):
+        utilisateur_existant = self.utilisateur_dao.find_by_id(id_utilisateur)
+        #return utilisateur_existant[2],utilisateur_existant[3]
+        print(f'Nom : {utilisateur_existant["nom"]} \nPrénom : {utilisateur_existant["prénom"]}')
+

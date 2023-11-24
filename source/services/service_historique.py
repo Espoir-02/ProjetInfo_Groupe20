@@ -19,10 +19,9 @@ class HistoriqueService:
         if not self.utilitaire_dao.check_historique_exists(id_utilisateur):
             print("L'historique est déjà vide.")
             return False
-        else :
-            succes = self.historique_dao.delete_all_historique_by_id(id_utilisateur)
-            if succes:
-                print("Historique supprimé avec succès")
-            else:
-                print("Erreur lors de la suppression de l'historique")
-            return succes
+        else:
+            print("Historique supprimé avec succès.")
+            success = self.historique_dao.delete_all_historique_by_id(id_utilisateur)
+            return success
+
+

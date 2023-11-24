@@ -33,10 +33,7 @@ class ServiceSuggestion:
             print("La liste de suggestions est déjà vide.")
             return False
         else :
+            print("Liste de suggestions vidées avec succès")
             succes = self.suggestions_dao.delete_all_suggestions(id_eleve)
-            if succes:
-                print("Liste de suggestions vidées avec succès")
-            else:
-                print("Erreur lors de la suppression de la liste")
             return succes
 

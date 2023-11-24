@@ -169,5 +169,5 @@ class UtilitaireDAO:
                     },
                 )
 
-                result = cursor.fetchall()
-                return [row[0] for row in result] if result else []
+                result = cursor.fetchone()
+                return result[0] if result else None

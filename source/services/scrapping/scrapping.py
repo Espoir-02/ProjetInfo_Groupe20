@@ -5,8 +5,9 @@ from source.business_object.stage_recherche.stage import Stage
 from source.DAO.utilitaire_dao import UtilitaireDAO
 from source.services.service_export import ExporteurStage
 from source.view.session_view import Session
-from source.DAO.HistoriqueDAO import update_historique
+from source.DAO.HistoriqueDAO import HistoriqueDAO
 from source.DAO.ListeEnvieDAO import ListeEnvieDAO
+from source.services.service_liste_envie import ListeEnvieService
 
 from bs4 import BeautifulSoup
 import requests
@@ -27,11 +28,12 @@ class Scrapping:
         print(f"Gratification: {stage_info['gratification']}")
         print(f"Date de publication: {stage_info['date_publication']}")
         print(f"{'*' * 40}\n")
+        id_utilisateur=Session().user_id
 
 
    def scrap(self, url):
 
-        id_utilisateur=9
+        id_utilisateur= Session().user_id #9
         chemin_fichier_sortie = f'{id_utilisateur}_fichierExport.csv'
 
         response = requests.get(url)
@@ -130,17 +132,18 @@ class Scrapping:
 
             #Ajout du stage à l'historique
             id_stage_selected=liste_id_stages[int(user_choice) - 1]
-            HistoriqueDAO().update_historique(id_utilisateur,id_stage_selected[0])
+            HistoriqueDAO().update_historique(id_utilisateur,id_stage_selected)
 
             user_choice2 = input("Tapez 1-pour ajouter ce stage à votre liste d'envie\nTapez 2-pour exporter ce stage\nTapez q-pour quitter: ")
-            if user_choice2.lower() == 1:
+            if user_choice2.lower() == '1':
                 try:
                     ListeEnvieDAO().update_liste_envie(id_utilisateur,id_stage_selected[0])
+                    #ListeEnvieDAO().update_liste_envie(id_utilisateur,id_stage_selected)
                 except (ValueError, IndexError):
                     print("Choix invalide. Veuillez entrer un numéro valide.")
-            if user_choice2.lower() == 2:
+            if user_choice2.lower() == '2':
                 try:
-                    ExporteurStage().exporter_donnees(id_utilisateur,id_stage_selected[0],  chemin_fichier_sortie)
+                    ExporteurStage().exporter_donnees(id_utilisateur,id_stage_selected,chemin_fichier_sortie)
                 except (ValueError, IndexError):
                     print("Choix invalide. Veuillez entrer un numéro valide.")
             if user_choice2.lower() == 'q':

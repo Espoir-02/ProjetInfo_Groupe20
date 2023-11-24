@@ -89,7 +89,7 @@ class HistoriqueView:
 
                         if eleve is not None:
                             id_eleve = eleve.get("id_utilisateur")
-                            if self.service_liste_eleves.verifier_eleve_dans_liste(id_eleve, self.id_utilisateur):
+                            if self.liste_eleves_service.verifier_eleve_dans_liste(id_eleve, self.id_utilisateur):
                                 self.suggestions_service.create_suggestion(id_eleve, selected_stage, self.id_utilisateur)
                                 print(f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}.")
                             else:
@@ -119,7 +119,6 @@ class HistoriqueView:
                 from source.view.Page_option.menu_view import Menu_view
                 menu_view = Menu_view()
                 return menu_view.display()
-                
             else:
                 print("Option invalide. Veuillez réessayer.")
 
