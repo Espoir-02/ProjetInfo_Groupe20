@@ -3,7 +3,7 @@ from inquirer import prompt, List
 from source.DAO.StageDAO import StageDAO
 from source.business_object.stage_recherche.stage import Stage
 from source.DAO.utilitaire_dao import UtilitaireDAO
-from source.services.service_export import ExporteurStage
+from source.DAO.Export_DAO import ExporteurStage
 from source.services.service_liste_eleves import ListeElevesService
 from source.services.service_liste_envie import ListeEnvieService
 from source.services.service_historique import HistoriqueService
@@ -103,6 +103,7 @@ class Scrapping2:
         elif selected_option == "Exporter le stage":
             chemin_sortie = input("Entrez le chemin du fichier de sortie (ex. sortie.txt) : ")
             try:
+                chemin_fichier_sortie = f"{id_utilisateur}_fichierExport.csv"
                 ExporteurStage().exporter_donnees(
                      id_stage_selected, chemin_sortie
                 )
@@ -119,7 +120,6 @@ class Scrapping2:
 
     def scrap(self, url):
         id_utilisateur = Session().user_id
-        chemin_fichier_sortie = f"{id_utilisateur}_fichierExport.csv"
 
         response = requests.get(url)
         html = response.text

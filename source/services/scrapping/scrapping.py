@@ -5,7 +5,7 @@ from source.business_object.stage_recherche.stage import Stage
 
 # from source.business_object.stage_recherche.entreprise import Entreprise
 from source.DAO.utilitaire_dao import UtilitaireDAO
-from source.services.service_export import ExporteurStage
+from source.DAO.Export_DAO import ExporteurStage
 from source.view.session_view import Session
 from source.DAO.HistoriqueDAO import HistoriqueDAO
 from source.DAO.ListeEnvieDAO import ListeEnvieDAO
