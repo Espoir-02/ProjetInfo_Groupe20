@@ -46,14 +46,8 @@ class Scrapping2:
         if selected_stage_str.lower() == "retour au menu":
             from source.view.Page_option.menu_view import Menu_view
             return Menu_view().display()
-<<<<<<< HEAD
-        else:
-            selected_stage_str = re.search(r'\d+', answers['selection']).group()
-            selected_stage = int(selected_stage_str)
-=======
         elif re.match(r'^\d', selected_stage_str):
             selected_stage = int(re.search(r'\d+', selected_stage_str).group())
->>>>>>> 790ad95dc4eb8972bfbeefa4dcaeacd03aa61fcf
             selected_stage_info = all_stages_info[selected_stage - 1]
             self.display_additional_info(selected_stage_info)
             return selected_stage_info
