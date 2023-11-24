@@ -77,7 +77,7 @@ class Scrapping2:
         ]
 
         if Session().user_type in ['professeur', 'eleve', 'administrateur']:
-                options.append("Ajouter le stage à votre liste d'envie")
+                options.append("Ajouter le stage à votre liste d'envies")
         if (Session().user_type == 'professeur'):
             options.append('Proposer le stage à un élève')
 
@@ -85,7 +85,7 @@ class Scrapping2:
         answers = inquirer.prompt(questions)
         selected_option = answers['selection']
 
-        if selected_option == 'Ajouter le stage à votre liste d\'envies':
+        if selected_option == "Ajouter le stage à votre liste d'envies":
             try:
                 self.liste_envie_service.ajouter_stage_a_liste_envie(self.id_utilisateur, id_stage_selected)
             except (ValueError, IndexError):
