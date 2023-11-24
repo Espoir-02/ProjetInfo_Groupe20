@@ -38,6 +38,9 @@ class Menu_view:
 
             if Session().user_type == 'administrateur':
                 choices.append("Accéder aux fonctions administrateur")
+            
+            if Session().user_type in ['professeur', 'eleve', 'administrateur']:
+                choices.append("Voir mes informations")
 
             if Session().user_type in ['professeur', 'eleve', 'administrateur']:
                 choices.append("Modifier ses informations")
@@ -45,8 +48,6 @@ class Menu_view:
             if Session().user_type in ['professeur', 'eleve', 'administrateur']:
                 choices.append("Déconnexion")
             
-            if Session().user_type in ['professeur', 'eleve', 'administrateur']:
-                choices.append("Voir mes informations")
 
             questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
 
@@ -62,8 +63,7 @@ class Menu_view:
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
                 liste_envie_view= ListeEnvieView(id_utilisateur)
                 return liste_envie_view.display()
-                """from source.view.Page_option.view_envie2_essaie import ListeEnvieView
-                return ListeEnvieView(Session().user_id).display()"""
+                
 
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Modifier ses informations"):
                 from source.view.Page_option.maj_utilisateur_view import MajUtilisateurView
