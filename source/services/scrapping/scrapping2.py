@@ -71,6 +71,7 @@ class Scrapping2:
             'Ajouter le stage à votre liste d\'envies',
             'Exporter le stage',
             'Consulter un autre stage',
+            'Retour au menu',
             'Quitter'
         ]
 
@@ -93,8 +94,14 @@ class Scrapping2:
                 print("Choix invalide. Veuillez entrer un numéro valide.")
         elif selected_option == 'Consulter un autre stage':
             return 'continue'
+
         elif selected_option == 'Quitter':
             return 'quit'
+
+        else:
+            from source.view.Page_option.menu_view import Menu_view
+            return Menu_view().display()
+
 
     def scrap(self, url):
         id_utilisateur = Session().user_id
