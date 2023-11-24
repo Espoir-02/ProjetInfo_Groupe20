@@ -77,7 +77,8 @@ class Scrapping2:
             from source.view.Page_option.menu_view import Menu_view
             return Menu_view().display()
         else:
-            selected_stage = int(answer['selection'])
+            selected_stage_str = re.search(r'\d+', answers['selection']).group()
+            selected_stage = int(selected_stage_str)
             selected_stage_info = all_stages_info[selected_stage - 1]
             self.display_additional_info(selected_stage_info)
             return selected_stage_info

@@ -58,6 +58,8 @@ class Menu_view:
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Accéder à sa liste d'envie"):
                 liste_envie_view= ListeEnvieView(id_utilisateur)
                 return liste_envie_view.display()
+                """from source.view.Page_option.view_envie2_essaie import ListeEnvieView
+                return ListeEnvieView(Session().user_id).display()"""
 
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Modifier ses informations"):
                 from source.view.Page_option.maj_utilisateur_view import MajUtilisateurView
