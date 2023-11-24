@@ -102,6 +102,7 @@ class Scrapping2:
                 print("Choix invalide. Veuillez entrer un numéro valide.")
         elif selected_option == "Exporter le stage":
             try:
+                chemin_fichier_sortie = f"{id_utilisateur}_fichierExport.csv"
                 ExporteurStage().exporter_donnees(
                     id_utilisateur, id_stage_selected, chemin_fichier_sortie
                 )
