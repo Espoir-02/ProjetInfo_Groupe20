@@ -27,7 +27,7 @@ class ListeEnvieView:
             'Revenir au menu principal'
         ]
 
-        if (Session().user_type == 'professeur'):
+        if (Session().user_type in ['professeur', 'administrateur']): 
             menu_options.append('Proposer un stage à partir de la liste d\'envies')
 
         return [

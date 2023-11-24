@@ -97,27 +97,13 @@ class Scrapping2:
                 print("Choix invalide. Veuillez entrer un numéro valide.")
         elif selected_option == 'Consulter un autre stage':
             return 'continue'
-        elif selected_option =='Proposer le stage à un élève':
-            try:
-                nom_eleve = input("Entrez le nom de l'élève : ")
-                prenom_eleve = input("Entrez le prénom de l'élève : ")
-                eleve = self.utilisateur_service.trouver_utilisateur_par_nom(nom_eleve, prenom_eleve)
+        elif selected_option == 'Quitter':
+            return 'quit'
 
-                if eleve is not None:
-                    id_eleve = eleve.get("id_utilisateur")
-                    if self.service_liste_eleves.verifier_eleve_dans_liste(id_eleve, self.id_utilisateur):
-                        self.suggestions_service.create_suggestion(id_eleve, id_stage_selected, self.id_utilisateur)
-                        print(f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}.")
-                    else:
-                        print("Vous ne pouvez pas proposer de stage à cet élève. Il n'est pas dans votre liste.")
-                else:
-                    print("Aucun utilisateur trouvé avec les nom et prénom spécifiés.")
-            except UtilisateurInexistantError as e:
-                print(f"Erreur : {e}")
-        elif selected_option == 'Quitter et revenir au menu principal':
+        else:
             from source.view.Page_option.menu_view import Menu_view
-            menu_view = Menu_view()
-            return menu_view.display()
+            return Menu_view().display()
+
 
     def scrap(self, url):
         id_utilisateur = Session().user_id
