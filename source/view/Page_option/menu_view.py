@@ -75,7 +75,7 @@ class Menu_view:
                 return suggestions_view.display()
 
 
-            elif (Session().user_type == 'professeur') and (answers['choice'] == "Accéder à la liste d'élèves"):
+            elif (Session().user_type in ['professeur', 'administrateur']) and (answers['choice'] == "Accéder à la liste d'élèves"):
                 liste_eleves_view = ListeElevesView(id_professeur)
                 return liste_eleves_view.display()
 

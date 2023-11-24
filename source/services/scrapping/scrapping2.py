@@ -63,15 +63,23 @@ class Scrapping2:
         questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]
         answers = inquirer.prompt(questions)
 
-        selected_stage_str = re.search(r'\d+', answers['selection']).group()  # Extraire uniquement les chiffres
+        """selected_stage_str = re.search(r'\d+', answers['selection']).group()  # Extraire uniquement les chiffres
         selected_stage = int(selected_stage_str)
 
         if selected_stage_str == "Retour au menu":
-            return None
+            from source.view.Page_option.menu_view import Menu_view
+            return Menu_view().display()
         else:
             selected_stage_info = all_stages_info[selected_stage - 1]
+            self.display_additional_info(selected_stage_info)"""
+
+        if answers['selection'] == "Retour au menu":
+            from source.view.Page_option.menu_view import Menu_view
+            return Menu_view().display()
+        else:
+            selected_stage = int(answer['selection'])
+            selected_stage_info = all_stages_info[selected_stage - 1]
             self.display_additional_info(selected_stage_info)
-            
             return selected_stage_info
 
     def scrap(self, url):
