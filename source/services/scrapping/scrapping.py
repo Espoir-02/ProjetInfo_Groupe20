@@ -137,9 +137,7 @@ class Scrapping:
             user_choice2 = input("Tapez 1-pour ajouter ce stage à votre liste d'envie\nTapez 2-pour exporter ce stage\nTapez q-pour quitter: ")
             if user_choice2.lower() == '1':
                 try:
-                    service_liste_envie=ListeEnvieService()
-                    service_liste_envie(Session().user_id,id_stage_selected[0])
-                    #ListeEnvieDAO().update_liste_envie(id_utilisateur,id_stage_selected[0])
+                    ListeEnvieDAO().update_liste_envie(id_utilisateur,id_stage_selected[0])
                     #ListeEnvieDAO().update_liste_envie(id_utilisateur,id_stage_selected)
                 except (ValueError, IndexError):
                     print("Choix invalide. Veuillez entrer un numéro valide.")
