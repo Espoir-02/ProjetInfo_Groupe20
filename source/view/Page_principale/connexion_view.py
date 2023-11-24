@@ -47,14 +47,14 @@ class ConnexionController:
                 choix = self.afficher_options_erreur_connexion()
 
                 if choix == self.CHOIX_MENU_PRECEDENT:
+                     # Sortir de la boucle, revenir au menu précédent.
                     from source.view.Page_principale.start_view import Start_view
-                    start_view = Start_view()
-                    return start_view.display()
+                    Start_view().make_choice()
 
         self.connexion_view.afficher_message("Nombre maximum d'essais atteint. Retour au menu précédent.")
         from source.view.Page_principale.start_view import Start_view
         start_view = Start_view()
-        return start_view.display()
+        return start_view.make_choice()
 
     def afficher_options_erreur_connexion(self):
         choices = [
