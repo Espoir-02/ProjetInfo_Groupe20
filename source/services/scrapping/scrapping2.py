@@ -7,9 +7,10 @@ from source.services.service_export import ExporteurStage
 from source.services.service_liste_eleves import ListeElevesService
 from source.services.service_liste_envie import ListeEnvieService
 from source.services.service_historique import HistoriqueService
+from source.services.service_suggestion_eleve import ServiceSuggestion
+from source.services.service_utilisateur import ServiceUtilisateur
+from source.exception.exceptions import UtilisateurInexistantError
 from source.view.session_view import Session
-from source.DAO.HistoriqueDAO import HistoriqueDAO
-from source.DAO.ListeEnvieDAO import ListeEnvieDAO
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -19,8 +20,10 @@ class Scrapping2:
     def __init__(self):
         self.historique_service = HistoriqueService()
         self.id_utilisateur= Session().user_id
+        self.utilisateur_service = ServiceUtilisateur()
         self.liste_envie_service = ListeEnvieService()
-        self.liste_eleves_service = ListeElevesService()
+        self.suggestions_service = ServiceSuggestion()
+        self.service_liste_eleves = ListeElevesService()
         self.type_utilisateur = Session().user_type
 
     def display_additional_info(self, stage_info):
@@ -68,14 +71,15 @@ class Scrapping2:
     def display_stage_options(self, id_stage_selected):
         id_utilisateur = Session().user_id
         options = [
-            'Ajouter le stage à votre liste d\'envies',
             'Exporter le stage',
             'Consulter un autre stage',
-            'Quitter'
+            'Quitter et revenir au menu principal'
         ]
 
+        if Session().user_type in ['professeur', 'eleve', 'administrateur']:
+                options.append("Ajouter le stage à votre liste d'envie")
         if (Session().user_type == 'professeur'):
-            options.append('Proposer un stage à partir de la liste d\'envies')
+            options.append('Proposer le stage à un élève')
 
         questions = [inquirer.List('selection', message='Que souhaitez-vous faire?', choices=options)]
         answers = inquirer.prompt(questions)
@@ -83,7 +87,7 @@ class Scrapping2:
 
         if selected_option == 'Ajouter le stage à votre liste d\'envies':
             try:
-                self.liste_envie_service.ajouter_stage_a_liste_envie(id_utilisateur, id_stage_selected)
+                self.liste_envie_service.ajouter_stage_a_liste_envie(self.id_utilisateur, id_stage_selected)
             except (ValueError, IndexError):
                 print("Choix invalide. Veuillez entrer un numéro valide.")
         elif selected_option == 'Exporter le stage':
@@ -93,8 +97,27 @@ class Scrapping2:
                 print("Choix invalide. Veuillez entrer un numéro valide.")
         elif selected_option == 'Consulter un autre stage':
             return 'continue'
-        elif selected_option == 'Quitter':
-            return 'quit'
+        elif selected_option =='Proposer le stage à un élève':
+            try:
+                nom_eleve = input("Entrez le nom de l'élève : ")
+                prenom_eleve = input("Entrez le prénom de l'élève : ")
+                eleve = self.utilisateur_service.trouver_utilisateur_par_nom(nom_eleve, prenom_eleve)
+
+                if eleve is not None:
+                    id_eleve = eleve.get("id_utilisateur")
+                    if self.service_liste_eleves.verifier_eleve_dans_liste(id_eleve, self.id_utilisateur):
+                        self.suggestions_service.create_suggestion(id_eleve, id_stage_selected, self.id_utilisateur)
+                        print(f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}.")
+                    else:
+                        print("Vous ne pouvez pas proposer de stage à cet élève. Il n'est pas dans votre liste.")
+                else:
+                    print("Aucun utilisateur trouvé avec les nom et prénom spécifiés.")
+            except UtilisateurInexistantError as e:
+                print(f"Erreur : {e}")
+        elif selected_option == 'Quitter et revenir au menu principal':
+            from source.view.Page_option.menu_view import Menu_view
+            menu_view = Menu_view()
+            return menu_view.display()
 
     def scrap(self, url):
         id_utilisateur = Session().user_id
@@ -171,7 +194,7 @@ class Scrapping2:
 
             id_stage_selected = UtilitaireDAO().get_stage_ids(selected_stage_info['titre'], selected_stage_info['lien'], selected_stage_info['domaine'], selected_stage_info['periode'], selected_stage_info['gratification'], selected_stage_info['date_publication'], selected_stage_info['etude'], selected_stage_info['entreprise'], selected_stage_info['lieu'])
 
-            HistoriqueDAO().update_historique(id_utilisateur, id_stage_selected)
+            self.historique_service.ajouter_stage_a_historique(id_utilisateur, id_stage_selected)
             while True:
                 result = self.display_stage_options(id_stage_selected)
                 if result == 'quit':
