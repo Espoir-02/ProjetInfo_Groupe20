@@ -5,7 +5,7 @@ from source.business_object.stage_recherche.stage import Stage
 from source.DAO.utilitaire_dao import UtilitaireDAO
 from source.services.service_export import ExporteurStage
 from source.view.session_view import Session
-from source.DAO.HistoriqueDAO import update_historique
+from source.DAO.HistoriqueDAO import HistoriqueDAO
 from source.DAO.ListeEnvieDAO import ListeEnvieDAO
 
 from bs4 import BeautifulSoup
@@ -31,7 +31,7 @@ class Scrapping:
 
    def scrap(self, url):
 
-        id_utilisateur=9
+        id_utilisateur= Session().user_id #9
         chemin_fichier_sortie = f'{id_utilisateur}_fichierExport.csv'
 
         response = requests.get(url)

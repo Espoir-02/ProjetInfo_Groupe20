@@ -2,7 +2,9 @@ from source.DAO.dbconnection import DBConnection
 from source.DAO.utilitaire_dao import UtilitaireDAO
 from source.exception.exceptions import IdUtilisateurInexistantError
 from source.exception.exceptions import IdStageInexistantError
-from source.services.scrapping.scrapping import Scrapping
+#from source.services.scrapping.scrapping import Scrapping
+#n'importe pas Scrapping dans tout le fichier 
+#importe le seulment dans une méthode de cette classe où tu en aura besoin car sinon ça va pas marcher
 
 class ExporteurStage:
     @staticmethod

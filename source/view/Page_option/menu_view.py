@@ -1,5 +1,5 @@
-#from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
-#from source.view.Page_option.historique_view import HistoriqueView
+from source.view.Page_option.recherche_stage_view import Recherche_Stage_View
+from source.view.Page_option.historique_view import HistoriqueView
 from source.view.Page_option.Liste_envie_view import ListeEnvieView 
 from source.view.Page_option.proposition_prof_view import Proposition_prof_view
 from source.view.Page_option.suggestions_eleve_view import SuggestionEleveView
