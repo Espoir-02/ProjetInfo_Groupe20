@@ -7,6 +7,7 @@ from source.services.service_export import ExporteurStage
 from source.view.session_view import Session
 from source.DAO.HistoriqueDAO import HistoriqueDAO
 from source.DAO.ListeEnvieDAO import ListeEnvieDAO
+from source.services.service_liste_envie import ListeEnvieService
 
 from bs4 import BeautifulSoup
 import requests
@@ -27,6 +28,7 @@ class Scrapping:
         print(f"Gratification: {stage_info['gratification']}")
         print(f"Date de publication: {stage_info['date_publication']}")
         print(f"{'*' * 40}\n")
+        id_utilisateur=Session().user_id
 
 
    def scrap(self, url):
@@ -135,7 +137,10 @@ class Scrapping:
             user_choice2 = input("Tapez 1-pour ajouter ce stage à votre liste d'envie\nTapez 2-pour exporter ce stage\nTapez q-pour quitter: ")
             if user_choice2.lower() == '1':
                 try:
-                    ListeEnvieDAO().update_liste_envie(id_utilisateur,id_stage_selected)
+                    service_liste_envie=ListeEnvieService()
+                    service_liste_envie(Session().user_id,id_stage_selected[0])
+                    #ListeEnvieDAO().update_liste_envie(id_utilisateur,id_stage_selected[0])
+                    #ListeEnvieDAO().update_liste_envie(id_utilisateur,id_stage_selected)
                 except (ValueError, IndexError):
                     print("Choix invalide. Veuillez entrer un numéro valide.")
             if user_choice2.lower() == '2':
