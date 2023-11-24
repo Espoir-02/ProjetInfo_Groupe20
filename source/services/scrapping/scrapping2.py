@@ -4,6 +4,9 @@ from source.DAO.StageDAO import StageDAO
 from source.business_object.stage_recherche.stage import Stage
 from source.DAO.utilitaire_dao import UtilitaireDAO
 from source.services.service_export import ExporteurStage
+from source.services.service_liste_eleves import ListeElevesService
+from source.services.service_liste_envie import ListeEnvieService
+from source.services.service_historique import HistoriqueService
 from source.view.session_view import Session
 from source.DAO.HistoriqueDAO import HistoriqueDAO
 from source.DAO.ListeEnvieDAO import ListeEnvieDAO
@@ -12,6 +15,13 @@ import requests
 import re
 
 class Scrapping2:
+
+    def __init__(self):
+        self.historique_service = HistoriqueService()
+        self.id_utilisateur= Session().user_id
+        self.liste_envie_service = ListeEnvieService()
+        self.liste_eleves_service = ListeElevesService()
+        self.type_utilisateur = Session().user_type
 
     def display_additional_info(self, stage_info):
         print(f"{'*' * 40}")
@@ -54,6 +64,37 @@ class Scrapping2:
         else:
             print("Choix invalide. Veuillez entrer un numéro valide.")
             return None
+
+    def display_stage_options(self, id_stage_selected):
+        id_utilisateur = Session().user_id
+        options = [
+            'Ajouter le stage à votre liste d\'envies',
+            'Exporter le stage',
+            'Consulter un autre stage',
+            'Quitter'
+        ]
+
+        if (Session().user_type == 'professeur'):
+            options.append('Proposer un stage à partir de la liste d\'envies')
+
+        questions = [inquirer.List('selection', message='Que souhaitez-vous faire?', choices=options)]
+        answers = inquirer.prompt(questions)
+        selected_option = answers['selection']
+
+        if selected_option == 'Ajouter le stage à votre liste d\'envies':
+            try:
+                self.liste_envie_service.ajouter_stage_a_liste_envie(id_utilisateur, id_stage_selected)
+            except (ValueError, IndexError):
+                print("Choix invalide. Veuillez entrer un numéro valide.")
+        elif selected_option == 'Exporter le stage':
+            try:
+                ExporteurStage().exporter_donnees(id_utilisateur, id_stage_selected, chemin_fichier_sortie)
+            except (ValueError, IndexError):
+                print("Choix invalide. Veuillez entrer un numéro valide.")
+        elif selected_option == 'Consulter un autre stage':
+            return 'continue'
+        elif selected_option == 'Quitter':
+            return 'quit'
 
     def scrap(self, url):
         id_utilisateur = Session().user_id
@@ -131,8 +172,14 @@ class Scrapping2:
             id_stage_selected = UtilitaireDAO().get_stage_ids(selected_stage_info['titre'], selected_stage_info['lien'], selected_stage_info['domaine'], selected_stage_info['periode'], selected_stage_info['gratification'], selected_stage_info['date_publication'], selected_stage_info['etude'], selected_stage_info['entreprise'], selected_stage_info['lieu'])
 
             HistoriqueDAO().update_historique(id_utilisateur, id_stage_selected)
+            while True:
+                result = self.display_stage_options(id_stage_selected)
+                if result == 'quit':
+                    return
+                elif result == 'continue':
+                    break
 
-            user_choice2 = input("Tapez 1-pour ajouter ce stage à votre liste d'envie\nTapez 2-pour exporter ce stage\nTapez q-pour quitter: ")
+            """user_choice2 = input("Tapez 1-pour ajouter ce stage à votre liste d'envie\nTapez 2-pour exporter ce stage\nTapez q-pour quitter: ")
             if user_choice2.lower() == '1':
                 try:
                     ListeEnvieDAO().update_liste_envie(id_utilisateur, id_stage_selected)
@@ -142,4 +189,4 @@ class Scrapping2:
                 try:
                     ExporteurStage().exporter_donnees(id_utilisateur, id_stage_selected, chemin_fichier_sortie)
                 except (ValueError, IndexError):
-                    print("Choix invalide. Veuillez entrer un numéro valide.")
+                    print("Choix invalide. Veuillez entrer un numéro valide.")"""
