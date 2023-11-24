@@ -21,10 +21,12 @@ class IdProfesseurInexistantError(Exception):
         self.id_professeur = id_professeur
         super().__init__(f"Le professeur avec l'ID {id_professeur} n'existe pas.")
 
+
 class UtilisateurInexistantError(Exception):
     def __init__(self, message="Aucun utilisateur trouvé."):
         self.message = message
         super().__init__(self.message)
+
 
 class PseudoDejaExistantError(Exception):
     def __init__(self, pseudo):

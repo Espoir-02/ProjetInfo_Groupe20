@@ -84,11 +84,14 @@ def test_delete_liste_envie():
         id_eleve_valide = 6
         ma_liste_envie.delete_all_liste_envie(id_eleve_valide)
 
-        # Test avec un id_eleve invalide 
+        # Test avec un id_eleve invalide
         with pytest.raises(TypeError) as exc_info:
             id_eleve_invalide = "pas_un_entier"
             ma_liste_envie.delete_all_liste_envie(id_eleve_invalide)
-        assert str(exc_info.value) == "L'identifiant de l'élève doit être un entier numérique"
+        assert (
+            str(exc_info.value)
+            == "L'identifiant de l'élève doit être un entier numérique"
+        )
 
         # Test avec un id_eleve inexistant
         with pytest.raises(IdEleveInexistantError) as exc_info:
