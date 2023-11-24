@@ -53,8 +53,7 @@ class ConnexionController:
 
         self.connexion_view.afficher_message("Nombre maximum d'essais atteint. Retour au menu précédent.")
         from source.view.Page_principale.start_view import Start_view
-        start_view = Start_view()
-        return start_view.make_choice()
+        return Start_view().make_choice()
 
     def afficher_options_erreur_connexion(self):
         choices = [

@@ -16,13 +16,13 @@ class Start_view:
         choice = inquirer.prompt(self.__questions)['choice']
 
         if choice == "Se connecter":
-            return ConnexionController()
+            return ConnexionController().display()
 
         elif choice == "S'inscrire":
-            return CreationCompte_view()
+            return CreationCompte_view().display()
 
         elif choice == "Continuer en mode invité":
-            return Mode_invite_view()
+            return Mode_invite_view().make_choice()
 
 
 

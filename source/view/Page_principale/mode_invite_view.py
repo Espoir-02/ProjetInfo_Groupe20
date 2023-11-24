@@ -17,6 +17,6 @@ class Mode_invite_view:
         Session().user_id = id_non_authentifie
         Session().user_type ="invité"
 
-        return Menu_view()
+        return Menu_view().display()
 
     
