@@ -74,6 +74,6 @@ class ServiceUtilisateur:
     
     def information(self,id_utilisateur):
         utilisateur_existant = self.utilisateur_dao.find_by_id(id_utilisateur)
-        #return utilisateur_existant[2],utilisateur_existant[3]
-        print(f'Nom : {utilisateur_existant["nom"]} \nPrénom : {utilisateur_existant["prénom"]}')
+        return utilisateur_existant["nom"],utilisateur_existant["prénom"]
+        #print(f'Nom : {utilisateur_existant["nom"]} \nPrénom : {utilisateur_existant["prénom"]}')
 
