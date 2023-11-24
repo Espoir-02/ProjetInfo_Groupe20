@@ -150,5 +150,3 @@ class ListeEnvieDAO:
                     "WHERE id_eleve = %(id_eleve)s",
                     {"id_eleve": id_eleve},
                 )
-
-

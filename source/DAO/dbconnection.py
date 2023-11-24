@@ -1,5 +1,6 @@
 import psycopg2
 
+
 class DBConnection:
     def __init__(self):
         try:
@@ -15,9 +16,10 @@ class DBConnection:
             # Si une exception se produit, assurez-vous de ne pas essayer de fermer la connexion ici
 
     def close_connection(self):
-        if hasattr(self, 'connection') and self.connection is not None:
+        if hasattr(self, "connection") and self.connection is not None:
             self.connection.close()
             print("La connexion à la base de données a été fermée.")
+
 
 # Utilisation de la classe DBConnection
 try:

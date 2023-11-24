@@ -1,5 +1,7 @@
 from source.DAO.dbconnection import DBConnection
-#from source.services.scrapping.scrapping import Scrapping
+
+# from source.services.scrapping.scrapping import Scrapping
+
 
 class UtilitaireDAO:
     def __init__(self):
@@ -16,7 +18,7 @@ class UtilitaireDAO:
                 )
                 count = cursor.fetchone()[0]
                 return count > 0
-                
+
     @staticmethod
     def check_stage_exists(id_stage):
         with DBConnection().connection as conn:
@@ -54,7 +56,7 @@ class UtilitaireDAO:
                 return count > 0
 
     @staticmethod
-    def check_liste_envie_exists( id_eleve):
+    def check_liste_envie_exists(id_eleve):
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -101,9 +103,18 @@ class UtilitaireDAO:
                 count = cursor.fetchone()[0]
                 return count > 0
 
-
     @staticmethod
-    def check_infos_stage_exists(nomstage, url2, domaine, periode , gratification, date_publication, etude, nomentreprise, lieu):
+    def check_infos_stage_exists(
+        nomstage,
+        url2,
+        domaine,
+        periode,
+        gratification,
+        date_publication,
+        etude,
+        nomentreprise,
+        lieu,
+    ):
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -123,7 +134,7 @@ class UtilitaireDAO:
                         "date_publication": date_publication,
                         "etude": etude,
                         "nomentreprise": nomentreprise,
-                        "lieu": lieu
+                        "lieu": lieu,
                     },
                 )
 
@@ -142,10 +153,18 @@ class UtilitaireDAO:
                 count = cursor.fetchone()[0]
                 return count > 0
 
-    
-
     @staticmethod
-    def get_stage_ids(nomstage, url2, domaine, periode, gratification, date_publication, etude, nomentreprise, lieu):
+    def get_stage_ids(
+        nomstage,
+        url2,
+        domaine,
+        periode,
+        gratification,
+        date_publication,
+        etude,
+        nomentreprise,
+        lieu,
+    ):
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -165,7 +184,7 @@ class UtilitaireDAO:
                         "date_publication": date_publication,
                         "etude": etude,
                         "nomentreprise": nomentreprise,
-                        "lieu": lieu
+                        "lieu": lieu,
                     },
                 )
 

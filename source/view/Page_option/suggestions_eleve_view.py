@@ -6,8 +6,8 @@ from source.view.session_view import Session
 from inquirer import prompt, List
 import inquirer
 
-class SuggestionEleveView:
 
+class SuggestionEleveView:
     def __init__(self, id_eleve):
         self.id_eleve = id_eleve
         self.suggestions_eleves_service = ServiceSuggestion()
@@ -17,28 +17,41 @@ class SuggestionEleveView:
 
     def afficher_menu(self):
         return [
-            List('choix',
-                 message="Choisissez une option",
-                 choices=[
-                     'Consulter la liste de suggestions',
-                     'Supprimer une suggestion',
-                     'Vider la liste de suggestions',
-                     'Quitter et revenir au menu principal'
-                 ]),
+            List(
+                "choix",
+                message="Choisissez une option",
+                choices=[
+                    "Consulter la liste de suggestions",
+                    "Supprimer une suggestion",
+                    "Vider la liste de suggestions",
+                    "Quitter et revenir au menu principal",
+                ],
+            ),
         ]
 
     def consulter_suggestions(self):
         try:
-            liste_suggestions_courant = self.suggestions_eleves_service.get_suggestions_by_id(self.id_eleve)
+            liste_suggestions_courant = (
+                self.suggestions_eleves_service.get_suggestions_by_id(self.id_eleve)
+            )
 
             if not liste_suggestions_courant:
                 print("La liste de suggestions est vide.")
             else:
-                choix_stage = [f"{suggestion['id_stage']} - {suggestion['titre']}" for suggestion in liste_suggestions_courant] + ["Retour au menu"]
-                questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]
+                choix_stage = [
+                    f"{suggestion['id_stage']} - {suggestion['titre']}"
+                    for suggestion in liste_suggestions_courant
+                ] + ["Retour au menu"]
+                questions = [
+                    inquirer.List(
+                        "selection",
+                        message="Sélectionner un stage:",
+                        choices=choix_stage,
+                    )
+                ]
                 answers = inquirer.prompt(questions)
 
-                selected_stage_str = answers['selection'].split(' - ')[0]
+                selected_stage_str = answers["selection"].split(" - ")[0]
 
                 if selected_stage_str == "Retour au menu":
                     self.display()
@@ -48,37 +61,52 @@ class SuggestionEleveView:
                         stage = self.stage_service.find_stage_by_id(selected_stage)
 
                         if stage is not None:
-                            self.historique_service.ajouter_stage_a_historique(self.id_eleve, selected_stage)
+                            self.historique_service.ajouter_stage_a_historique(
+                                self.id_eleve, selected_stage
+                            )
                             print("Informations sur le stage :")
                             print(f"   ID du stage : {stage['id_stage']}")
                             print(f"   Titre : {stage['titre']}")
                             print(f"   Lien : {stage['lien']}")
                             print(f"   Domaine : {stage['domaine']}")
                             print(f"   Salaire : {stage['salaire']}")
-                            print(f"   Date de publication : {stage['date_publication']}")
+                            print(
+                                f"   Date de publication : {stage['date_publication']}"
+                            )
                             print(f"   Période : {stage['periode']}")
                             print(f"   Niveau d'études : {stage['niveau_etudes']}")
                             print(f"   Entreprise : {stage['entreprise']}")
                             print(f"   Lieu : {stage['lieu']}")
 
                             # Demander à l'utilisateur s'il souhaite ajouter le stage à sa liste d'envies
-                            ajout_envie = inquirer.confirm(message="Voulez-vous ajouter ce stage à votre liste d'envies?")
+                            ajout_envie = inquirer.confirm(
+                                message="Voulez-vous ajouter ce stage à votre liste d'envies?"
+                            )
                             if ajout_envie:
-                                self.liste_envie_service.ajouter_stage_a_liste_envie(self.id_eleve, selected_stage)
+                                self.liste_envie_service.ajouter_stage_a_liste_envie(
+                                    self.id_eleve, selected_stage
+                                )
                             else:
-                                print("Le stage n'a pas été ajouté à votre liste d'envies.")
+                                print(
+                                    "Le stage n'a pas été ajouté à votre liste d'envies."
+                                )
                         else:
                             print("Aucun stage trouvé avec l'ID spécifié.")
                     except Exception as e:
-                        print(f"Une erreur s'est produite lors de la recherche du stage : {e}")
+                        print(
+                            f"Une erreur s'est produite lors de la recherche du stage : {e}"
+                        )
 
         except Exception as e:
-            print(f"Une erreur s'est produite lors de la récupération des suggestions : {e}")
-
+            print(
+                f"Une erreur s'est produite lors de la récupération des suggestions : {e}"
+            )
 
     def supprimer_suggestion(self):
         while True:
-            id_stage = input("Entrez l'ID du stage à supprimer (ou appuyez sur Entrée pour annuler) : ")
+            id_stage = input(
+                "Entrez l'ID du stage à supprimer (ou appuyez sur Entrée pour annuler) : "
+            )
 
             if not id_stage.strip():
                 print("L'ID du stage ne peut pas être vide.")
@@ -92,26 +120,30 @@ class SuggestionEleveView:
 
         self.suggestions_eleves_service.delete_suggestion(self.id_eleve, id_stage)
 
-
     def display(self):
         while True:
             reponse = prompt(self.afficher_menu())
-            choix = reponse['choix']
+            choix = reponse["choix"]
 
-            if choix == 'Consulter la liste de suggestions':
+            if choix == "Consulter la liste de suggestions":
                 self.consulter_suggestions()
                 self.suggestions_eleves_service.get_suggestions_by_id(self.id_eleve)
-            elif choix == 'Supprimer une suggestion':
+            elif choix == "Supprimer une suggestion":
                 self.supprimer_suggestion()
-            elif choix== 'Vider la liste de suggestions':
-                confirmation = inquirer.confirm(message="Êtes-vous sûr de vouloir vider la liste de suggestions ?")
+            elif choix == "Vider la liste de suggestions":
+                confirmation = inquirer.confirm(
+                    message="Êtes-vous sûr de vouloir vider la liste de suggestions ?"
+                )
                 if confirmation:
-                    self.suggestions_eleves_service.vider_liste_suggestions(self.id_eleve)
+                    self.suggestions_eleves_service.vider_liste_suggestions(
+                        self.id_eleve
+                    )
                 else:
                     print("Opération annulée.")
-            elif choix == 'Quitter et revenir au menu principal':
+            elif choix == "Quitter et revenir au menu principal":
                 print("Au revoir !")
                 from source.view.Page_option.menu_view import Menu_view
+
                 menu_view = Menu_view()
                 return menu_view.display()
             else:
@@ -119,9 +151,9 @@ class SuggestionEleveView:
 
     def make_choice(self):
         return self.display()
-if __name__ == "__main__":
 
-    id_eleve = Session().user_id 
+
+if __name__ == "__main__":
+    id_eleve = Session().user_id
     suggestions_eleves = SuggestionEleveView(id_eleve=id_eleve)
     suggestions_eleves.display()
-    

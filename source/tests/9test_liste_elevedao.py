@@ -84,10 +84,16 @@ def test_delete_eleve():
         with pytest.raises(TypeError) as exc_info:
             id_professeur_invalide = "pas_un_entier"
             ma_liste.delete_all_liste(id_professeur_invalide)
-        assert str(exc_info.value) == "L'identifiant du professeur doit être un entier numérique"
+        assert (
+            str(exc_info.value)
+            == "L'identifiant du professeur doit être un entier numérique"
+        )
 
         # Test avec un id_professeur inexistant
         with pytest.raises(IdProfesseurInexistantError) as exc_info:
             id_professeur_inexistant = 9999
             ma_liste.delete_all_liste(id_professeur_inexistant)
-        assert str(exc_info.value) == "Le professeur avec l'identifiant '9999' n'existe pas"
+        assert (
+            str(exc_info.value)
+            == "Le professeur avec l'identifiant '9999' n'existe pas"
+        )
