@@ -1,5 +1,5 @@
 from source.services.scrapping.scrapping import *
-
+from source.services.scrapping.scrapping2 import *
 class Recherche:
     def __init__(
         self,
@@ -105,4 +105,4 @@ class Recherche:
 
         urlf = url + niveau_etude + domaine + zone + ".html"
 
-        Scrapping().scrap(urlf)
+        Scrapping2().scrap(urlf)
