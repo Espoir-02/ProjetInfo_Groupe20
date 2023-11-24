@@ -1,6 +1,5 @@
 from source.services.scrapping.scrapping import *
 
-
 class Recherche:
     def __init__(
         self,
