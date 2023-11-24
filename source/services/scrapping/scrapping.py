@@ -133,12 +133,12 @@ class Scrapping:
             HistoriqueDAO().update_historique(id_utilisateur,id_stage_selected)
 
             user_choice2 = input("Tapez 1-pour ajouter ce stage à votre liste d'envie\nTapez 2-pour exporter ce stage\nTapez q-pour quitter: ")
-            if user_choice2.lower() == 1:
+            if user_choice2.lower() == '1':
                 try:
                     ListeEnvieDAO().update_liste_envie(id_utilisateur,id_stage_selected)
                 except (ValueError, IndexError):
                     print("Choix invalide. Veuillez entrer un numéro valide.")
-            if user_choice2.lower() == 2:
+            if user_choice2.lower() == '2':
                 try:
                     ExporteurStage().exporter_donnees(id_utilisateur,id_stage_selected,  chemin_fichier_sortie)
                 except (ValueError, IndexError):
