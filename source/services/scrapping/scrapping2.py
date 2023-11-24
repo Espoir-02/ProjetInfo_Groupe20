@@ -1,3 +1,4 @@
+import inquirer
 from inquirer import prompt, List
 from source.DAO.StageDAO import StageDAO
 from source.business_object.stage_recherche.stage import Stage
@@ -8,6 +9,7 @@ from source.DAO.HistoriqueDAO import HistoriqueDAO
 from source.DAO.ListeEnvieDAO import ListeEnvieDAO
 from bs4 import BeautifulSoup
 import requests
+import re
 
 class Scrapping2:
 
@@ -25,7 +27,7 @@ class Scrapping2:
         print(f"Date de publication: {stage_info['date_publication']}")
         print(f"{'*' * 40}\n")
 
-    def display_stage_menu(self, all_stages_info):
+    """def display_stage_menu(self, all_stages_info):
         print("Choisissez un stage (ou tapez 'q' pour quitter) :")
 
         for i, stage_info in enumerate(all_stages_info, start=1):
@@ -46,7 +48,31 @@ class Scrapping2:
                 else:
                     print("Choix invalide. Veuillez entrer un numéro valide.")
             except ValueError:
-                print("Veuillez entrer un numéro valide.")
+                print("Veuillez entrer un numéro valide.")"""
+
+    def display_stage_menu(self, all_stages_info):
+        if not all_stages_info:
+            print("Aucun stage trouvé.")
+            return None
+
+        choix_stage = [
+            f"{i + 1}. {stage_info['titre']} - {stage_info['entreprise']} - {stage_info['lieu']}"
+            for i, stage_info in enumerate(all_stages_info)
+        ] + ["Retour au menu"]
+
+        questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]
+        answers = inquirer.prompt(questions)
+
+        selected_stage_str = re.search(r'\d+', answers['selection']).group()  # Extraire uniquement les chiffres
+        selected_stage = int(selected_stage_str)
+
+        if selected_stage_str == "Retour au menu":
+            return None
+        else:
+            selected_stage_info = all_stages_info[selected_stage - 1]
+            self.display_additional_info(selected_stage_info)
+            
+            return selected_stage_info
 
     def scrap(self, url):
         id_utilisateur = Session().user_id
