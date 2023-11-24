@@ -8,8 +8,6 @@ class ListeEnvieService:
         self.liste_envie_dao = ListeEnvieDAO()
         self.utilitaire_dao = UtilitaireDAO()
 
-
-
     def ajouter_stage_a_liste_envie(self, id_eleve, id_stage):
         if self.utilitaire_dao.check_envie_exists(id_eleve, id_stage):
             print("Le stage est déjà dans la liste d'envies.")
