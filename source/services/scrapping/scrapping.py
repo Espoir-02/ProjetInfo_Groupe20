@@ -145,7 +145,7 @@ class Scrapping:
                     print("Choix invalide. Veuillez entrer un numéro valide.")
             if user_choice2.lower() == 2:
                 try:
-                    ExporteurStage().exporter_donnees(id_utilisateur,id_stage_selected,  chemin_fichier_sortie)
+                    ExporteurStage().exporter_donnees(id_utilisateur,id_stage_selected,chemin_fichier_sortie)
                 except (ValueError, IndexError):
                     print("Choix invalide. Veuillez entrer un numéro valide.")
             if user_choice2.lower() == 'q':
