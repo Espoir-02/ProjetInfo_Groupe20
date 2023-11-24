@@ -9,6 +9,7 @@ from source.services.service_utilisateur import ServiceUtilisateur
 from source.view.Page_option.admin_view import AdminView
 from source.view.session_view import Session 
 import inquirer
+import sys
 
 class Menu_view:
     def __init__(self):
@@ -71,9 +72,9 @@ class Menu_view:
             
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Déconnexion"):
                 from source.view.Page_principale.start_view import Start_view
-                start_view= Start_view()
-                return start_view.display()
-            
+                return Start_view().make_choice()
+    
+        
             elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Voir mes informations"):
                 from source.view.Page_option.mes_info import MesInfos
                 info= MesInfos()
@@ -96,7 +97,7 @@ class Menu_view:
 
             elif answers['choice'] == "Quitter l'application":
                 print("Au revoir !")
-                break
+                sys.exit()
 
     def make_choice(self):
         return self.display()

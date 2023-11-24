@@ -97,9 +97,8 @@ class Scrapping2:
                 print("Choix invalide. Veuillez entrer un numéro valide.")
         elif selected_option == 'Consulter un autre stage':
             return 'continue'
-        elif selected_option == 'Quitter':
+        elif selected_option == 'Quitter et revenir au menu principal':
             return 'quit'
-
         else:
             from source.view.Page_option.menu_view import Menu_view
             return Menu_view().display()
@@ -184,18 +183,8 @@ class Scrapping2:
             while True:
                 result = self.display_stage_options(id_stage_selected)
                 if result == 'quit':
-                    return
+                    from source.view.Page_option.menu_view import Menu_view
+                    return Menu_view().display()
                 elif result == 'continue':
                     break
 
-            """user_choice2 = input("Tapez 1-pour ajouter ce stage à votre liste d'envie\nTapez 2-pour exporter ce stage\nTapez q-pour quitter: ")
-            if user_choice2.lower() == '1':
-                try:
-                    ListeEnvieDAO().update_liste_envie(id_utilisateur, id_stage_selected)
-                except (ValueError, IndexError):
-                    print("Choix invalide. Veuillez entrer un numéro valide.")
-            if user_choice2.lower() == '2':
-                try:
-                    ExporteurStage().exporter_donnees(id_utilisateur, id_stage_selected, chemin_fichier_sortie)
-                except (ValueError, IndexError):
-                    print("Choix invalide. Veuillez entrer un numéro valide.")"""
