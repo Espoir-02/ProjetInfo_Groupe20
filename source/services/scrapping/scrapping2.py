@@ -27,28 +27,6 @@ class Scrapping2:
         print(f"Date de publication: {stage_info['date_publication']}")
         print(f"{'*' * 40}\n")
 
-    """def display_stage_menu(self, all_stages_info):
-        print("Choisissez un stage (ou tapez 'q' pour quitter) :")
-
-        for i, stage_info in enumerate(all_stages_info, start=1):
-            print(f"{i}. {stage_info['titre']} - {stage_info['entreprise']} - {stage_info['lieu']}")
-
-        while True:
-            user_choice = input("Entrez le numéro du stage pour plus d'informations : ")
-        
-            if user_choice.lower() == 'q':
-                return None  # L'utilisateur a choisi de quitter
-
-            try:
-                selected_stage_index = int(user_choice)
-                if 1 <= selected_stage_index <= len(all_stages_info):
-                    selected_stage_info = all_stages_info[selected_stage_index - 1]
-                    self.display_additional_info(selected_stage_info)
-                    return selected_stage_info
-                else:
-                    print("Choix invalide. Veuillez entrer un numéro valide.")
-            except ValueError:
-                print("Veuillez entrer un numéro valide.")"""
 
     def display_stage_menu(self, all_stages_info):
         if not all_stages_info:
@@ -63,24 +41,19 @@ class Scrapping2:
         questions = [inquirer.List('selection', message='Sélectionner un stage:', choices=choix_stage)]
         answers = inquirer.prompt(questions)
 
-        """selected_stage_str = re.search(r'\d+', answers['selection']).group()  # Extraire uniquement les chiffres
-        selected_stage = int(selected_stage_str)
+        selected_stage_str = answers['selection']
 
-        if selected_stage_str == "Retour au menu":
+        if selected_stage_str.lower() == "retour au menu":
             from source.view.Page_option.menu_view import Menu_view
             return Menu_view().display()
-        else:
-            selected_stage_info = all_stages_info[selected_stage - 1]
-            self.display_additional_info(selected_stage_info)"""
-
-        if answers['selection'] == "Retour au menu":
-            from source.view.Page_option.menu_view import Menu_view
-            return Menu_view().display()
-        else:
-            selected_stage = int(answer['selection'])
+        elif re.match(r'^\d', selected_stage_str):
+            selected_stage = int(re.search(r'\d+', selected_stage_str).group())
             selected_stage_info = all_stages_info[selected_stage - 1]
             self.display_additional_info(selected_stage_info)
             return selected_stage_info
+        else:
+            print("Choix invalide. Veuillez entrer un numéro valide.")
+            return None
 
     def scrap(self, url):
         id_utilisateur = Session().user_id
