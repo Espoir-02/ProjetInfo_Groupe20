@@ -1,0 +1,11 @@
+ID Stage; Titre; Lien; Domaine
+630; Ingénieur Commercial Grands Comptes (F/H); https://jobs-stages.letudiant.fr/stages-etudiants/annonce/ingenieur-commercial-grands-comptes-f-h.html; Commerce, vente, distribution - Vente, négociation, relation clientèle
+651; Stage - 6 mois - Contentieux des affaires F/H; https://jobs-stages.letudiant.fr/stages-etudiants/annonce/stage-6-mois-contentieux-des-affaires-f-h.html; Droit, Sc Politique, Economie - Droit
+652; stage - juriste en droit des familles h/f; https://jobs-stages.letudiant.fr/stages-etudiants/annonce/stage-juriste-en-droit-des-familles-h-f-1.html; Droit, Sc Politique, Economie - Droit
+680; Stage 6 mois - Ingenieur Amélioration Continue - F/H/NB; https://jobs-stages.letudiant.fr/stages-etudiants/annonce/stage-6-mois-ingenieur-e-amelioration-continue.html; Sciences, technologies - Industries chimiques et pharmaceutiques
+701; Consultant Stagiaire Finance Secteur Public - Nantes F/H; https://jobs-stages.letudiant.fr/stages-etudiants/annonce/consultant-stagiaire-finance-secteur-public-nantes-f-h.html; Gestion, management, RH - Audit, conseil
+836; Stage de Pré-embauche - Business Intelligence H/F; https://jobs-stages.letudiant.fr/stages-etudiants/annonce/stage-de-pre-embauche-business-intelligence-h-f-1.html; Informatique, télécom - Développement, Génie logiciel
+840; SICRA IDF - Stage Marketing Stratégique F/H; https://jobs-stages.letudiant.fr/stages-etudiants/annonce/sicra-idf-stage-marketing-strategique-f-h.html; Sciences, technologies - Bâtiment, travaux publics, génie civil
+864; Chargé(e) de valorisation et projets culturels H/F; https://jobs-stages.letudiant.fr/stages-etudiants/annonce/charge-e-de-valorisation-et-projets-culturels-h-f.html; Communication, Culture - Médiation culturelle
+881; Customer Success Manager - Stage Stage  H/F; https://jobs-stages.letudiant.fr/stages-etudiants/annonce/customer-success-manager-stage-stage-h-f.html; Commerce, vente, distribution - Distribution - Merchandising
+1004; stage 6 mois – affaires publiques h/f; https://jobs-stages.letudiant.fr/stages-etudiants/annonce/stage-6-mois-affaires-publiques-h-f.html; Droit, Sc Politique, Economie - Droit

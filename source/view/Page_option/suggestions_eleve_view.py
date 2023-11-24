@@ -3,6 +3,7 @@ from source.services.service_stage import StageService
 from source.services.service_historique import HistoriqueService
 from source.services.service_liste_envie import ListeEnvieService
 from source.view.session_view import Session
+from source.services.service_export import ExporteurStage
 from inquirer import prompt, List
 import inquirer
 
@@ -14,6 +15,7 @@ class SuggestionEleveView:
         self.stage_service = StageService()
         self.historique_service = HistoriqueService()
         self.liste_envie_service = ListeEnvieService()
+        self.export = ExporteurStage()
 
     def afficher_menu(self):
         return [
@@ -24,6 +26,7 @@ class SuggestionEleveView:
                     "Consulter la liste de suggestions",
                     "Supprimer une suggestion",
                     "Vider la liste de suggestions",
+                    "Exporter la liste de suggestions"
                     "Quitter et revenir au menu principal",
                 ],
             ),
@@ -130,6 +133,9 @@ class SuggestionEleveView:
                 self.suggestions_eleves_service.get_suggestions_by_id(self.id_eleve)
             elif choix == "Supprimer une suggestion":
                 self.supprimer_suggestion()
+            elif choix == "Exporter la liste de suggestions":
+                chemin_sortie = input("Entrez le chemin du fichier de sortie (ex. sortie.txt) : ")
+                self.export.exporter_suggestions(self.id_eleve, chemin_sortie)
             elif choix == "Vider la liste de suggestions":
                 confirmation = inquirer.confirm(
                     message="Êtes-vous sûr de vouloir vider la liste de suggestions ?"

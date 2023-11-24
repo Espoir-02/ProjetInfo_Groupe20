@@ -6,6 +6,7 @@ from source.services.service_utilisateur import ServiceUtilisateur
 from source.services.service_suggestion_eleve import ServiceSuggestion
 from source.services.service_liste_eleves import ListeElevesService
 from source.exception.exceptions import UtilisateurInexistantError
+from source.services.service_export import ExporteurStage
 import inquirer
 
 
@@ -16,6 +17,7 @@ class ListeEnvieView:
         self.service_liste_eleves = ListeElevesService()
         self.utilisateur_service = ServiceUtilisateur()
         self.suggestions_service = ServiceSuggestion()
+        self.export = ExporteurStage()
         self.type_utilisateur = Session().user_type
         self.id_utilisateur = Session().user_id
 
@@ -24,6 +26,7 @@ class ListeEnvieView:
             "Consulter la liste d'envies",
             "Supprimer un stage de la liste",
             "Vider la liste d'envie",
+            "Exporter la liste d'envie"
             "Revenir au menu principal",
         ]
 
@@ -156,6 +159,9 @@ class ListeEnvieView:
                     print("Opération annulée.")
             elif choix == "Proposer un stage à partir de la liste d'envies":
                 self.proposer_stage()
+            elif choix == "Exporter la liste d'envie":
+                chemin_sortie = input("Entrez le chemin du fichier de sortie (ex. sortie.txt) : ")
+                self.export.exporter_listeEnvies(self.id_utilisateur, chemin_sortie)
             elif choix == "Revenir au menu principal":
                 from source.view.Page_option.menu_view import Menu_view
 
