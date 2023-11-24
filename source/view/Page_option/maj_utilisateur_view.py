@@ -16,7 +16,11 @@ class MajUtilisateurView:
             List(
                 "choix",
                 message="Choisissez une option",
-                choices=["Modifier le pseudo", "Modifier le mot de passe", "Quitter et revenir au menu principal"],
+                choices=[
+                    "Modifier le pseudo",
+                    "Modifier le mot de passe",
+                    "Quitter et revenir au menu principal",
+                ],
             ),
         ]
 
@@ -45,7 +49,7 @@ class MajUtilisateurView:
                 menu_view = Menu_view()
                 menu_view.display()
                 break
-                
+
             else:
                 print("Option invalide. Veuillez réessayer.")
 
@@ -58,7 +62,9 @@ class MajUtilisateurView:
                 continue
 
             if len(mdp1) < 8:
-                print("Le mot de passe est trop court (au moins 8 caractères). Veuillez réessayer.")
+                print(
+                    "Le mot de passe est trop court (au moins 8 caractères). Veuillez réessayer."
+                )
                 continue
 
             mdp2 = inquirer.password("Confirmez le nouveau mot de passe : ")
@@ -70,7 +76,9 @@ class MajUtilisateurView:
 
     def valider_pseudo(self):
         while True:
-            nouveau_pseudo = input("Entrez le nouveau pseudo (appuyez sur 'Entrée' pour quitter) : ")
+            nouveau_pseudo = input(
+                "Entrez le nouveau pseudo (appuyez sur 'Entrée' pour quitter) : "
+            )
 
             if nouveau_pseudo == "":
                 return ""
@@ -80,7 +88,6 @@ class MajUtilisateurView:
                 continue
             else:
                 return nouveau_pseudo
-
 
 
 if __name__ == "__main__":

@@ -13,7 +13,6 @@ class ListeElevesService:
         return self.liste_eleves_dao.update_liste_eleve(id_eleve, id_professeur)
         print("Élève ajouté avec succès.")
 
-
     def supprimer_eleve_de_liste_eleves(self, id_eleve, id_professeur):
         try:
             # Validation de l'ID de l'élève
@@ -42,11 +41,9 @@ class ListeElevesService:
         except IdEleveInexistantError as e:
             print(f"Erreur lors de la suppression de l'élève : {e}")
             return False
- 
-
 
     def consulter_liste_eleves(self, id_professeur):
-        liste_eleves= self.liste_eleves_dao.get_liste_eleve_by_id(id_professeur)
+        liste_eleves = self.liste_eleves_dao.get_liste_eleve_by_id(id_professeur)
 
         if liste_eleves:
             table = PrettyTable()
@@ -58,12 +55,11 @@ class ListeElevesService:
         else:
             print("La liste d'élèves est vide.")
 
-
     def vider_liste_eleves(self, id_professeur):
         if not self.utilitaire_dao.check_liste_eleves_exists(id_professeur):
             print("La liste d'élèves est déjà vide.")
             return False
-        else :
+        else:
             succes = self.liste_eleves_dao.delete_all_liste(id_professeur)
             if succes:
                 print("Liste vidée avec succès")
@@ -73,6 +69,3 @@ class ListeElevesService:
 
     def verifier_eleve_dans_liste(self, id_eleve, id_professeur):
         return self.utilitaire_dao.check_eleve_exist_dans_liste(id_eleve, id_professeur)
-
-
-

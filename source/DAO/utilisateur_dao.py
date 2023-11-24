@@ -1,5 +1,8 @@
 from source.DAO.dbconnection import DBConnection
-from source.exception.exceptions import IdUtilisateurInexistantError, PseudoDejaExistantError
+from source.exception.exceptions import (
+    IdUtilisateurInexistantError,
+    PseudoDejaExistantError,
+)
 from source.business_object.utilisateur.utilisateur2 import Utilisateur
 from source.DAO.utilitaire_dao import UtilitaireDAO
 from prettytable import PrettyTable
@@ -267,7 +270,7 @@ class UtilisateurDAO:
 
         if not result:
             print("Aucun utilisateur trouvé dans la base de données.")
-        return(result)
+        return result
 
     def get_type_utilisateur(self, pseudo):
         """Pour récupérer le type de l'utilisateur à partir de son pseudo
@@ -327,7 +330,9 @@ class UtilisateurDAO:
         if not isinstance(pseudo, str):
             raise TypeError("le pseudo de l'utilisateur est une chaîne de caractères")
         if len(nouveau_mdp) <= 8:
-            raise ValueError("Le nouveau mot de passe doit contenir plus de 8 caractères")
+            raise ValueError(
+                "Le nouveau mot de passe doit contenir plus de 8 caractères"
+            )
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
@@ -362,14 +367,17 @@ class UtilisateurDAO:
             raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
         if UtilitaireDAO.check_pseudo_exists(nouveau_pseudo):
             raise PseudoDejaExistantError(nouveau_pseudo)
-        
+
         with DBConnection().connection as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "UPDATE base_projetinfo.utilisateur "
                     "SET pseudo = %(nouveau_pseudo)s "
                     "WHERE id_utilisateur = %(id_utilisateur)s",
-                    {"nouveau_pseudo": nouveau_pseudo, "id_utilisateur": id_utilisateur},
+                    {
+                        "nouveau_pseudo": nouveau_pseudo,
+                        "id_utilisateur": id_utilisateur,
+                    },
                 )
 
                 if cursor.rowcount == 0:
@@ -400,6 +408,3 @@ class UtilisateurDAO:
                 )
                 if cursor.rowcount == 0:
                     raise IdUtilisateurInexistantError(id_utilisateur)
-
-
-

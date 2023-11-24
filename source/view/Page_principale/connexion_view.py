@@ -5,12 +5,12 @@ from source.view.Page_option.menu_view import Menu_view
 from source.view.session_view import Session
 import inquirer
 
-class ConnexionView:
 
+class ConnexionView:
     def demander_pseudo_mot_de_passe(self):
         questions = [
             inquirer.Text("pseudo", message="Pseudo:"),
-            inquirer.Password("mot_de_passe", message="Mot de passe:")
+            inquirer.Password("mot_de_passe", message="Mot de passe:"),
         ]
 
         answers = inquirer.prompt(questions, raise_keyboard_interrupt=True)
@@ -21,8 +21,8 @@ class ConnexionView:
     def afficher_message(self, message):
         print(message)
 
-class ConnexionController:
 
+class ConnexionController:
     MAX_TENTATIVES = 3  # Nombre maximum d'essais autorisés
 
     CHOIX_REESSAYER = "Réessayer"
@@ -47,23 +47,25 @@ class ConnexionController:
                 choix = self.afficher_options_erreur_connexion()
 
                 if choix == self.CHOIX_MENU_PRECEDENT:
-                     # Sortir de la boucle, revenir au menu précédent.
+                    # Sortir de la boucle, revenir au menu précédent.
                     from source.view.Page_principale.start_view import Start_view
+
                     Start_view().make_choice()
 
-        self.connexion_view.afficher_message("Nombre maximum d'essais atteint. Retour au menu précédent.")
+        self.connexion_view.afficher_message(
+            "Nombre maximum d'essais atteint. Retour au menu précédent."
+        )
         from source.view.Page_principale.start_view import Start_view
-        start_view = Start_view()
-        return start_view.make_choice()
+
+        return Start_view().make_choice()
 
     def afficher_options_erreur_connexion(self):
-        choices = [
-            self.CHOIX_REESSAYER,
-            self.CHOIX_MENU_PRECEDENT
+        choices = [self.CHOIX_REESSAYER, self.CHOIX_MENU_PRECEDENT]
+        questions = [
+            inquirer.List("choice", message="Choisir une option:", choices=choices)
         ]
-        questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
         answers = inquirer.prompt(questions)
-        return answers['choice']
+        return answers["choice"]
 
     def gerer_connexion_reussie(self, pseudo):
         type_utilisateur = self.connexion_service.get_type_utilisateur(pseudo)
@@ -77,6 +79,7 @@ class ConnexionController:
 
     def make_choice(self):
         return self.display()
+
 
 if __name__ == "__main__":
     connexion_controller = ConnexionController()
