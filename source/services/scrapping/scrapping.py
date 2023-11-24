@@ -130,7 +130,7 @@ class Scrapping:
 
             #Ajout du stage à l'historique
             id_stage_selected=liste_id_stages[int(user_choice) - 1]
-            HistoriqueDAO().update_historique(id_utilisateur,id_stage_selected[0])
+            HistoriqueDAO().update_historique(id_utilisateur,id_stage_selected)
 
             user_choice2 = input("Tapez 1-pour ajouter ce stage à votre liste d'envie\nTapez 2-pour exporter ce stage\nTapez q-pour quitter: ")
             if user_choice2.lower() == 1:
