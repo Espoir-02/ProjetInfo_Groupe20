@@ -89,7 +89,7 @@ class HistoriqueView:
 
                         if eleve is not None:
                             id_eleve = eleve.get("id_utilisateur")
-                            if self.service_liste_eleves.verifier_eleve_dans_liste(id_eleve, self.id_utilisateur):
+                            if self.liste_eleves_service.verifier_eleve_dans_liste(id_eleve, self.id_utilisateur):
                                 self.suggestions_service.create_suggestion(id_eleve, selected_stage, self.id_utilisateur)
                                 print(f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}.")
                             else:

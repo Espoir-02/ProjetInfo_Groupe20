@@ -13,6 +13,7 @@ class ListeEnvieService:
             print("Le stage est déjà dans la liste d'envies.")
             return False
         else:
+            self.liste_envie_dao
             success = self.liste_envie_dao.update_liste_envie(id_eleve, id_stage)
             if success:
                 print("Le stage a été ajouté à la liste d'envies avec succès.")
@@ -43,15 +44,12 @@ class ListeEnvieService:
             print("La liste d'envie est déjà vide.")
             return False
         else :
+            print("Liste d'envie vidée avec succès")
             succes = self.liste_envie_dao.delete_all_liste_envie(id_eleve)
-            if succes:
-                print("Liste d'envie vidée avec succès")
-            else:
-                print("Erreur lors de la suppression de la liste d'envie")
             return succes
+
 
 
     def get_liste_envie_eleve(self, id_eleve):
         return self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
 
-        
