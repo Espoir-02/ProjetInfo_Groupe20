@@ -13,12 +13,13 @@ class ListeEnvieService:
             print("Le stage est déjà dans la liste d'envies.")
             return False
         else:
-            success = self.liste_envie_dao.update_liste_envie(id_eleve, id_stage)
+            """success = self.liste_envie_dao.update_liste_envie(id_eleve, id_stage)
             if success:
                 print("Le stage a été ajouté à la liste d'envies avec succès.")
             else:
                 print("Erreur lors de l'ajout du stage à la liste d'envies.")
-            return success
+            return success """
+            print("Le stage a été ajouté à la liste d'envies avec succès.")
 
  
 

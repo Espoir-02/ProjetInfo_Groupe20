@@ -6,7 +6,6 @@ if __name__ == "__main__":
 
     while current_view: 
         current_view.display()
-        
         current_view = current_view.make_choice()    
 
 
