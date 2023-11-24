@@ -43,6 +43,9 @@ class Menu_view:
             
             if Session().user_type in ['professeur', 'eleve', 'administrateur']:
                 choices.append("Déconnexion")
+            
+            if Session().user_type in ['professeur', 'eleve', 'administrateur']:
+                choices.append("Voir mes informations")
 
             questions = [inquirer.List('choice', message='Choisir une option:', choices=choices)]
 
@@ -70,6 +73,11 @@ class Menu_view:
                 from source.view.Page_principale.start_view import Start_view
                 start_view= Start_view()
                 return start_view.display()
+            
+            elif (Session().user_type in ['professeur', 'eleve', 'administrateur']) and (answers['choice'] == "Voir mes informations"):
+                from source.view.Page_option.mes_info import MesInfos
+                info= MesInfos()
+                return info.display()
     
 
             elif (Session().user_type  == 'eleve') and (answers['choice'] == "Accéder à la liste de suggestions du professeur"):
