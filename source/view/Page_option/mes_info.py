@@ -15,7 +15,7 @@ class MesInfos:
 
         if answers['choice'] == 'Modifier mes informations':
             from source.view.Page_option.maj_utilisateur_view import MajUtilisateurView
-            maj_utilisateur_view = MajUtilisateurView(pseudo)
+            maj_utilisateur_view = MajUtilisateurView(Session().user_pseudo)
             return maj_utilisateur_view.display()
         else:
             from source.view.Page_option.menu_view import Menu_view
