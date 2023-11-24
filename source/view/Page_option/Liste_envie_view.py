@@ -26,7 +26,7 @@ class ListeEnvieView:
             "Consulter la liste d'envies",
             "Supprimer un stage de la liste",
             "Vider la liste d'envie",
-            "Exporter la liste d'envie"
+            "Exporter la liste d'envie",
             "Revenir au menu principal",
         ]
 

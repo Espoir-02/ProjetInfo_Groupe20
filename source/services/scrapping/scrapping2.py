@@ -101,11 +101,11 @@ class Scrapping2:
             except (ValueError, IndexError):
                 print("Choix invalide. Veuillez entrer un numéro valide.")
         elif selected_option == "Exporter le stage":
-            chemin_sortie = input("Entrez le chemin du fichier de sortie (ex. sortie.txt) : ")
+            chemin_sortie = input("Entrez le nom du fichier de sortie (ex. sortie) : ")#ils penseront pas à metre .csv mieux vaut pas car ça creera des erreurs pour rien , on demande que le nom 
             try:
-                chemin_fichier_sortie = f"{id_utilisateur}_fichierExport.csv"
+                chemin_fichier_sortie = f"{chemin_sortie}_fichierExport.csv"
                 ExporteurStage().exporter_donnees(
-                     id_stage_selected, chemin_sortie
+                     Session().user_id,id_stage_selected, chemin_fichier_sortie
                 )
             except (ValueError, IndexError):
                 print("Choix invalide. Veuillez entrer un numéro valide.")
