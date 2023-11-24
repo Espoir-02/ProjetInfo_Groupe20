@@ -1,6 +1,9 @@
 from source.DAO.utilisateur_dao import UtilisateurDAO
 from source.DAO.utilitaire_dao import UtilitaireDAO
-from source.exception.exceptions import IdUtilisateurInexistantError, IdStageInexistantError
+from source.exception.exceptions import (
+    IdUtilisateurInexistantError,
+    IdStageInexistantError,
+)
 from source.DAO.StageDAO import StageDAO
 from prettytable import PrettyTable
 
@@ -20,29 +23,35 @@ class ServiceAdmin:
             return self.utilisateur_dao.delete_utilisateur(id_utilisateur)
         except IdUtilisateurInexistantError as e:
             print(f"Erreur lors de la suppression de l'utilisateur : {e}")
-        
-        
 
     def obtenir_liste_utilisateurs(self):
         liste = self.utilisateur_dao.get_all_utilisateurs()
         if liste:
             table = PrettyTable()
-            table.field_names = ["ID Utilisateur", "Nom", "Prénom", "Pseudo", "Mot de passe", "Type Utilisateur"]
+            table.field_names = [
+                "ID Utilisateur",
+                "Nom",
+                "Prénom",
+                "Pseudo",
+                "Mot de passe",
+                "Type Utilisateur",
+            ]
 
             for utilisateur in liste:
-                table.add_row([
-                    utilisateur["id_utilisateur"],
-                    utilisateur["nom"],
-                    utilisateur["prenom"],
-                    utilisateur["pseudo"],
-                    utilisateur["mot_de_passe"],
-                    utilisateur["type_utilisateur"]
-                ])
+                table.add_row(
+                    [
+                        utilisateur["id_utilisateur"],
+                        utilisateur["nom"],
+                        utilisateur["prenom"],
+                        utilisateur["pseudo"],
+                        utilisateur["mot_de_passe"],
+                        utilisateur["type_utilisateur"],
+                    ]
+                )
 
             print(table)
         else:
             print("La liste d'utilisateurs est vide.")
-    
 
     def supprimer_stage(self, id_stage):
         try:
@@ -54,33 +63,42 @@ class ServiceAdmin:
         except IdStageInexistantError as e:
             print(f"Erreur lors de la suppression du stage : {e}")
 
-        
-
     def obtenir_liste_stages(self):
         liste_stages = self.stage_dao.get_all_stages()
         if liste_stages:
             table = PrettyTable()
             table.field_names = [
-                "ID Stage", "Titre", "Lien", "Domaine", "Salaire", 
-                "Date de Publication", "Période", "Niveau d'Études", 
-                "Entreprise", "Lieu"
+                "ID Stage",
+                "Titre",
+                "Lien",
+                "Domaine",
+                "Salaire",
+                "Date de Publication",
+                "Période",
+                "Niveau d'Études",
+                "Entreprise",
+                "Lieu",
             ]
 
             # Ajustez la largeur maximale des colonnes
-            max_width=20
+            max_width = 20
             for stage in liste_stages:
-                table.add_row([
-                    stage["id_stage"],
-                    ServiceAdmin.truncate_text(stage["titre"], 20),
-                    ServiceAdmin.truncate_text(stage["lien"], 20),
-                    ServiceAdmin.truncate_text(stage["domaine"], max_width),
-                    ServiceAdmin.truncate_text(stage["salaire"], max_width),
-                    ServiceAdmin.truncate_text(stage["date_publication"], max_width),
-                    ServiceAdmin.truncate_text(stage["periode"], max_width),
-                    ServiceAdmin.truncate_text(stage["niveau_etudes"], max_width),
-                    ServiceAdmin.truncate_text(stage["entreprise"], max_width),
-                    ServiceAdmin.truncate_text(stage["lieu"], max_width),
-                ])
+                table.add_row(
+                    [
+                        stage["id_stage"],
+                        ServiceAdmin.truncate_text(stage["titre"], 20),
+                        ServiceAdmin.truncate_text(stage["lien"], 20),
+                        ServiceAdmin.truncate_text(stage["domaine"], max_width),
+                        ServiceAdmin.truncate_text(stage["salaire"], max_width),
+                        ServiceAdmin.truncate_text(
+                            stage["date_publication"], max_width
+                        ),
+                        ServiceAdmin.truncate_text(stage["periode"], max_width),
+                        ServiceAdmin.truncate_text(stage["niveau_etudes"], max_width),
+                        ServiceAdmin.truncate_text(stage["entreprise"], max_width),
+                        ServiceAdmin.truncate_text(stage["lieu"], max_width),
+                    ]
+                )
 
             print(table)
         else:
@@ -91,4 +109,4 @@ class ServiceAdmin:
         """Tronque le texte si sa longueur dépasse la largeur maximale."""
         if text is None:
             return ""
-        return (text[:max_width] + '...') if len(text) > max_width else text
+        return (text[:max_width] + "...") if len(text) > max_width else text

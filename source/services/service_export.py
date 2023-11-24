@@ -2,9 +2,11 @@ from source.DAO.dbconnection import DBConnection
 from source.DAO.utilitaire_dao import UtilitaireDAO
 from source.exception.exceptions import IdUtilisateurInexistantError
 from source.exception.exceptions import IdStageInexistantError
-#from source.services.scrapping.scrapping import Scrapping
-#n'importe pas Scrapping dans tout le fichier 
-#importe le seulment dans une méthode de cette classe où tu en aura besoin car sinon ça va pas marcher
+
+# from source.services.scrapping.scrapping import Scrapping
+# n'importe pas Scrapping dans tout le fichier
+# importe le seulment dans une méthode de cette classe où tu en aura besoin car sinon ça va pas marcher
+
 
 class ExporteurStage:
     @staticmethod
@@ -24,7 +26,7 @@ class ExporteurStage:
 
                 # Écriture des résultats dans un fichier texte
                 try:
-                    with open(chemin_fichier_sortie, 'w') as fichier_sortie:
+                    with open(chemin_fichier_sortie, "w") as fichier_sortie:
                         # Écrire l'en-tête avec le nom des colonnes
                         en_tete = "Titre; Lien; Domaine; Periode; Salaire; Date de publication; Niveau d'études; Entreprise; Lieu"
                         fichier_sortie.write(f"{en_tete}\n")
@@ -44,7 +46,7 @@ class ExporteurStage:
                             # Écrire les valeurs dans le fichier avec le séparateur ";"
                             ligne = f"{titre}; {lien}; {domaine}; {periode}; {salaire}; {date_publication}; {niveau_etudes}; {entreprise}; {lieu}"
                             fichier_sortie.write(f"{ligne}\n")
-                        
+
                     print("****Exportation réussie! Veuillez consulter vos fichiers")
                 except Exception as e:
                     print("Erreur lors de l'écriture dans le fichier :", str(e))

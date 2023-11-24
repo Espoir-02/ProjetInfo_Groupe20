@@ -126,7 +126,6 @@ class ListeElevesDAO:
                     result_list.append(eleve_dict)
         return result_list
 
-
     def delete_all_liste(self, id_professeur):
         """Pour vider la liste d'élèves d'un professeur.
 
@@ -153,4 +152,3 @@ class ListeElevesDAO:
                     "WHERE id_professeur = %(id_professeur)s",
                     {"id_professeur": id_professeur},
                 )
-
