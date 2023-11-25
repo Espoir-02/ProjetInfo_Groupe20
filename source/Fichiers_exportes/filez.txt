@@ -1,0 +1,10 @@
+Titre; Lien; Domaine; Periode; Salaire; Date de publication; Niveau d'études; Entreprise; Lieu
+Titre: Stage - Assistant-e gestionnaire RH F/H
+Lien: https://jobs-stages.letudiant.fr/stages-etudiants/annonce/stage-assistant-e-gestionnaire-rh-f-h.html
+Domaine: Lettres et Sciences humaines - Sciences humaines
+Période: 4 à 6 mois
+Salaire: Minimum SMIC
+Date de publication: None
+Niveau d'études: Bac +3
+Entreprise: Safran
+Lieu: Gonfreville

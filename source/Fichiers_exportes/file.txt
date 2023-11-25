@@ -1,0 +1,10 @@
+Titre; Lien; Domaine; Periode; Salaire; Date de publication; Niveau d'études; Entreprise; Lieu
+Titre: Assistant en structuration de produits dérivés
+Lien: https://jobs-stages.letudiant.fr/stages-etudiants/annonce/assistant-en-structuration-de-produits-derives.html
+Domaine: Assurance, Banque, Immobilier - Banque, bourse, marchés financiers
+Période: 6 mois
+Salaire: Minimum SMIC
+Date de publication: None
+Niveau d'études: Bac +4
+Entreprise: Societe Generale
+Lieu: Puteaux

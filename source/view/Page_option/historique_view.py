@@ -6,6 +6,7 @@ from source.services.service_suggestion_eleve import ServiceSuggestion
 from source.services.service_liste_eleves import ListeElevesService
 from source.services.service_stage import StageService
 from source.view.session_view import Session
+from source.services.service_export import ExporteurStage
 from source.exception.exceptions import UtilisateurInexistantError
 import inquirer
 
@@ -17,6 +18,7 @@ class HistoriqueView:
         self.liste_envie_service = ListeEnvieService()
         self.liste_eleves_service = ListeElevesService()
         self.stage_service = StageService()
+        self.export = ExporteurStage()
         self.suggestions_service = ServiceSuggestion()
         self.utilisateur_service = ServiceUtilisateur()
         self.type_utilisateur = Session().user_type
@@ -26,10 +28,8 @@ class HistoriqueView:
             "Consulter l'historique",
             "Vider l'historique",
             "Revenir au menu principal",
+            "Exporter l'historique"
         ]
-
-        if Session().user_type == "professeur":
-            menu_options.append("Proposer un stage à partir de la liste d'envies")
 
         return [
             inquirer.List(
@@ -39,7 +39,7 @@ class HistoriqueView:
 
     def choisir_stage(self, liste_historique_courant):
         if not liste_historique_courant:
-            print("L'historique est vide.")
+            print("\n")
         else:
             choix_stage = [
                 f"{historique['id_stage']} - {historique['titre']}"
@@ -147,9 +147,11 @@ class HistoriqueView:
                 self.vider_historique()
             elif choix == "Revenir au menu principal":
                 from source.view.Page_option.menu_view import Menu_view
-
                 menu_view = Menu_view()
                 return menu_view.display()
+            elif choix == "Exporter l'historique":
+                chemin_sortie = input("Entrez le chemin du fichier de sortie (ex. sortie.txt) : ")
+                self.export.exporter_historique(self.id_utilisateur, chemin_sortie)
             else:
                 print("Option invalide. Veuillez réessayer.")
 

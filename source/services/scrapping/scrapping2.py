@@ -3,7 +3,7 @@ from inquirer import prompt, List
 from source.DAO.StageDAO import StageDAO
 from source.business_object.stage_recherche.stage import Stage
 from source.DAO.utilitaire_dao import UtilitaireDAO
-from source.services.service_export import ExporteurStage
+from source.DAO.Export_DAO import ExporteurStage
 from source.services.service_liste_eleves import ListeElevesService
 from source.services.service_liste_envie import ListeEnvieService
 from source.services.service_historique import HistoriqueService
@@ -49,7 +49,7 @@ class Scrapping2:
             f"{i + 1}. {stage_info['titre']} - {stage_info['entreprise']} - {stage_info['lieu']}"
             for i, stage_info in enumerate(all_stages_info)
         ] + ["Retour au menu"]
-
+        
         questions = [
             inquirer.List(
                 "selection", message="Sélectionner un stage:", choices=choix_stage
@@ -63,11 +63,13 @@ class Scrapping2:
             from source.view.Page_option.menu_view import Menu_view
 
             return Menu_view().display()
+        
         elif re.match(r"^\d", selected_stage_str):
             selected_stage = int(re.search(r"\d+", selected_stage_str).group())
             selected_stage_info = all_stages_info[selected_stage - 1]
             self.display_additional_info(selected_stage_info)
             return selected_stage_info
+
         else:
             print("Choix invalide. Veuillez entrer un numéro valide.")
             return None
@@ -77,13 +79,14 @@ class Scrapping2:
         options = [
             "Exporter le stage",
             "Consulter un autre stage",
-            "Quitter et revenir au menu principal",
         ]
 
         if Session().user_type in ["professeur", "eleve", "administrateur"]:
             options.append("Ajouter le stage à votre liste d'envies")
         if Session().user_type == "professeur":
             options.append("Proposer le stage à un élève")
+        
+        options.append("Quitter et revenir au menu principal")
 
         questions = [
             inquirer.List(
@@ -101,9 +104,11 @@ class Scrapping2:
             except (ValueError, IndexError):
                 print("Choix invalide. Veuillez entrer un numéro valide.")
         elif selected_option == "Exporter le stage":
+            chemin_sortie = input("Entrez le nom du fichier de sortie (ex. sortie) : ")#ils penseront pas à metre .csv mieux vaut pas car ça creera des erreurs pour rien , on demande que le nom 
             try:
+                chemin_fichier_sortie = f"{chemin_sortie}_fichierExport.csv"
                 ExporteurStage().exporter_donnees(
-                    id_utilisateur, id_stage_selected, chemin_fichier_sortie
+                     Session().user_id,id_stage_selected, chemin_fichier_sortie
                 )
             except (ValueError, IndexError):
                 print("Choix invalide. Veuillez entrer un numéro valide.")
@@ -118,7 +123,6 @@ class Scrapping2:
 
     def scrap(self, url):
         id_utilisateur = Session().user_id
-        chemin_fichier_sortie = f"{id_utilisateur}_fichierExport.csv"
 
         response = requests.get(url)
         html = response.text

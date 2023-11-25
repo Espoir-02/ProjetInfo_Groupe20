@@ -3,17 +3,19 @@ from source.services.service_stage import StageService
 from source.services.service_historique import HistoriqueService
 from source.services.service_liste_envie import ListeEnvieService
 from source.view.session_view import Session
+from source.services.service_export import ExporteurStage
 from inquirer import prompt, List
 import inquirer
 
 
 class SuggestionEleveView:
     def __init__(self, id_eleve):
-        self.id_eleve = id_eleve
+        self.id_eleve = Session().user_id
         self.suggestions_eleves_service = ServiceSuggestion()
         self.stage_service = StageService()
         self.historique_service = HistoriqueService()
         self.liste_envie_service = ListeEnvieService()
+        self.export = ExporteurStage()
 
     def afficher_menu(self):
         return [
@@ -24,6 +26,7 @@ class SuggestionEleveView:
                     "Consulter la liste de suggestions",
                     "Supprimer une suggestion",
                     "Vider la liste de suggestions",
+                    "Exporter la liste de suggestions",
                     "Quitter et revenir au menu principal",
                 ],
             ),
@@ -36,7 +39,7 @@ class SuggestionEleveView:
             )
 
             if not liste_suggestions_courant:
-                print("La liste de suggestions est vide.")
+                print("La liste de suggestions est vide.\n")
             else:
                 choix_stage = [
                     f"{suggestion['id_stage']} - {suggestion['titre']}"
@@ -53,7 +56,7 @@ class SuggestionEleveView:
 
                 selected_stage_str = answers["selection"].split(" - ")[0]
 
-                if selected_stage_str == "Retour au menu":
+                if selected_stage_str == "Retour":
                     self.display()
                 else:
                     selected_stage = int(selected_stage_str)
@@ -80,7 +83,7 @@ class SuggestionEleveView:
 
                             # Demander à l'utilisateur s'il souhaite ajouter le stage à sa liste d'envies
                             ajout_envie = inquirer.confirm(
-                                message="Voulez-vous ajouter ce stage à votre liste d'envies?"
+                                message="Voulez-vous ajouter ce stage à votre liste d'envies?\n"
                             )
                             if ajout_envie:
                                 self.liste_envie_service.ajouter_stage_a_liste_envie(
@@ -88,10 +91,10 @@ class SuggestionEleveView:
                                 )
                             else:
                                 print(
-                                    "Le stage n'a pas été ajouté à votre liste d'envies."
+                                    "Le stage n'a pas été ajouté à votre liste d'envies.\n"
                                 )
                         else:
-                            print("Aucun stage trouvé avec l'ID spécifié.")
+                            print("Aucun stage trouvé avec l'ID spécifié.\n")
                     except Exception as e:
                         print(
                             f"Une erreur s'est produite lors de la recherche du stage : {e}"
@@ -99,7 +102,7 @@ class SuggestionEleveView:
 
         except Exception as e:
             print(
-                f"Une erreur s'est produite lors de la récupération des suggestions : {e}"
+                f"Une erreur s'est produite lors de la récupération des suggestions : {e}\n"
             )
 
     def supprimer_suggestion(self):
@@ -109,14 +112,14 @@ class SuggestionEleveView:
             )
 
             if not id_stage.strip():
-                print("L'ID du stage ne peut pas être vide.")
+                print("L'ID du stage ne peut pas être vide.\n")
                 return  # Annuler l'opération si l'ID est vide
 
             try:
                 id_stage = int(id_stage)
                 break  # Sortir de la boucle si la conversion en entier réussit
             except ValueError:
-                print("L'ID du stage doit être un nombre entier. Veuillez réessayer.")
+                print("L'ID du stage doit être un nombre entier. Veuillez réessayer.\n")
 
         self.suggestions_eleves_service.delete_suggestion(self.id_eleve, id_stage)
 
@@ -130,9 +133,12 @@ class SuggestionEleveView:
                 self.suggestions_eleves_service.get_suggestions_by_id(self.id_eleve)
             elif choix == "Supprimer une suggestion":
                 self.supprimer_suggestion()
+            elif choix == "Exporter la liste de suggestions":
+                chemin_sortie = input("Entrez le chemin du fichier de sortie (ex. sortie.txt) : ")
+                self.export.exporter_suggestions(self.id_eleve, chemin_sortie)
             elif choix == "Vider la liste de suggestions":
                 confirmation = inquirer.confirm(
-                    message="Êtes-vous sûr de vouloir vider la liste de suggestions ?"
+                    message="Êtes-vous sûr de vouloir vider la liste de suggestions ?\n"
                 )
                 if confirmation:
                     self.suggestions_eleves_service.vider_liste_suggestions(
@@ -141,7 +147,7 @@ class SuggestionEleveView:
                 else:
                     print("Opération annulée.")
             elif choix == "Quitter et revenir au menu principal":
-                print("Au revoir !")
+                #print("Au revoir !")
                 from source.view.Page_option.menu_view import Menu_view
 
                 menu_view = Menu_view()
