@@ -8,7 +8,7 @@ from source.services.service_liste_eleves import ListeElevesService
 from source.exception.exceptions import UtilisateurInexistantError
 from source.services.service_export import ExporteurStage
 from source.services.service_import import ImporteurStage
-
+import inquirer
 
 class ListeEnvieView:
     def __init__(self, id_utilisateur):
