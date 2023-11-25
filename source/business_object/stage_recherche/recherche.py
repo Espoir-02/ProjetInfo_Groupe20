@@ -1,5 +1,6 @@
-from source.services.scrapping.scrapping import *
 from source.services.scrapping.scrapping2 import *
+
+
 class Recherche:
     def __init__(
         self,
@@ -19,7 +20,7 @@ class Recherche:
         self.niveau_etude = niveau_etude
         self.periode = periode
 
-    def lancer_recherche(self):
+    def create_url(self):
         url = "https://jobs-stages.letudiant.fr/stages-etudiants/offres"
         zone = ""
         domaine = ""
@@ -105,4 +106,4 @@ class Recherche:
 
         urlf = url + niveau_etude + domaine + zone + ".html"
 
-        Scrapping2().scrap(urlf)
+        return urlf
