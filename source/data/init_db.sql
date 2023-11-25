@@ -1,141 +1,163 @@
-DROP SCHEMA IF EXISTS base_ProjetInfo;
-CREATE SCHEMA base_ProjetInfo;
+-- DROP SCHEMA base_projetinfo;
 
-DROP TABLE IF EXISTS base_ProjetInfo.utilisateur;
-CREATE TABLE base_ProjetInfo.utilisateur (
-    id_utilisateur INT,
-    pseudo VARCHAR(25),
-    nom VARCHAR(25),
-    prenom VARCHAR(25),
-    mot_de_passe VARCHAR(25),
-    type_utilisateur VARCHAR(25),
-      PRIMARY KEY (id_utilisateur)
+CREATE SCHEMA base_projetinfo AUTHORIZATION id2225;
 
+-- DROP SEQUENCE base_projetinfo.sequence_stage;
+
+CREATE SEQUENCE base_projetinfo.sequence_stage
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 3000
+	START 400;
+-- DROP SEQUENCE base_projetinfo.sequence_utilisateur;
+
+CREATE SEQUENCE base_projetinfo.sequence_utilisateur
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 300
+	START 1;-- base_projetinfo.administrateur definition
+
+-- Drop table
+
+-- DROP TABLE base_projetinfo.administrateur;
+
+CREATE TABLE base_projetinfo.administrateur (
+	id_admin varchar(25) NOT NULL,
+	mot_de_passe varchar(25) NULL,
+	CONSTRAINT administrateur_pkey PRIMARY KEY (id_admin)
 );
 
 
+-- base_projetinfo.entreprise definition
 
-DROP TABLE IF EXISTS base_ProjetInfo.administrateur;
-CREATE TABLE base_ProjetInfo.Administrateur(
-        id_admin     Varchar (25),
-        mot_de_passe     Varchar (25),
-        PRIMARY KEY (id_admin)
+-- Drop table
+
+-- DROP TABLE base_projetinfo.entreprise;
+
+CREATE TABLE base_projetinfo.entreprise (
+	id_ent int4 NOT NULL,
+	denomination varchar(50) NULL,
+	ville varchar(30) NULL,
+	region varchar(30) NULL,
+	pays varchar(30) NULL,
+	email_ent varchar(70) NULL,
+	domaine varchar(402) NULL,
+	CONSTRAINT entreprise_pkey PRIMARY KEY (id_ent)
 );
 
 
+-- base_projetinfo.recherche definition
 
-DROP TABLE IF EXISTS base_ProjetInfo.stage;
-CREATE TABLE base_ProjetInfo.stage(
-        id_stage     Int,
-        titre     Varchar (800),
-        lien     Varchar (800),
-        domaine     Varchar (800),
-        niveau_etude     Varchar (200),
-        date_publication      Varchar (70) ,
-        salaire      Varchar (70),
-        periode  Varchar (100),
-        entreprise Varchar (100),
-        lieu Varchar
-        PRIMARY KEY (id_stage)
+-- Drop table
+
+-- DROP TABLE base_projetinfo.recherche;
+
+CREATE TABLE base_projetinfo.recherche (
+	id_recherche int4 NOT NULL,
+	domaine varchar(800) NULL,
+	ville varchar(50) NULL,
+	entreprise varchar(50) NULL,
+	CONSTRAINT recherche_pkey PRIMARY KEY (id_recherche)
 );
 
 
+-- base_projetinfo.stage definition
 
-DROP TABLE IF EXISTS base_ProjetInfo.entreprise;
-CREATE TABLE base_ProjetInfo.entreprise(
-        id_ent     Int,
-        denomination     Varchar (50),
-        ville     Varchar (30),
-        region     Varchar (30),
-        pays     Varchar (30),
-        email_ent     Varchar (70),
-        domaine     Varchar (402),
-        PRIMARY KEY (id_ent)
+-- Drop table
+
+-- DROP TABLE base_projetinfo.stage;
+
+CREATE TABLE base_projetinfo.stage (
+	id_stage int4 NOT NULL DEFAULT nextval('base_projetinfo.sequence_stage'::regclass),
+	titre varchar(800) NULL,
+	lien varchar(800) NULL,
+	domaine varchar(800) NULL,
+	date_publication varchar NULL,
+	salaire varchar NULL,
+	periode varchar NULL,
+	niveau_etudes varchar NULL,
+	entreprise varchar NULL,
+	lieu varchar NULL,
+	CONSTRAINT stage_pkey PRIMARY KEY (id_stage)
 );
 
 
+-- base_projetinfo.utilisateur definition
 
+-- Drop table
 
-DROP TABLE IF EXISTS base_ProjetInfo.recherche;
-CREATE TABLE base_ProjetInfo.recherche(
-        id_recherche     Int,
-        domaine     Varchar (800),
-        ville     Varchar (50),
-        entreprise     Varchar (50),
-        PRIMARY KEY (id_recherche)
+-- DROP TABLE base_projetinfo.utilisateur;
+
+CREATE TABLE base_projetinfo.utilisateur (
+	id_utilisateur int4 NOT NULL DEFAULT nextval('base_projetinfo.sequence_utilisateur'::regclass),
+	pseudo varchar(25) NULL,
+	nom varchar(25) NULL,
+	prenom varchar(25) NULL,
+	mot_de_passe varchar(25) NULL,
+	type_utilisateur varchar(25) NULL,
+	CONSTRAINT check_longueur_mot_de_passe CHECK ((length((mot_de_passe)::text) >= 8)),
+	CONSTRAINT unique_pseudo UNIQUE (pseudo),
+	CONSTRAINT utilisateur_pkey PRIMARY KEY (id_utilisateur)
 );
 
 
+-- base_projetinfo.historique definition
 
-DROP TABLE IF EXISTS base_ProjetInfo.historique;
-CREATE TABLE base_ProjetInfo.historique(
-        id_stage     Int,
-        id_utilisateur     Int,
-        PRIMARY KEY (id_stage, id_utilisateur)
+-- Drop table
+
+-- DROP TABLE base_projetinfo.historique;
+
+CREATE TABLE base_projetinfo.historique (
+	id_stage int4 NOT NULL,
+	id_utilisateur int4 NOT NULL,
+	CONSTRAINT fk_historique_id_stage FOREIGN KEY (id_stage) REFERENCES base_projetinfo.stage(id_stage),
+	CONSTRAINT fk_historique_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES base_projetinfo.utilisateur(id_utilisateur)
 );
 
 
+-- base_projetinfo.liste_eleves definition
 
-DROP TABLE IF EXISTS base_ProjetInfo.liste_envie;
-CREATE TABLE base_ProjetInfo.liste_envie(
-        id_eleve     Int ,
-        id_stage     Int,
-        PRIMARY KEY (id_eleve, id_stage)
+-- Drop table
+
+-- DROP TABLE base_projetinfo.liste_eleves;
+
+CREATE TABLE base_projetinfo.liste_eleves (
+	id_eleve int4 NULL,
+	id_professeur int4 NULL,
+	nom varchar NULL,
+	prenom varchar NULL,
+	CONSTRAINT fk_liste_eleves FOREIGN KEY (id_eleve) REFERENCES base_projetinfo.utilisateur(id_utilisateur),
+	CONSTRAINT fk_liste_eleves2 FOREIGN KEY (id_professeur) REFERENCES base_projetinfo.utilisateur(id_utilisateur)
 );
 
 
+-- base_projetinfo.liste_envie definition
 
-DROP TABLE IF EXISTS base_ProjetInfo.suggestion;
-CREATE TABLE base_ProjetInfo.suggestion(
-        id_eleve     Int,
-        id_stage     Int,
-        id_professeur    Int,
-        PRIMARY KEY (id_eleve, id_stage, id_professeur)
+-- Drop table
+
+-- DROP TABLE base_projetinfo.liste_envie;
+
+CREATE TABLE base_projetinfo.liste_envie (
+	id_eleve int4 NOT NULL,
+	id_stage int4 NOT NULL,
+	CONSTRAINT liste_envie_pkey PRIMARY KEY (id_eleve, id_stage),
+	CONSTRAINT fk_voeux_id_stage FOREIGN KEY (id_stage) REFERENCES base_projetinfo.stage(id_stage),
+	CONSTRAINT fk_voeux_id_utilisateur FOREIGN KEY (id_eleve) REFERENCES base_projetinfo.utilisateur(id_utilisateur)
 );
 
-DROP TABLE IF EXISTS base_ProjetInfo.liste_eleves;
-CREATE TABLE base_ProjetInfo.liste_eleves(
-        id_eleve     Int,
-        id_professeur     Int
+
+-- base_projetinfo.suggestion definition
+
+-- Drop table
+
+-- DROP TABLE base_projetinfo.suggestion;
+
+CREATE TABLE base_projetinfo.suggestion (
+	id_eleve int4 NOT NULL,
+	id_stage int4 NOT NULL,
+	id_professeur int4 NOT NULL,
+	CONSTRAINT suggestion_pkey PRIMARY KEY (id_eleve, id_stage, id_professeur),
+	CONSTRAINT fk_suggestion_id_stage FOREIGN KEY (id_stage) REFERENCES base_projetinfo.stage(id_stage),
+	CONSTRAINT fk_suggestion_id_utilisateur FOREIGN KEY (id_eleve) REFERENCES base_projetinfo.utilisateur(id_utilisateur),
+	CONSTRAINT fk_suggestion_id_utilisateur2 FOREIGN KEY (id_professeur) REFERENCES base_projetinfo.utilisateur(id_utilisateur)
 );
-
-
-
-ALTER TABLE base_ProjetInfo.stage ADD CONSTRAINT FK_stage_id_ent FOREIGN KEY (id_ent) REFERENCES base_ProjetInfo.entreprise(id_ent)
-
-ALTER TABLE base_ProjetInfo.historique  ADD CONSTRAINT FK_Historique_id_stage FOREIGN KEY (id_stage) REFERENCES base_ProjetInfo.stage(id_stage)
-ALTER TABLE base_ProjetInfo.historique  ADD CONSTRAINT FK_Historique_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES base_ProjetInfo.utilisateur(id_utilisateur)
-
-ALTER TABLE base_ProjetInfo.voeux ADD CONSTRAINT FK_voeux_id_utilisateur FOREIGN KEY (id_eleve) REFERENCES base_ProjetInfo.utilisateur(id_utilisateur)
-ALTER TABLE base_ProjetInfo.voeux ADD CONSTRAINT FK_voeux_id_stage FOREIGN KEY (id_stage) REFERENCES base_ProjetInfo.stage(id_stage)
-
-ALTER TABLE base_ProjetInfo.suggestion ADD CONSTRAINT FK_suggestion_id_stage FOREIGN KEY (id_stage) REFERENCES base_ProjetInfo.stage(id_stage)
-ALTER TABLE base_ProjetInfo.suggestion ADD CONSTRAINT FK_suggestion_id_utilisateur FOREIGN KEY (id_eleve) REFERENCES base_ProjetInfo.utilisateur(id_utilisateur)
-ALTER TABLE base_ProjetInfo.suggestion ADD CONSTRAINT FK_suggestion_id_utilisateur2 FOREIGN KEY (id_professeur) REFERENCES base_ProjetInfo.utilisateur(id_utilisateur)
-
-
-ALTER TABLE base_ProjetInfo.liste_eleves ADD CONSTRAINT FK_Liste_eleves FOREIGN KEY (id_eleve) REFERENCES base_ProjetInfo.utilisateur(id_utilisateur)
-ALTER TABLE base_ProjetInfo.liste_eleves ADD CONSTRAINT FK_Liste_eleves2 FOREIGN KEY (id_professeur) REFERENCES base_ProjetInfo.utilisateur(id_utilisateur);
-
-CREATE SEQUENCE sequence_utilisateur
-    START 1
-    INCREMENT 1
-    MINVALUE 1
-    MAXVALUE 300
-    CACHE 1;
-   
- ALTER TABLE base_projetinfo.utilisateur 
-    ALTER COLUMN id_utilisateur SET DEFAULT nextval('sequence_utilisateur');
-
-CREATE SEQUENCE sequence_stage
-    START 400
-    INCREMENT 1
-    MINVALUE 1
-    MAXVALUE 800
-    CACHE 1;
-   
- ALTER TABLE base_projetinfo.stage 
-    ALTER COLUMN id_stage SET DEFAULT nextval('sequence_stage');
-
-ALTER TABLE base_projetinfo.stage 
-DROP CONSTRAINT fk_stage_id_ent;

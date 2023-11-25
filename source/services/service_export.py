@@ -26,8 +26,12 @@ class ExporteurStage:
 
                 # Écriture des résultats dans un fichier texte
                 try:
+<<<<<<< HEAD
                     with open(chemin_fichier_sortie, 'w', encoding='utf-8') as fichier_sortie:
                     with open(chemin_fichier_sortie, 'w' ) as fichier_sortie:
+=======
+                    with open(chemin_fichier_sortie, "w") as fichier_sortie:
+>>>>>>> c0b7443ff613ecd5d3120b280b6b6a91b683595f
                         # Écrire l'en-tête avec le nom des colonnes
                         en_tete = "Titre; Lien; Domaine; Periode; Salaire; Date de publication; Niveau d'études; Entreprise; Lieu"
                         fichier_sortie.write(f"{en_tete}\n")
