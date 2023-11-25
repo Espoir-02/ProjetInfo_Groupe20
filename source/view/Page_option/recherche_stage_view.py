@@ -15,7 +15,7 @@ class Recherche_Stage_View:
         choix_echelle = [
             inquirer.List(
                 "choice",
-                message="Choose an option:",
+                message="Échelle de la zone de recherche:",
                 choices=["Toute échelle", "région", "département", "ville"],
             )
         ]
@@ -51,7 +51,7 @@ class Recherche_Stage_View:
         formation = [
             inquirer.List(
                 "choice",
-                message="Choose an option:",
+                message="Domaine d'étude:",
                 choices=[
                     "Non renseigné",
                     "Agriculture, agroalimentaire, environnement",
@@ -77,7 +77,7 @@ class Recherche_Stage_View:
         niveau_etude = [
             inquirer.List(
                 "choice",
-                message="Choose an option:",
+                message="Niveau d'étude:",
                 choices=[
                     "Non renseigné",
                     "Bac +5",
