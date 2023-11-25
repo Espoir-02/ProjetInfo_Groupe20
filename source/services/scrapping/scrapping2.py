@@ -49,7 +49,7 @@ class Scrapping2:
             f"{i + 1}. {stage_info['titre']} - {stage_info['entreprise']} - {stage_info['lieu']}"
             for i, stage_info in enumerate(all_stages_info)
         ] + ["Retour au menu"]
-
+        
         questions = [
             inquirer.List(
                 "selection", message="Sélectionner un stage:", choices=choix_stage
@@ -63,6 +63,7 @@ class Scrapping2:
             from source.view.Page_option.menu_view import Menu_view
 
             return Menu_view().display()
+        
         elif re.match(r"^\d", selected_stage_str):
             selected_stage = int(re.search(r"\d+", selected_stage_str).group())
             selected_stage_info = all_stages_info[selected_stage - 1]
