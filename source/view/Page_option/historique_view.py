@@ -39,7 +39,7 @@ class HistoriqueView:
 
     def choisir_stage(self, liste_historique_courant):
         if not liste_historique_courant:
-            print("L'historique est vide.")
+            print("\n")
         else:
             choix_stage = [
                 f"{historique['id_stage']} - {historique['titre']}"
