@@ -81,8 +81,8 @@ class ListeEnvieView:
                 print(f"   Période : {stage['periode']}")
                 print(f"   Niveau d'études : {stage['niveau_etudes']}")
                 print(f"   Entreprise : {stage['entreprise']}")
-                print(f"   Lieu : {stage['lieu']}")
-                input("Appuyez sur Entrée pour continuer...")
+                print(f"   Lieu : {stage['lieu']}\n")
+                input("Appuyez sur Entrée pour continuer...\n")
 
     def proposer_stage(self):
         liste_envie_courant = self.service_liste_envie.get_liste_envie_eleve(

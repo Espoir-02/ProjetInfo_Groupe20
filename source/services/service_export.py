@@ -131,7 +131,7 @@ class ExporteurStage:
                     fichier_sortie.write(f"{ligne}\n")
 
                 print(
-                    "****Exportation de la liste de suggestions réussie! Veuillez consulter vos fichiers"
+                    "**** Exportation de la liste de suggestions réussie! Veuillez consulter vos fichiers.\n"
                 )
         except Exception as e:
             print("Erreur lors de l'écriture dans le fichier :", str(e))

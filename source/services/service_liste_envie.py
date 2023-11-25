@@ -11,7 +11,7 @@ class ListeEnvieService:
 
     def ajouter_stage_a_liste_envie(self, id_eleve, id_stage):
         if self.utilitaire_dao.check_envie_exists(id_eleve, id_stage):
-            print("Le stage est déjà dans la liste d'envies.")
+            print("Le stage est déjà dans la liste d'envies.\n")
             return False
         else:
             print("Le stage a été ajouté à la liste d'envies avec succès.")

@@ -68,6 +68,7 @@ class Scrapping2:
             selected_stage_info = all_stages_info[selected_stage - 1]
             self.display_additional_info(selected_stage_info)
             return selected_stage_info
+
         else:
             print("Choix invalide. Veuillez entrer un numéro valide.")
             return None
@@ -77,13 +78,14 @@ class Scrapping2:
         options = [
             "Exporter le stage",
             "Consulter un autre stage",
-            "Quitter et revenir au menu principal",
         ]
 
         if Session().user_type in ["professeur", "eleve", "administrateur"]:
             options.append("Ajouter le stage à votre liste d'envies")
         if Session().user_type == "professeur":
             options.append("Proposer le stage à un élève")
+        
+        options.append("Quitter et revenir au menu principal")
 
         questions = [
             inquirer.List(

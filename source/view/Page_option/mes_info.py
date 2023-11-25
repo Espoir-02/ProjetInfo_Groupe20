@@ -7,7 +7,7 @@ class MesInfos:
     def display(self):
         service = ServiceUtilisateur()
         nom, prenom = service.information(Session().user_id)
-        print(f"Nom : {nom} \nPrénom : {prenom}")
+        print(f"Nom : {nom} \nPrénom : {prenom}\n")
 
         choices = ["Modifier mes informations", "Retour au menu"]
         questions = [
