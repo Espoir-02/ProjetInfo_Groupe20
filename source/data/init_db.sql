@@ -161,3 +161,18 @@ CREATE TABLE base_projetinfo.suggestion (
 	CONSTRAINT fk_suggestion_id_utilisateur FOREIGN KEY (id_eleve) REFERENCES base_projetinfo.utilisateur(id_utilisateur),
 	CONSTRAINT fk_suggestion_id_utilisateur2 FOREIGN KEY (id_professeur) REFERENCES base_projetinfo.utilisateur(id_utilisateur)
 );
+
+
+CREATE TABLE base_projetinfo.stage_import (
+    id_utilisateur INT,
+    info1 VARCHAR(255),
+    info2 VARCHAR(255),
+	info3 VARCHAR(255),
+    info4 VARCHAR(255),
+	info5 VARCHAR(255),
+    info6 VARCHAR(255),
+	info7 VARCHAR(255),
+    info8 VARCHAR(255),
+	info9 VARCHAR(255),
+    info10 VARCHAR(255),
+);

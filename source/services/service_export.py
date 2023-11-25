@@ -1,4 +1,4 @@
-from source.exception.exceptions import IdUtilisateurInexistantError
+from source.exception.exceptions import IdUtilisateurInexistantError, IdEleveInexistantError
 from source.exception.exceptions import IdStageInexistantError
 from source.services.service_stage import StageService
 from source.services.service_liste_envie import ListeEnvieService
@@ -143,7 +143,7 @@ class ExporteurStage:
         mes_suggestions = ServiceSuggestion()
         try:
             suggestions = mes_suggestions.get_suggestions_by_id(id_eleve)
-        except IdEleveInexistantError as e:
+        except IdEleveInexistantError(id_eleve) as e:
             print(f"Élève inexistant : {str(e)}")
             return
 
