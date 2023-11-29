@@ -10,7 +10,7 @@ class ConnexionView:
     def demander_pseudo_mot_de_passe(self):
         questions = [
             inquirer.Text("pseudo", message="Pseudo:"),
-            inquirer.Password("mot_de_passe", message="Mot de passe:"),
+            inquirer.Password("mot_de_passe", message="Mot de passe:\n"),
         ]
 
         answers = inquirer.prompt(questions, raise_keyboard_interrupt=True)
@@ -25,8 +25,8 @@ class ConnexionView:
 class ConnexionController:
     MAX_TENTATIVES = 3  # Nombre maximum d'essais autorisés
 
-    CHOIX_REESSAYER = "Réessayer"
-    CHOIX_MENU_PRECEDENT = "Revenir au menu précédent"
+    CHOIX_REESSAYER = "Réessayer\n"
+    CHOIX_MENU_PRECEDENT = "Revenir au menu précédent\n"
 
     def __init__(self):
         self.utilisateur_service = ServiceUtilisateur()
@@ -39,11 +39,11 @@ class ConnexionController:
             pseudo, mot_de_passe = self.connexion_view.demander_pseudo_mot_de_passe()
 
             if self.connexion_service.verifier_identifiants(pseudo, mot_de_passe):
-                self.connexion_view.afficher_message("Connexion réussie!")
+                self.connexion_view.afficher_message("Connexion réussie!\n")
                 self.gerer_connexion_reussie(pseudo)
                 return
             else:
-                self.connexion_view.afficher_message("Identifiants incorrects.")
+                self.connexion_view.afficher_message("Identifiants incorrects.\n")
                 choix = self.afficher_options_erreur_connexion()
 
                 if choix == self.CHOIX_MENU_PRECEDENT:
@@ -53,7 +53,7 @@ class ConnexionController:
                     Start_view().make_choice()
 
         self.connexion_view.afficher_message(
-            "Nombre maximum d'essais atteint. Retour au menu précédent."
+            "Nombre maximum d'essais atteint. Retour au menu précédent.\n"
         )
         from source.view.Page_principale.start_view import Start_view
 
