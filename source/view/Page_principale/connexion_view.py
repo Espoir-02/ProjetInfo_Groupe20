@@ -10,7 +10,7 @@ class ConnexionView:
     def demander_pseudo_mot_de_passe(self):
         questions = [
             inquirer.Text("pseudo", message="Pseudo:"),
-            inquirer.Password("mot_de_passe", message="Mot de passe:\n"),
+            inquirer.Password("mot_de_passe", message="Mot de passe:"),
         ]
 
         answers = inquirer.prompt(questions, raise_keyboard_interrupt=True)
@@ -25,7 +25,7 @@ class ConnexionView:
 class ConnexionController:
     MAX_TENTATIVES = 3  # Nombre maximum d'essais autorisés
 
-    CHOIX_REESSAYER = "Réessayer\n"
+    CHOIX_REESSAYER = "Réessayer"
     CHOIX_MENU_PRECEDENT = "Revenir au menu précédent\n"
 
     def __init__(self):
