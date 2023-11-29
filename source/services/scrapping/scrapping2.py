@@ -3,7 +3,6 @@ from inquirer import prompt, List
 from source.DAO.StageDAO import StageDAO
 from source.business_object.stage_recherche.stage import Stage
 from source.DAO.utilitaire_dao import UtilitaireDAO
-from source.DAO.Export_DAO import ExporteurStage
 from source.services.service_liste_eleves import ListeElevesService
 from source.services.service_liste_envie import ListeEnvieService
 from source.services.service_historique import HistoriqueService
@@ -11,6 +10,7 @@ from source.services.service_suggestion_eleve import ServiceSuggestion
 from source.services.service_utilisateur import ServiceUtilisateur
 from source.exception.exceptions import UtilisateurInexistantError
 from source.view.session_view import Session
+from source.services.service_export import ExporteurStage
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -24,6 +24,7 @@ class Scrapping2:
         self.liste_envie_service = ListeEnvieService()
         self.suggestions_service = ServiceSuggestion()
         self.service_liste_eleves = ListeElevesService()
+        self.export = ExporteurStage()
         self.type_utilisateur = Session().user_type
 
     def display_additional_info(self, stage_info):
