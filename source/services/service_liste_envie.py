@@ -1,5 +1,6 @@
 from source.DAO.ListeEnvieDAO import ListeEnvieDAO
 from source.DAO.utilitaire_dao import UtilitaireDAO
+from source.DAO.ImportDAO import ImporteurStageDAO
 from source.exception.exceptions import IdStageInexistantError
 from prettytable import PrettyTable
 
@@ -8,6 +9,7 @@ class ListeEnvieService:
     def __init__(self):
         self.liste_envie_dao = ListeEnvieDAO()
         self.utilitaire_dao = UtilitaireDAO()
+        self.import_dao = ImporteurStageDAO()
 
     def ajouter_stage_a_liste_envie(self, id_eleve, id_stage):
         if self.utilitaire_dao.check_envie_exists(id_eleve, id_stage):
@@ -42,3 +44,6 @@ class ListeEnvieService:
 
     def get_liste_envie_eleve(self, id_eleve):
         return self.liste_envie_dao.get_liste_envie_by_id(id_eleve)
+
+    def get_liste_import(self, id_utilisateur):
+        return self.import_dao.get_liste_stages_importes(id_utilisateur)

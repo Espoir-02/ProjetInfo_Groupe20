@@ -25,6 +25,7 @@ class ListeEnvieView:
     def afficher_menu(self):
         menu_options = [
             "Consulter la liste d'envies",
+            "Consulter mes listes importées"
             "Supprimer un stage de la liste",
             "Vider la liste d'envie",
             "Exporter la liste d'envie",
@@ -84,6 +85,24 @@ class ListeEnvieView:
                 print(f"   Niveau d'études : {stage['niveau_etudes']}")
                 print(f"   Entreprise : {stage['entreprise']}")
                 print(f"   Lieu : {stage['lieu']}\n")
+                input("Appuyez sur Entrée pour continuer...\n")
+
+    def consulter_liste_stages_importes(self):
+        liste_stages_importes = self.service_liste_envie.get_liste_import(
+            self.id_utilisateur
+        )
+        selected_stage = self.choisir_stage(liste_stages_importes)
+
+        if selected_stage is not None:
+            stage_importe = liste_stages_importes[selected_stage]
+            if stage_importe is not None:
+                print("Informations sur le stage importé :")
+
+                # Affiche toutes les informations disponibles dynamiquement
+                for cle, valeur in stage_importe.items():
+                    print(f"   {cle.capitalize()} : {valeur}")
+
+                print("\n")
                 input("Appuyez sur Entrée pour continuer...\n")
 
     def proposer_stage(self):
@@ -147,6 +166,8 @@ class ListeEnvieView:
 
             if choix == "Consulter la liste d'envies":
                 self.consulter_liste_envies()
+            elif choix == "Consulter mes listes importées":
+                self.consulter_import()
             elif choix == "Supprimer un stage de la liste":
                 self.supprimer_envie()
             elif choix == "Vider la liste d'envie":
