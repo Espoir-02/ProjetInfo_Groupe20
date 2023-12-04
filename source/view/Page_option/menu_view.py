@@ -25,7 +25,9 @@ class Menu_view:
 
         while True:
             choices = [
-                "Rechercher un stage"
+                "Rechercher un stage",
+                "Accéder à son historique",
+                "Quitter l'application",
             ]
 
             if Session().user_type in ["professeur", "eleve", "administrateur"]:
@@ -36,8 +38,6 @@ class Menu_view:
 
             if Session().user_type == "professeur":
                 choices.append("Accéder à la liste d'élèves")
-            
-            choices.append("Accéder à son historique")
 
             if Session().user_type == "administrateur":
                 choices.append("Accéder aux fonctions administrateur")
@@ -50,8 +50,6 @@ class Menu_view:
 
             if Session().user_type in ["professeur", "eleve", "administrateur"]:
                 choices.append("Déconnexion")
-            
-            choices.append("Quitter l'application")
 
             questions = [
                 inquirer.List("choice", message="Choisir une option:", choices=choices)
