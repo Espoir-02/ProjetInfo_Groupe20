@@ -8,6 +8,7 @@ from source.services.service_liste_envie import ListeEnvieService
 from source.services.service_historique import HistoriqueService
 from source.services.service_suggestion_eleve import ServiceSuggestion
 from source.services.service_utilisateur import ServiceUtilisateur
+from source.services.service_stage import StageService
 from source.exception.exceptions import UtilisateurInexistantError
 from source.view.session_view import Session
 from source.services.service_export import ExporteurStage
@@ -24,6 +25,7 @@ class Scrapping2:
         self.liste_envie_service = ListeEnvieService()
         self.suggestions_service = ServiceSuggestion()
         self.service_liste_eleves = ListeElevesService()
+        self.service_stage = StageService()
         self.export = ExporteurStage()
         self.type_utilisateur = Session().user_type
         self.current_page = 1  # Added attribute to track the current page
@@ -92,6 +94,7 @@ class Scrapping2:
         id_utilisateur = Session().user_id
         options = [
             "Exporter le stage",
+            "Signaler ce stage",
             "Consulter un autre stage",
         ]
 
@@ -126,6 +129,15 @@ class Scrapping2:
                 )
             except (ValueError, IndexError):
                 print("Choix invalide. Veuillez entrer un numéro valide.")
+        elif selected_option == "Signaler ce stage":
+            confirmation = inquirer.confirm(
+            message="Êtes-vous sûr de vouloir signaler ce stage?"
+        )
+            if confirmation:
+                self.service_stage.signaler_stage(id_stage_selected,self.id_utilisateur)
+                print("Stage signalé")
+            else:
+                print("Opération annulée.")
         elif selected_option == "Consulter un autre stage":
             return "continue"
         elif selected_option == "Quitter et revenir au menu principal":

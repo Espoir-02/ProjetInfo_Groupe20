@@ -58,7 +58,6 @@ class ServiceAdmin:
             if not self.utilitaire_dao.check_stage_exists(id_stage):
                 raise IdStageInexistantError(id_stage)
 
-            print("Stage supprimé avec succès.")
             return self.stage_dao.delete_stage(id_stage)
         except IdStageInexistantError as e:
             print(f"Erreur lors de la suppression du stage : {e}")
@@ -110,3 +109,15 @@ class ServiceAdmin:
         if text is None:
             return ""
         return (text[:max_width] + "...") if len(text) > max_width else text
+
+    def obtenir_stages_signal(self):
+        return self.stage_dao.get_liste_signal()
+
+    def supprimer_signal(self, id_stage):
+        try:
+            if not self.utilitaire_dao.check_stage_exists(id_stage):
+                raise IdStageInexistantError(id_stage)
+
+            return self.stage_dao.delete_signal(id_stage)
+        except IdStageInexistantError as e:
+            print(f"Erreur lors de la suppression du stage : {e}")

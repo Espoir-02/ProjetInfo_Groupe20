@@ -25,11 +25,11 @@ class ListeEnvieView:
     def afficher_menu(self):
         menu_options = [
             "Consulter la liste d'envies",
-            "Consulter mes listes importées"
+            "Consulter mes listes importées",
             "Supprimer un stage de la liste",
             "Vider la liste d'envie",
             "Exporter la liste d'envie",
-            "Importer une liste d'envie au format csv"
+            "Importer une liste d'envie au format csv",
             "Revenir au menu principal",
         ]
 

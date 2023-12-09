@@ -1,6 +1,7 @@
 from source.DAO.dbconnection import DBConnection
 from source.DAO.utilitaire_dao import UtilitaireDAO
 from source.exception.exceptions import IdStageInexistantError
+from source.exception.exceptions import IdUtilisateurInexistantError
 from prettytable import PrettyTable
 
 
@@ -308,6 +309,105 @@ class StageDAO:
             with conn.cursor() as cursor:
                 cursor.execute(
                     "DELETE FROM base_projetinfo.stage "
+                    "WHERE id_stage = %(id_stage)s",
+                    {"id_stage": id_stage},
+                )
+                if cursor.rowcount == 0:
+                    raise IdStageInexistantError(id_stage)
+
+
+    def update_liste_signal(self, id_stage, id_utilisateur):
+        """Met à jour la liste de signalements.
+
+        Parameters
+        ----------
+        id_utilisateur: int
+            L'identifiant de l'utilisateur qui effectue le signalement
+        id_stage : int
+            L'identifiant du stage à ajouter
+
+        Examples
+        --------
+        >>> ma_liste = StageDAO()
+        >>> id_eleve = 1
+        >>> id_stage = 10
+        >>> ma_liste.update_liste_signal(id_stage, id_eleve)
+        """
+        if not isinstance(id_utilisateur, int):
+            raise TypeError("l'identifiant de l'utilisateur est un entier numérique")
+        if not isinstance(id_stage, int):
+            raise TypeError("l'identifiant du stage est un entier numérique")
+        if not UtilitaireDAO.check_user_exists(id_utilisateur):
+            raise IdUtilisateurInexistantError(id_utilisateur)
+        if not UtilitaireDAO.check_stage_exists(id_stage):
+            raise IdStageInexistantError(id_stage)
+
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO base_projetinfo.liste_signal (id_stage, id_utilisateur) "
+                    "VALUES  (%(id_stage)s, %(id_utilisateur)s)",
+                    {"id_stage": id_stage, "id_utilisateur": id_utilisateur},
+                )
+
+    def get_liste_signal(self):
+        """Récupère la liste de tous les stages signalés.
+
+        Returns
+        -------
+        list of dict
+            La liste de tous les stages signalés.
+            Chaque stage signalé est représenté sous forme de dictionnaire avec les informations nécessaires.
+
+        Examples
+        --------
+        >>> ma_dao = StageDAO()
+        >>> liste_signals = ma_dao.get_liste_signal()
+        >>> print(liste_signals)
+        # Liste de tous les stages signalés
+        """
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT stage.id_stage, stage.titre, stage.lien, ls.id_utilisateur "
+                    "FROM base_projetinfo.liste_signal AS ls "
+                    "JOIN base_projetinfo.stage AS stage ON ls.id_stage = stage.id_stage"
+                )
+
+                liste_signal = cursor.fetchall()
+                if not liste_signal:
+                    print("La liste des stages signalés est vide")
+                result_list = []
+                for signal in liste_signal:
+                    signal_dict = {
+                        "id_stage": signal[0],
+                        "titre": signal[1],
+                        "lien": signal[2],
+                        "id_utilisateur": signal[3],
+                    }
+                    result_list.append(signal_dict)
+        return result_list
+
+    def delete_signal(self, id_stage):
+        """Pour retirer un stage de la liste des signalements.
+
+        Parameters
+        ---------
+        id_stage : int
+            L'identifiant du stage à supprimer
+
+        Examples
+        --------
+        >>> mes_stages = StageDAO()
+        >>> id_stage_a_supprimer = 410
+        >>> mes_stages.delete_signal(id_stage_a_supprimer)
+        """
+        if not isinstance(id_stage, int):
+            raise TypeError("l'identifiant du stage est un entier numérique")
+        with DBConnection().connection as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "DELETE FROM base_projetinfo.liste_signal "
                     "WHERE id_stage = %(id_stage)s",
                     {"id_stage": id_stage},
                 )

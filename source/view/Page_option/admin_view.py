@@ -1,5 +1,6 @@
 from source.services.service_admin import ServiceAdmin
 from inquirer import prompt, List
+import inquirer
 
 
 class AdminView:
@@ -15,6 +16,7 @@ class AdminView:
                     "Consulter la liste de tous les utilisateurs",
                     "Supprimer un utilisateur",
                     "Consulter la liste de tous les stages",
+                    "Consulter la liste des stages signalés",
                     "Supprimer un stage",
                     "Quitter et revenir au menu principal",
                 ],
@@ -40,6 +42,67 @@ class AdminView:
                 )
 
         self.admin_service.supprimer_utilisateur(id_utilisateur)
+
+    def choisir_signal(self, liste_signals):
+        if not liste_signals:
+            print("\nLa liste des stages signalés est vide.")
+        else:
+            choix_stage = [
+                f"{signal['id_stage']} - {signal['titre']}"
+                for signal in liste_signals
+            ] + ["Retour au menu"]
+            questions = [
+                inquirer.List(
+                    "selection", message="Sélectionner un stage:", choices=choix_stage
+                )
+            ]
+            answers = inquirer.prompt(questions)
+
+            selected_stage_str = answers["selection"].split(" - ")[0]
+
+            if selected_stage_str == "Retour au menu":
+                self.display()
+            else:
+                selected_stage = int(selected_stage_str)
+                return selected_stage
+
+    def afficher_signal(self):
+        liste_signals = self.admin_service.obtenir_stages_signal()
+
+        selected_stage = self.choisir_signal(liste_signals)
+
+        if selected_stage is not None:
+            stage = next((signal for signal in liste_signals if signal['id_stage'] == selected_stage), None)
+            if stage:
+                print("Informations sur le stage signalé :")
+                print(f"   ID du stage : {stage['id_stage']}")
+                print(f"   Titre : {stage['titre']}")
+                print(f"   Lien : {stage['lien']}")
+                print(f"   ID de l'utilisateur : {stage['id_utilisateur']}")
+
+                choix_options = [
+                    "Supprimer le stage de la base de données",
+                    "Retirer le stage de la liste des stages signalés",
+                    "Retour"
+                ]
+
+                questions = [
+                    inquirer.List(
+                        "choix_option", message="Choisissez une option:", choices=choix_options
+                    )
+                ]
+
+                reponse_options = inquirer.prompt(questions)
+                choix_option = reponse_options["choix_option"]
+
+                if choix_option == "Supprimer le stage de la base de données":
+                    self.admin_service.supprimer_stage(selected_stage)
+                    print(f"Le stage avec l'ID {selected_stage} a été supprimé de la base de données.")
+                elif choix_option == "Retirer le stage de la liste des stages signalés":
+                    self.admin_service.supprimer_signal(selected_stage)
+                    print(f"Le stage avec l'ID {selected_stage} a été retiré de la liste des stages signalés.")
+                else:
+                    print("Opération annulée.")
 
     def supprimer_stage(self):
         while True:
@@ -71,6 +134,8 @@ class AdminView:
                 self.supprimer_utilisateur()
             elif choix == "Consulter la liste de tous les stages":
                 self.admin_service.obtenir_liste_stages()
+            elif choix== "Consulter la liste des stages signalés":
+                self.afficher_signal()
             elif choix == "Supprimer un stage":
                 self.supprimer_stage()
             elif choix == "Quitter et revenir au menu principal":
