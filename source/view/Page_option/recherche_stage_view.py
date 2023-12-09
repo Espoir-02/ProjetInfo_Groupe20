@@ -1,5 +1,5 @@
 from source.business_object.stage_recherche.recherche import Recherche
-from source.services.scrapping.scrapping2 import Scrapping2
+from source.services.scrapping.scrapeur import Scrapping2
 import inquirer
 
 
