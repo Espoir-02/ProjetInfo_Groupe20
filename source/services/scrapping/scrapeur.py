@@ -90,6 +90,28 @@ class Scrapping2:
             print("Choix invalide. Veuillez entrer un numéro valide.")
             return None
 
+    def choisir_eleve_menu(self, liste_eleves):
+        choix_eleve = [
+            f"{eleve['nom']} {eleve['prenom']}" for eleve in liste_eleves
+        ] + ["Retour au menu"]
+
+        questions = [
+            inquirer.List(
+                "selection_eleve",
+                message="Sélectionner un élève:",
+                choices=choix_eleve
+            )
+        ]
+
+        answers = inquirer.prompt(questions)
+        selected_eleve_str = answers["selection_eleve"]
+
+        if selected_eleve_str == "Retour au menu":
+            return None
+        else:
+            selected_eleve = [eleve for eleve in liste_eleves if f"{eleve['nom']} {eleve['prenom']}" == selected_eleve_str][0]
+            return selected_eleve["id_eleve"]
+
     def display_stage_options(self, id_stage_selected):
         id_utilisateur = Session().user_id
         options = [
@@ -101,7 +123,7 @@ class Scrapping2:
         if Session().user_type in ["professeur", "eleve", "administrateur"]:
             options.append("Ajouter le stage à votre liste d'envies")
         if Session().user_type == "professeur":
-            options.append("Proposer le stage à un élève")
+            options.append("Proposer ce stage à un élève")
         
         options.append("Quitter et revenir au menu principal")
 
@@ -129,10 +151,22 @@ class Scrapping2:
                 )
             except (ValueError, IndexError):
                 print("Choix invalide. Veuillez entrer un numéro valide.")
+        elif selected_option == "Proposer ce stage à un élève":
+                liste_eleves = self.service_liste_eleves.get_liste_eleves(
+                    self.id_utilisateur
+                )
+                id_eleve = self.choisir_eleve_menu(liste_eleves)
+                if id_eleve is not None:
+                    self.suggestions_service.create_suggestion(
+                        id_eleve, id_stage_selected, self.id_utilisateur
+                    )
+                    print(f"Le stage a été proposé à l'élève sélectionné.")
+                else:
+                    print("Aucun élève sélectionné.")
         elif selected_option == "Signaler ce stage":
             confirmation = inquirer.confirm(
-            message="Êtes-vous sûr de vouloir signaler ce stage?"
-        )
+                message="Êtes-vous sûr de vouloir signaler ce stage?"
+            )
             if confirmation:
                 self.service_stage.signaler_stage(id_stage_selected,self.id_utilisateur)
                 print("Stage signalé")
