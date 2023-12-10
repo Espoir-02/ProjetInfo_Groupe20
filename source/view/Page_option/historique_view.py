@@ -80,61 +80,66 @@ class HistoriqueView:
             print(f"   Entreprise : {stage['entreprise']}")
             print(f"   Lieu : {stage['lieu']}")
 
-            # Demander à l'utilisateur s'il souhaite ajouter le stage à sa liste d'envies
-            if self.type_utilisateur in ["professeur", "eleve", "administrateur"]:
-                ajout_envie = inquirer.confirm(
-                    message="Voulez-vous ajouter ce stage à votre liste d'envies?"
-                )
-                if ajout_envie:
-                    self.liste_envie_service.ajouter_stage_a_liste_envie(
-                        self.id_utilisateur, selected_stage
-                    )
-                else:
-                    print("Le stage n'a pas été ajouté à votre liste d'envies.")
+            menu_options = ["Retour au menu principal"]
 
-            # Demander à l'utilisateur s'il souhaite proposer le stage à un élève
             if self.type_utilisateur == "professeur":
-                proposer_eleve = inquirer.confirm(
-                    message="Voulez-vous proposer ce stage à un élève?"
+                menu_options.insert(0, "Proposer ce stage à un élève")
+
+            if self.type_utilisateur in ["eleve", "professeur", "administrateur"]:
+                menu_options.insert(0, "Ajouter ce stage à votre liste d'envies")
+
+            question = inquirer.List(
+                "choix_option", message="Choisissez une option", choices=menu_options
+            )
+            answer = inquirer.prompt([question])
+
+            selected_option = answer["choix_option"]
+
+            if selected_option == "Ajouter ce stage à votre liste d'envies":
+                self.liste_envie_service.ajouter_stage_a_liste_envie(
+                    self.id_utilisateur, selected_stage
                 )
-                if proposer_eleve:
-                    try:
-                        nom_eleve = input("Entrez le nom de l'élève : ")
-                        prenom_eleve = input("Entrez le prénom de l'élève : ")
-                        eleve = self.utilisateur_service.trouver_utilisateur_par_nom(
-                            nom_eleve, prenom_eleve
-                        )
+                print("Le stage a été ajouté à votre liste d'envies.")
+            elif selected_option == "Proposer ce stage à un élève":
+                liste_eleves = self.liste_eleves_service.get_liste_eleves(
+                    self.id_utilisateur
+                )
 
-                        if eleve is not None:
-                            id_eleve = eleve.get("id_utilisateur")
-                            if self.liste_eleves_service.verifier_eleve_dans_liste(
-                                id_eleve, self.id_utilisateur
-                            ):
-                                self.suggestions_service.create_suggestion(
-                                    id_eleve, selected_stage, self.id_utilisateur
-                                )
-                                print(
-                                    f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}."
-                                )
-                            else:
-                                print(
-                                    "Vous ne pouvez pas proposer de stage à cet élève. Il n'est pas dans votre liste."
-                                )
-                        else:
-                            print(
-                                "Aucun utilisateur trouvé avec les nom et prénom spécifiés."
-                            )
-                    except UtilisateurInexistantError as e:
-                        print(f"Erreur : {e}")
+                id_eleve = self.choisir_eleve_menu(liste_eleves)
 
-    def vider_historique(self):
-        confirmation = inquirer.confirm(
-            message="Êtes-vous sûr de vouloir vider l'historique?"
-        )
-        if confirmation:
-            self.historique_service.vider_historique(self.id_utilisateur)
+                if id_eleve is not None:
+                    self.suggestions_service.create_suggestion(
+                        id_eleve, selected_stage, self.id_utilisateur
+                    )
+                    print(f"Le stage a été proposé à l'élève sélectionné.")
+                else:
+                    print("Aucun élève sélectionné.")
+            elif selected_option == "Retour au menu principal":
+                print("Retour au menu principal...")
+            else:
+                print("Option invalide. Veuillez réessayer.")
+    
+    def choisir_eleve_menu(self, liste_eleves):
+        choix_eleve = [
+            f"{eleve['nom']} {eleve['prenom']}" for eleve in liste_eleves
+        ] + ["Retour au menu"]
+
+        questions = [
+            inquirer.List(
+                "selection_eleve",
+                message="Sélectionner un élève:",
+                choices=choix_eleve
+            )
+        ]
+
+        answers = inquirer.prompt(questions)
+        selected_eleve_str = answers["selection_eleve"]
+
+        if selected_eleve_str == "Retour au menu":
+            return None
         else:
-            print("Opération annulée.")
+            selected_eleve = [eleve for eleve in liste_eleves if f"{eleve['nom']} {eleve['prenom']}" == selected_eleve_str][0]
+            return selected_eleve["id_eleve"]
 
     def display(self):
         while True:

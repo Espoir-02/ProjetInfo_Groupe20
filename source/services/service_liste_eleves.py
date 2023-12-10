@@ -69,3 +69,6 @@ class ListeElevesService:
 
     def verifier_eleve_dans_liste(self, id_eleve, id_professeur):
         return self.utilitaire_dao.check_eleve_exist_dans_liste(id_eleve, id_professeur)
+
+    def get_liste_eleves(self, id_professeur):
+        return self.liste_eleves_dao.get_liste_eleve_by_id(id_professeur)
