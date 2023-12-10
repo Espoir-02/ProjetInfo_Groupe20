@@ -149,7 +149,7 @@ class HistoriqueView:
             if choix == "Consulter l'historique":
                 self.consulter_historique()
             elif choix == "Vider l'historique":
-                self.vider_historique()
+                self.historique_service.vider_historique(self.id_utilisateur)
             elif choix == "Revenir au menu principal":
                 from source.view.Page_option.menu_view import Menu_view
                 menu_view = Menu_view()
