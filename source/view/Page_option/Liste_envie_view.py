@@ -34,7 +34,7 @@ class ListeEnvieView:
         ]
 
         if Session().user_type in ["professeur", "administrateur"]:
-            menu_options.append("Proposer un stage à partir de la liste d'envies")
+            menu_options.insert(3, "Proposer un stage à partir de la liste d'envies")
 
         return [
             inquirer.List(
@@ -113,31 +113,47 @@ class ListeEnvieView:
 
         if selected_stage is not None:
             try:
-                nom_eleve = input("Entrez le nom de l'élève : ")
-                prenom_eleve = input("Entrez le prénom de l'élève : ")
-                eleve = self.utilisateur_service.trouver_utilisateur_par_nom(
-                    nom_eleve, prenom_eleve
-                )
+            # Obtenir la liste des élèves du professeur
+                liste_eleves = self.service_liste_eleves.get_liste_eleves(self.id_utilisateur)
 
-                if eleve is not None:
-                    id_eleve = eleve.get("id_utilisateur")
-                    if self.service_liste_eleves.verifier_eleve_dans_liste(
-                        id_eleve, self.id_utilisateur
-                    ):
-                        self.suggestions_service.create_suggestion(
-                            id_eleve, selected_stage, self.id_utilisateur
-                        )
-                        print(
-                            f"Le stage a été proposé à l'élève {nom_eleve} {prenom_eleve}."
-                        )
-                    else:
-                        print(
-                            "Vous ne pouvez pas proposer de stage à cet élève. Il n'est pas dans votre liste."
-                        )
+            # Afficher la liste déroulante pour choisir un élève
+                id_eleve = self.choisir_eleve_menu(liste_eleves)
+
+                if id_eleve is not None:
+                    self.suggestions_service.create_suggestion(
+                        id_eleve, selected_stage, self.id_utilisateur
+                    )
+                    print(f"Le stage a été proposé à l'élève sélectionné.")
                 else:
-                    print("Aucun utilisateur trouvé avec les nom et prénom spécifiés.")
+                    print("Aucun élève sélectionné.")
             except UtilisateurInexistantError as e:
                 print(f"Erreur : {e}")
+        
+    def choisir_eleve_menu(self, liste_eleves):
+        if not liste_eleves:
+            print("Aucun élève disponible.")
+            return None
+
+        choix_eleve = [
+            f"{eleve['nom']} {eleve['prenom']}" for eleve in liste_eleves
+        ] + ["Retour au menu"]
+
+        questions = [
+            inquirer.List(
+                "selection_eleve",
+                message="Sélectionner un élève:",
+                choices=choix_eleve
+            )
+        ]
+
+        answers = inquirer.prompt(questions)
+        selected_eleve_str = answers["selection_eleve"]
+
+        if selected_eleve_str == "Retour au menu":
+            return None
+        else:
+            selected_eleve = [eleve for eleve in liste_eleves if f"{eleve['nom']} {eleve['prenom']}" == selected_eleve_str][0]
+            return selected_eleve["id_eleve"]
 
     def supprimer_envie(self):
         while True:
