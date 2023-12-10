@@ -18,7 +18,7 @@ class DBConnection:
     def close_connection(self):
         if hasattr(self, "connection") and self.connection is not None:
             self.connection.close()
-            print("La connexion à la base de données a été fermée.")
+
 
 
 # Utilisation de la classe DBConnection
