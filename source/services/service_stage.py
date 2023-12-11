@@ -16,3 +16,4 @@ class StageService:
 
     def signaler_stage(self, id_stage, id_utilisateur):
         return self.stage_dao.update_liste_signal(id_stage, id_utilisateur)
+

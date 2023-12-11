@@ -413,3 +413,4 @@ class StageDAO:
                 )
                 if cursor.rowcount == 0:
                     raise IdStageInexistantError(id_stage)
+

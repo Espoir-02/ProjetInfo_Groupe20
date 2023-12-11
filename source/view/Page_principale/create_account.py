@@ -23,7 +23,7 @@ class CreationCompte_view:
                 inquirer.List(
                     "type_utilisateur",
                     message="Type utilisateur",
-                    choices=["administrateur", "professeur", "eleve"],
+                    choices=["professeur", "eleve"],
                 ),
                 inquirer.Confirm(
                     "recommencer",
