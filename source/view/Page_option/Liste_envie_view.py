@@ -87,7 +87,7 @@ class ListeEnvieView:
                 print(f"   Lieu : {stage['lieu']}\n")
                 input("Appuyez sur Entrée pour continuer...\n")
 
-    def consulter_liste_stages_importes(self):
+    def consulter_import(self):
         liste_stages_importes = self.service_liste_envie.get_liste_import(
             self.id_utilisateur
         )
