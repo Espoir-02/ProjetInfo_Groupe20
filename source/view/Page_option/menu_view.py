@@ -27,7 +27,6 @@ class Menu_view:
             choices = [
                 "Rechercher un stage",
                 "Accéder à son historique",
-                "Quitter l'application",
             ]
 
             if Session().user_type in ["professeur", "eleve", "administrateur"]:
@@ -50,6 +49,8 @@ class Menu_view:
 
             if Session().user_type in ["professeur", "eleve", "administrateur"]:
                 choices.append("Déconnexion")
+            
+            choices.append("Quitter l'application")            
 
             questions = [
                 inquirer.List("choice", message="Choisir une option:", choices=choices)
